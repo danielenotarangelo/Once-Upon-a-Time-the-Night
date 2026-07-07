@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import './Landing.css';
 
@@ -122,6 +122,26 @@ export default function Landing({ onEnter }) {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [advance, goTo, current]);
+
+  const goToRef = useRef(goTo);
+  goToRef.current = goTo;
+  const currentRef = useRef(current);
+  currentRef.current = current;
+  const advanceRef = useRef(advance);
+  advanceRef.current = advance;
+  const wheelCooldown = useRef(false);
+
+  useEffect(() => {
+    const onWheel = (e) => {
+      if (wheelCooldown.current) return;
+      wheelCooldown.current = true;
+      if (e.deltaY > 0) advanceRef.current();
+      else if (e.deltaY < 0) goToRef.current(currentRef.current - 1);
+      setTimeout(() => { wheelCooldown.current = false; }, 600);
+    };
+    window.addEventListener('wheel', onWheel, { passive: true });
+    return () => window.removeEventListener('wheel', onWheel);
+  }, []);
 
   const slide = SLIDES[current];
 
