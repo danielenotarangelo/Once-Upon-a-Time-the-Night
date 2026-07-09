@@ -1,6 +1,6 @@
 # Once upon a time... the Night
 
-An interactive data visualization exploring the relationship between **artificial light at night**, **economic development**, and **mental health** across 189 countries from 2013 to 2023.
+An interactive data visualization exploring the relationship between **artificial light at night**, **economic development**, and **mental health** across 192 countries from 2013 to 2023.
 
 Built for the Data Visualization Lab course at the University of Trento.
 
