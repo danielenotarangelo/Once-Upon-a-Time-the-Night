@@ -134,10 +134,11 @@ export default function Landing({ onEnter }) {
   useEffect(() => {
     const onWheel = (e) => {
       if (wheelCooldown.current) return;
+      if (Math.abs(e.deltaY) < 20) return;
       wheelCooldown.current = true;
       if (e.deltaY > 0) advanceRef.current();
       else if (e.deltaY < 0) goToRef.current(currentRef.current - 1);
-      setTimeout(() => { wheelCooldown.current = false; }, 600);
+      setTimeout(() => { wheelCooldown.current = false; }, 1000);
     };
     window.addEventListener('wheel', onWheel, { passive: true });
     return () => window.removeEventListener('wheel', onWheel);
