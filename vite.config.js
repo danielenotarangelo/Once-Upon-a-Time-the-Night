@@ -7,6 +7,7 @@ export default defineConfig({
     port: 5173,
     open: true,
   },
+  base: "/Once-Upon-a-Time-the-Night/",
   build: {
     outDir: 'dist',
     chunkSizeWarningLimit: 1500,
