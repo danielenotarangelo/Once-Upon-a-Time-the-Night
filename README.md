@@ -4,6 +4,10 @@ An interactive data visualization exploring the relationship between **artificia
 
 Built for the Data Visualization Lab course at the University of Trento.
 
+The project is publicly available on GitHub Pages:
+
+**https://danielenotarangelo.github.io/Once-Upon-a-Time-the-Night/**
+
 ---
 
 ## What the project is
