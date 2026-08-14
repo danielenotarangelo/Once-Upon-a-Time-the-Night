@@ -1040,8 +1040,9 @@ body.dark .chart-modal {
     align-items: stretch;
     overflow: hidden;
     gap: 0;
+    width: 50px;
     border-radius: 22px;
-    transition: gap 0.5s cubic-bezier(0.34, 1.1, 0.4, 1);
+    transition: gap 0.5s cubic-bezier(0.34, 1.1, 0.4, 1), width 0.5s cubic-bezier(0.34, 1.1, 0.4, 1);
   }
   .toggles:not(.open) .toggle:not(.active):not(.mobile-default) {
     max-height: 0;
@@ -1058,6 +1059,7 @@ body.dark .chart-modal {
   .toggles:not(.open) .toggle-label { display: none; }
   .toggles.open {
     gap: 6px;
+    width: 80px;
   }
 
   /* Legend & badge repositioned below taller header */
