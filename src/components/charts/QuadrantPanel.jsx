@@ -10,6 +10,7 @@ const COLOR_B = '#38bdf8';
 export default function QuadrantPanel({ lookup, country, compareCountry, year, healthMetric = 'd', dark, open, onClose, inStack = false, inTab = false, bgColor, compact = false }) {
   const [zoomed, setZoomed] = useState(false);
   const [metric, setMetric] = useState(healthMetric);
+  const [infoOpen, setInfoOpen] = useState(false);
   const visible = inTab ? true : (inStack ? !!country : (!!country && open));
   const cur        = country        && lookup[country]        ? lookup[country][year]        : null;
   const compareCur = compareCountry && lookup[compareCountry] ? lookup[compareCountry][year] : null;
@@ -57,7 +58,14 @@ export default function QuadrantPanel({ lookup, country, compareCountry, year, h
           <div className="fp-label">All countries · {year}</div>
           <div className="fp-title-row">
             <h2>Radiance &amp; Health Quadrants</h2>
-            <span className="info-btn">i
+            <span
+              className={`info-btn${infoOpen ? ' open' : ''}`}
+              tabIndex={0}
+              role="button"
+              aria-label="More information"
+              onClick={(e) => { e.stopPropagation(); setInfoOpen(v => !v); }}
+              onBlur={() => setInfoOpen(false)}
+            >i
               <span className="info-tooltip">
                 The mental health data represents the prevalence of depressive and anxiety disorders, not sleep disorders specifically. Given the indirect nature of the relationship with light pollution, these results should be interpreted with caution.
               </span>

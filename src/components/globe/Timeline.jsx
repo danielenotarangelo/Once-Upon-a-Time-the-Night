@@ -56,7 +56,7 @@ export default function Timeline({ year, onYearChange, playing, onTogglePlay }) 
             {YEARS.map((y) => (
               <div
                 key={y}
-                className={`tick${y <= year ? ' passed' : ''}`}
+                className={`tick${y <= year ? ' passed' : ''}${y === year ? ' current' : ''}`}
                 data-year={y}
                 onClick={() => onYearChange(y)}
               />

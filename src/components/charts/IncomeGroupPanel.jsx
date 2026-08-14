@@ -31,6 +31,7 @@ const COLOR_B = '#38bdf8';
 export default function IncomeGroupPanel({ lookup, country, compareCountry, year, dark, healthMetric = 'd', inStack = false }) {
   const [zoomedR, setZoomedR] = useState(false);
   const [zoomedH, setZoomedH] = useState(false);
+  const [infoOpen, setInfoOpen] = useState(false);
 
   const bg = dark ? 'rgba(13, 16, 28, 0.85)' : 'rgba(248, 249, 252, 0.90)';
 
@@ -58,7 +59,14 @@ export default function IncomeGroupPanel({ lookup, country, compareCountry, year
           <div className="fp-label">GDP income groups · {year}</div>
           <div className="fp-title-row">
             <h2>Light &amp; Health by Income Level</h2>
-            <span className="info-btn">i
+            <span
+              className={`info-btn${infoOpen ? ' open' : ''}`}
+              tabIndex={0}
+              role="button"
+              aria-label="More information"
+              onClick={(e) => { e.stopPropagation(); setInfoOpen(v => !v); }}
+              onBlur={() => setInfoOpen(false)}
+            >i
               <span className="info-tooltip">
                 The mental health data represents the prevalence of depressive and anxiety disorders, not sleep disorders specifically. Given the indirect nature of the relationship with light pollution, these results should be interpreted with caution.
               </span>

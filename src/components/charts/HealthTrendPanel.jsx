@@ -14,6 +14,7 @@ const fmtSigned = (v, fn) => v == null ? '—' : (v >= 0 ? '+' : '') + fn(v);
 export default function HealthTrendPanel({ lookup, country, compareCountry, year, healthMetric = 'd', dark, open, onClose, inStack = false, inTab = false, bgColor, compact = false }) {
   const [zoomed, setZoomed] = useState(false);
   const [metric, setMetric] = useState(healthMetric);
+  const [infoOpen, setInfoOpen] = useState(false);
   const visible = inTab ? !!country : (inStack ? !!country : (!!country && open));
   const series        = country        ? getSeries(lookup, YEARS, country)        : [];
   const compareSeries = compareCountry ? getSeries(lookup, YEARS, compareCountry) : null;
@@ -53,7 +54,14 @@ export default function HealthTrendPanel({ lookup, country, compareCountry, year
           <div className="fp-label">Year-over-year path</div>
           <div className="fp-title-row">
             <h2>Radiance &amp; Health Trend</h2>
-            <span className="info-btn">i
+            <span
+              className={`info-btn${infoOpen ? ' open' : ''}`}
+              tabIndex={0}
+              role="button"
+              aria-label="More information"
+              onClick={(e) => { e.stopPropagation(); setInfoOpen(v => !v); }}
+              onBlur={() => setInfoOpen(false)}
+            >i
               <span className="info-tooltip">
                 The mental health data represents the prevalence of depressive and anxiety disorders, not sleep disorders specifically. Given the indirect nature of the relationship with light pollution, these results should be interpreted with caution.
               </span>
