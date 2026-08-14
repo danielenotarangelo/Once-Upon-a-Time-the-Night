@@ -1,11 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BorderGlow from '../ui/BorderGlow.jsx';
 import RankingChart, { RANK_METRICS } from './RankingChart.jsx';
 import ChartModal from './ChartModal.jsx';
 
-export default function RankingPanel({ lookup, year, dark, visible, onSelect }) {
+export default function RankingPanel({ lookup, year, dark, visible, onSelect, mobileMode = false, onClose }) {
   const [metric,   setMetric]   = useState('r');
   const [expanded, setExpanded] = useState(false);
+
+  // On mobile there's no room for the compact side panel — jump straight to the full-screen modal.
+  useEffect(() => {
+    if (mobileMode && visible) setExpanded(true);
+  }, [mobileMode, visible]);
+
+  const closeExpanded = () => {
+    setExpanded(false);
+    if (mobileMode) onClose?.();
+  };
 
   const curMeta = RANK_METRICS.find(m => m.key === metric);
   const bg = dark ? 'rgba(13, 16, 28, 0.92)' : 'rgba(248, 249, 252, 0.95)';
@@ -79,7 +89,7 @@ export default function RankingPanel({ lookup, year, dark, visible, onSelect }) 
           title="Full Global Ranking"
           subtitle={curMeta?.unit}
           meta={String(year)}
-          onClose={() => setExpanded(false)}
+          onClose={closeExpanded}
         >
           <div className="ranking-tabs" style={{ marginBottom: 14 }}>
             {RANK_METRICS.map(m => (

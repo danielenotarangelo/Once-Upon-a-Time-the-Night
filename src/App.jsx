@@ -171,6 +171,7 @@ export default function App() {
         onToggleTheme={() => setDark((d) => !d)}
         onResultsClick={() => setShowResults(true)}
         showResults={!showLanding}
+        onOpenRankings={() => { setSelected(null); setShowRanking(true); }}
       />
 
       {data && <Legend domains={data.domains} variable={variable || 'r'} healthMetric={healthMetric} hidden={!variable || !!(isSmallPhone && selected)} />}
@@ -216,7 +217,7 @@ export default function App() {
 
       {/* Search + mode tabs — shown when no country is selected */}
       <AnimatePresence>
-        {data && !selected && !isMobile && (
+        {data && !selected && (
           <OverviewBar
             key="overview-bar"
             countries={Object.keys(data.lookup)}
@@ -227,14 +228,17 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* Ranking panel — visible when Rankings tab is active and no country selected */}
-      {data && !isMobile && (
+      {/* Ranking panel — visible when Rankings tab is active and no country selected.
+          On mobile it opens straight into the full-screen modal (see RankingPanel). */}
+      {data && (
         <RankingPanel
           lookup={data.lookup}
           year={year}
           dark={dark}
           visible={!selected && showRanking}
           onSelect={handleSearchSelect}
+          mobileMode={isMobile}
+          onClose={() => setShowRanking(false)}
         />
       )}
 
