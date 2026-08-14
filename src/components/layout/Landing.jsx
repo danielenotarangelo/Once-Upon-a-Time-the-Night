@@ -144,6 +144,30 @@ export default function Landing({ onEnter }) {
     return () => window.removeEventListener('wheel', onWheel);
   }, []);
 
+  const touchStartY = useRef(null);
+
+  useEffect(() => {
+    const onTouchStart = (e) => {
+      touchStartY.current = e.touches[0].clientY;
+    };
+    const onTouchEnd = (e) => {
+      if (touchStartY.current === null || wheelCooldown.current) return;
+      const deltaY = touchStartY.current - e.changedTouches[0].clientY;
+      touchStartY.current = null;
+      if (Math.abs(deltaY) < 50) return;
+      wheelCooldown.current = true;
+      if (deltaY > 0) advanceRef.current();
+      else goToRef.current(currentRef.current - 1);
+      setTimeout(() => { wheelCooldown.current = false; }, 1000);
+    };
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchend', onTouchEnd, { passive: true });
+    return () => {
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchend', onTouchEnd);
+    };
+  }, []);
+
   const slide = SLIDES[current];
 
   return (

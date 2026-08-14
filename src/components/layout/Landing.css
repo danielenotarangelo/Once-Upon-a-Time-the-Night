@@ -192,8 +192,8 @@
   .landing-title.big { font-size: clamp(40px, 12vw, 64px); }
   .landing-desc      { font-size: clamp(14px, 3.8vw, 18px); }
   .landing-eyebrow   { font-size: 11px; letter-spacing: 0.08em; }
-  .landing-slide     { padding: 0 22px 0 44px; gap: 14px; max-width: 100%; }
+  .landing-slide     { padding: 0 28px; gap: 14px; max-width: 100%; }
   .landing-icon svg  { width: 44px; height: 44px; }
-  .landing-dots      { left: 14px; gap: 9px; }
+  .landing-dots      { display: none; }
   .landing-arrow-btn { margin-bottom: 22px; }
 }
