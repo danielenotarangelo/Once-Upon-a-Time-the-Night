@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import StarBorder from '../ui/StarBorder.jsx';
 
 export default function Header({ variable, onVariableChange, dark, onToggleTheme, onResultsClick, showResults }) {
@@ -6,6 +7,18 @@ export default function Header({ variable, onVariableChange, dark, onToggleTheme
     { key: 'g',      label: 'Wealth' },
     { key: 'health', label: 'Health' },
   ];
+
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const togglesRef = useRef(null);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onPointerDown = (e) => {
+      if (togglesRef.current && !togglesRef.current.contains(e.target)) setMobileOpen(false);
+    };
+    document.addEventListener('pointerdown', onPointerDown);
+    return () => document.removeEventListener('pointerdown', onPointerDown);
+  }, [mobileOpen]);
 
   return (
     <header>
@@ -39,13 +52,27 @@ export default function Header({ variable, onVariableChange, dark, onToggleTheme
         )}
       </div>
       <div className="head-right">
-        <div className="toggles">
-          {toggles.map((t) => (
+        <div
+          className={`toggles${mobileOpen ? ' open' : ''}`}
+          ref={togglesRef}
+          onClick={() => {
+            if (window.innerWidth <= 640 && !mobileOpen) setMobileOpen(true);
+          }}
+        >
+          {toggles.map((t, i) => (
             <button
               key={t.key}
-              className={`toggle${variable === t.key ? ' active' : ''}`}
+              className={`toggle${variable === t.key ? ' active' : ''}${!variable && i === 0 ? ' mobile-default' : ''}`}
               data-var={t.key}
-              onClick={() => onVariableChange(variable === t.key ? null : t.key)}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (window.innerWidth <= 640 && !mobileOpen) {
+                  setMobileOpen(true);
+                  return;
+                }
+                onVariableChange(variable === t.key ? null : t.key);
+                setMobileOpen(false);
+              }}
             >
               {t.label}
             </button>
