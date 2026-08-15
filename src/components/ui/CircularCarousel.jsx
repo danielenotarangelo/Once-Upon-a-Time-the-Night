@@ -35,7 +35,7 @@ export default function CircularCarousel({
   radiusX = 160,
   radiusY = 24,
   renderWindow = 1,
-  duration = 0.55,
+  duration = 0.62,
   ease = [0.22, 1, 0.36, 1],
   onChange,
   className = '',
@@ -130,7 +130,15 @@ export default function CircularCarousel({
           return (
             <motion.div
               key={i}
-              initial={{ opacity: 0, scale: 0.85 }}
+              // Entering cards slide in from a touch further out (in the direction they're
+              // coming from) instead of just fading in place — reads as continuous motion
+              // rather than a pop, especially right at the moment a swipe crosses over.
+              initial={{
+                opacity: 0,
+                scale: pos.scale * 0.92,
+                x: pos.x - cardWidth / 2 + (pos.offset > 0 ? 26 : pos.offset < 0 ? -26 : 0),
+                y: pos.y - cardHeight / 2,
+              }}
               animate={{
                 x: pos.x - cardWidth / 2,
                 y: pos.y - cardHeight / 2,
@@ -138,7 +146,7 @@ export default function CircularCarousel({
                 opacity: pos.opacity,
                 zIndex: pos.zIndex,
               }}
-              exit={{ opacity: 0, scale: 0.85 }}
+              exit={{ opacity: 0, scale: pos.scale * 0.92 }}
               transition={{ duration, ease }}
               onClick={() => !isActive && goTo(i)}
               aria-label={`Slide ${i + 1} of ${total}`}
