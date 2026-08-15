@@ -1199,11 +1199,27 @@ body.dark .chart-modal {
   .country-badge { left: auto; right: 16px; top: 118px; font-size: 14px; padding: 8px 14px; }
   .country-badge-label { font-size: 9px; }
 
-  /* No close button on mobile */
-  .close-x { display: none; }
-
   /* Tighter padding inside mobile stack cards */
   .panel-stack-card > .border-glow-inner { padding: 14px; }
+
+  /* Chart zoom modal — nearly full-screen with a larger, touch-friendly close button */
+  .chart-modal-backdrop { padding: 10px; }
+  .chart-modal {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    border-radius: 16px;
+    padding: 18px 16px 16px;
+  }
+  .chart-modal-head h2 { font-size: 17px; }
+  .close-x {
+    width: 34px;
+    height: 34px;
+    font-size: 15px;
+    background: var(--panel);
+    box-shadow: var(--shadow);
+  }
 
   /* Backdrop: sits above globe, below timeline/legend/stack */
   .mobile-backdrop {
@@ -1946,6 +1962,16 @@ body.dark .compare-search-row {
   font-family: var(--font);
 }
 .compare-search-input::placeholder { color: var(--text-faint); }
+
+/* Any touch-capable device (phone, tablet, touchscreen laptop) auto-zooms the page when
+   focusing a text input under 16px — this isn't width-dependent (e.g. an iPad in landscape
+   is >900px but still triggers it), so guard by pointer type rather than a breakpoint. */
+@media (pointer: coarse) {
+  .search-bar-input,
+  .compare-search-input {
+    font-size: 16px;
+  }
+}
 .compare-clear-btn {
   background: none;
   border: none;

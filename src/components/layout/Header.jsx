@@ -160,6 +160,16 @@ export default function Header({ variable, onVariableChange, dark, onToggleTheme
                   {RANKINGS_ICON}
                   <span>Rankings</span>
                 </motion.button>
+                {showResults && (
+                  <motion.button
+                    className="mobile-menu-fab-item"
+                    variants={menuItemVariants}
+                    onClick={() => { onResultsClick(); setMenuOpen(false); }}
+                  >
+                    {RESULTS_ICON}
+                    <span>Interesting Results</span>
+                  </motion.button>
+                )}
                 <motion.button
                   className="mobile-menu-fab-item"
                   variants={menuItemVariants}
@@ -177,16 +187,6 @@ export default function Header({ variable, onVariableChange, dark, onToggleTheme
                   )}
                   <span>{dark ? 'Light mode' : 'Dark mode'}</span>
                 </motion.button>
-                {showResults && (
-                  <motion.button
-                    className="mobile-menu-fab-item"
-                    variants={menuItemVariants}
-                    onClick={() => { onResultsClick(); setMenuOpen(false); }}
-                  >
-                    {RESULTS_ICON}
-                    <span>Interesting Results</span>
-                  </motion.button>
-                )}
               </div>
             </motion.div>
           )}

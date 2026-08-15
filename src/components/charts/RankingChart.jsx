@@ -1,8 +1,9 @@
 import { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 
-const ROW_H  = 30;
-const MARGIN = { top: 8, right: 72, bottom: 24, left: 130 };
+const ROW_H  = 34;
+const MARGIN_WIDE   = { top: 8, right: 72, bottom: 24, left: 130 };
+const MARGIN_NARROW = { top: 8, right: 48, bottom: 24, left: 96 };
 
 export const RANK_METRICS = [
   { key: 'r',   label: 'Radiance',  unit: 'nW/cm²/sr', fmt: v => d3.format('.2f')(v) },
@@ -31,14 +32,14 @@ export default function RankingChart({ lookup, year, dark, country: selected, me
   const ac = dark ? '#5b647d' : '#939bb2';
   const gc = dark ? '#2a3048' : '#e2e6ee';
 
-  // Build the SVG skeleton (just groups, height is set in the data effect)
+  // Build the SVG skeleton (just groups, height/margin are set in the data effect)
   useEffect(() => {
     const el = svgRef.current;
     if (!el) return;
     el.innerHTML = '';
 
     const root = d3.select(el);
-    const g    = root.append('g').attr('transform', `translate(${MARGIN.left},${MARGIN.top})`);
+    const g    = root.append('g').attr('class', 'plot-area');
 
     g.append('g').attr('class', 'x-axis');
     g.append('g').attr('class', 'bars');
@@ -59,8 +60,13 @@ export default function RankingChart({ lookup, year, dark, country: selected, me
 
     const n  = data.length;
     const W  = el.clientWidth || 320;
+    const isNarrow = W < 400;
+    const MARGIN = isNarrow ? MARGIN_NARROW : MARGIN_WIDE;
+    const maxChars = isNarrow ? 13 : 18;
     const H  = ROW_H * n + MARGIN.top + MARGIN.bottom;
     const iw = W - MARGIN.left - MARGIN.right;
+
+    g.attr('transform', `translate(${MARGIN.left},${MARGIN.top})`);
 
     el.setAttribute('viewBox', `0 0 ${W} ${H}`);
     el.setAttribute('width',  W);
@@ -94,11 +100,18 @@ export default function RankingChart({ lookup, year, dark, country: selected, me
       .attr('width', d => Math.max(2, x(d.value)));
 
     enter.append('text')
+      .attr('class', 'lbl-rank')
+      .attr('x', -MARGIN.left).attr('y', ROW_H / 2).attr('dy', '0.35em')
+      .attr('text-anchor', 'start')
+      .style('font-size', '10px').style('font-family', 'inherit').style('font-variant-numeric', 'tabular-nums')
+      .text(d => `${d.rank + 1}.`);
+
+    enter.append('text')
       .attr('class', 'lbl-country')
       .attr('x', -6).attr('y', ROW_H / 2).attr('dy', '0.35em')
       .attr('text-anchor', 'end')
       .style('font-size', '11px').style('font-family', 'inherit')
-      .text(d => d.country.length > 18 ? d.country.slice(0, 17) + '…' : d.country);
+      .text(d => d.country.length > maxChars ? d.country.slice(0, maxChars - 1) + '…' : d.country);
 
     enter.append('text')
       .attr('class', 'lbl-val')
@@ -119,10 +132,15 @@ export default function RankingChart({ lookup, year, dark, country: selected, me
       .attr('width', d => Math.max(2, x(d.value)))
       .attr('fill',  d => d.country === selected ? 'var(--lgr)' : barColor);
 
+    merged.select('text.lbl-rank')
+      .attr('x', -MARGIN.left)
+      .attr('fill', ac)
+      .text(d => `${d.rank + 1}.`);
+
     merged.select('text.lbl-country')
       .attr('fill',        d => d.country === selected ? 'var(--lgr)' : (dark ? '#c8d0e8' : '#1e2540'))
       .style('font-weight', d => d.country === selected ? '700' : '400')
-      .text(d => d.country.length > 18 ? d.country.slice(0, 17) + '…' : d.country);
+      .text(d => d.country.length > maxChars ? d.country.slice(0, maxChars - 1) + '…' : d.country);
 
     merged.select('text.lbl-val')
       .transition().duration(700).ease(d3.easeCubicInOut)
