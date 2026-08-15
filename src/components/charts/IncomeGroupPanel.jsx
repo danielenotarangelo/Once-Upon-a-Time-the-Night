@@ -28,12 +28,12 @@ const H_COLOR = '#a855f7';
 const COLOR_A = '#f59e0b';
 const COLOR_B = '#38bdf8';
 
-export default function IncomeGroupPanel({ lookup, country, compareCountry, year, dark, healthMetric = 'd', inStack = false }) {
+export default function IncomeGroupPanel({ lookup, country, compareCountry, year, dark, healthMetric = 'd', onClose, inStack = false, bgColor }) {
   const [zoomedR, setZoomedR] = useState(false);
   const [zoomedH, setZoomedH] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
 
-  const bg = dark ? 'rgba(13, 16, 28, 0.85)' : 'rgba(248, 249, 252, 0.90)';
+  const bg = bgColor ?? (dark ? 'rgba(13, 16, 28, 0.85)' : 'rgba(248, 249, 252, 0.90)');
 
   const rPoints = useMemo(() => computePoints(lookup, year, 'r'),           [lookup, year]);
   const hPoints = useMemo(() => computePoints(lookup, year, healthMetric),  [lookup, year, healthMetric]);
@@ -85,6 +85,11 @@ export default function IncomeGroupPanel({ lookup, country, compareCountry, year
             </div>
           )}
         </div>
+        {onClose && (
+          <div className="fp-head-actions">
+            <button className="close-x" onClick={onClose}>✕</button>
+          </div>
+        )}
       </div>
 
       <p className="panel-desc">

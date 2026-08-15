@@ -988,12 +988,12 @@ body.dark .chart-modal {
   background: var(--text-dim);
 }
 .tick.current {
-  background: var(--accent);
+  background: var(--text);
   width: 3px;
   height: 10px;
 }
 .tick.current::after {
-  color: var(--accent);
+  color: var(--text);
   font-weight: 700;
 }
 
@@ -1081,13 +1081,8 @@ body.dark .chart-modal {
   border-radius: 4px;
 }
 
-/* Mobile stack wrapper (hidden on desktop) */
-.mobile-stack-wrapper {
-  display: none;
-}
-
-/* Transparent tap-to-dismiss backdrop (mobile only, rendered only when selected) */
-.mobile-backdrop {
+/* Mobile country-panel carousel (hidden on desktop) */
+.mobile-panel-backdrop {
   display: none;
 }
 
@@ -1202,7 +1197,7 @@ body.dark .chart-modal {
   /* Tighter padding inside mobile stack cards */
   .panel-stack-card > .border-glow-inner { padding: 14px; }
 
-  /* Chart zoom modal — nearly full-screen with a larger, touch-friendly close button */
+  /* Chart zoom modal — nearly full-screen; close button matches the plain aesthetic used elsewhere */
   .chart-modal-backdrop { padding: 10px; }
   .chart-modal {
     width: 100%;
@@ -1213,37 +1208,49 @@ body.dark .chart-modal {
     padding: 18px 16px 16px;
   }
   .chart-modal-head h2 { font-size: 17px; }
-  .close-x {
-    width: 34px;
-    height: 34px;
-    font-size: 15px;
-    background: var(--panel);
-    box-shadow: var(--shadow);
-  }
 
-  /* Backdrop: sits above globe, below timeline/legend/stack */
-  .mobile-backdrop {
-    display: block;
+  /* Country-panel carousel: near-fullscreen, swipeable, non-overlapping */
+  .mobile-panel-backdrop {
+    display: flex;
     position: fixed;
     inset: 0;
-    z-index: 20;
-    background: transparent;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 10px;
+    animation: modal-fade 0.15s ease;
+  }
+  .mobile-panel-backdrop.closing {
+    animation: modal-fade-out 0.2s ease-out forwards;
   }
 
-  /* Stack wrapper: centered on both axes */
-  .mobile-stack-wrapper {
-    display: block;
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: min(380px, calc(100vw - 32px));
-    height: min(360px, calc(100svh - 230px));
-    z-index: 28;
-    overflow: visible;
+  .mobile-panel-modal {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    animation: modal-rise 0.18s ease;
+  }
+  .mobile-panel-modal.closing {
+    animation: modal-fall 0.2s ease-out forwards;
+  }
+  .mobile-panel-carousel-area {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+  }
+  .mobile-panel-compare-footer {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    padding: 8px 4px 4px;
   }
 
-  /* Panel content sizing inside the stack */
+  /* Panel content sizing inside the carousel */
   .fp-head { margin-bottom: 10px; }
   .fp-label { font-size: 10px; }
   .fp-head h2 { font-size: 16px; }
@@ -2023,6 +2030,80 @@ body.dark .compare-search-row {
   transition: background 0.15s, color 0.15s;
 }
 .compare-cancel-btn:hover { background: var(--hairline); color: var(--text); }
+
+/* ── Compact compare bar (mobile carousel footer) ── */
+.compare-bar-mobile {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.compare-trigger-btn-mobile {
+  width: auto;
+  justify-content: center;
+  padding: 7px 15px;
+  border-radius: 10px;
+  font-size: 11px;
+}
+
+/* Compare picker (mobile): centered modal overlay, not a docked dropdown */
+.compare-picker-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 20px;
+  animation: modal-fade 0.15s ease;
+}
+.compare-picker-backdrop.exiting {
+  animation: modal-fade-out 0.2s ease-out forwards;
+}
+.compare-picker-card-center {
+  width: min(340px, calc(100vw - 40px));
+  background: #f8f9fc;
+  border: 1px solid var(--panel-border);
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.45);
+  animation: modal-rise 0.18s ease;
+}
+body.dark .compare-picker-card-center {
+  background: #0d101c;
+}
+.compare-picker-card-center.exiting {
+  animation: modal-fall 0.2s ease-out forwards;
+}
+.compare-bar-mobile-dual {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  padding: 10px 14px;
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow);
+  animation: compare-in 0.18s ease-in both;
+}
+.compare-bar-mobile-dual.exiting {
+  animation: compare-out 0.18s ease-out both;
+}
+.compare-bar-mobile-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 /* Compare result badge (second country selected) */
 .compare-result-badge.exiting {

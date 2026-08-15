@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { getFlagEmoji } from '../../utils/countryFlags.js';
 
 const ANIM_MS = 180;
@@ -16,6 +17,7 @@ export default function CompareBar({
   onCancelCompare,
   onSelectCompare,
   onClearCompare,
+  compact = false,
 }) {
   const [query,       setQuery]       = useState('');
   const [suggestions, setSuggestions] = useState([]);
@@ -83,6 +85,70 @@ export default function CompareBar({
   const flag1 = getFlagEmoji(selected);
   const flag2 = compareCountry ? getFlagEmoji(compareCountry) : null;
   const animClass = exiting ? ' exiting' : '';
+
+  // ── Compact mode: docked footer bar, no redundant top badge ───────
+  if (compact) {
+    if (displayState === 'result') {
+      return (
+        <div className={`compare-bar-mobile-dual${animClass}`}>
+          <span className="compare-badge-dot" style={{ background: COLOR_A }} />
+          <span className="compare-bar-mobile-name">{flag1 && `${flag1} `}{selected}</span>
+          <span className="compare-vs-separator">vs</span>
+          <span className="compare-badge-dot" style={{ background: COLOR_B }} />
+          <span className="compare-bar-mobile-name">{flag2 && `${flag2} `}{compareCountry}</span>
+          <button className="close-x" onClick={onClearCompare}>✕</button>
+        </div>
+      );
+    }
+    if (displayState === 'picker') {
+      return createPortal(
+        <div className={`compare-picker-backdrop${animClass}`} onClick={onCancelCompare}>
+          <div className={`compare-picker-card compare-picker-card-center${animClass}`} ref={wrapperRef} onClick={e => e.stopPropagation()}>
+            <div className="compare-search-row">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, opacity: 0.5 }}>
+                <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/>
+              </svg>
+              <input
+                ref={inputRef}
+                className="compare-search-input"
+                value={query}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
+                placeholder="Search a country…"
+                autoComplete="off"
+                spellCheck={false}
+              />
+              <button className="close-x" tabIndex={-1} onClick={onCancelCompare} style={{ flexShrink: 0 }}>✕</button>
+            </div>
+            {suggestions.length > 0 && (
+              <ul className="compare-suggestions">
+                {suggestions.map((s, i) => {
+                  const f = getFlagEmoji(s);
+                  return (
+                    <li key={s} className={i === activeIdx ? 'active' : ''} onMouseDown={() => commit(s)}>
+                      {f && <span className="suggestion-flag">{f}</span>}
+                      {s}
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+            <div className="compare-hint">or click a country on the globe</div>
+          </div>
+        </div>,
+        document.body
+      );
+    }
+    return (
+      <div className="compare-bar-mobile">
+        {displayState === 'trigger' && (
+          <button className={`compare-trigger-btn compare-trigger-btn-mobile${animClass}`} onClick={onEnterCompare}>
+            Compare with…
+          </button>
+        )}
+      </div>
+    );
+  }
 
   // ── Dual badge: both countries selected ──────────────────────────
   if (displayState === 'result') {

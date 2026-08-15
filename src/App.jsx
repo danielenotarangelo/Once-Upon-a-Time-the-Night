@@ -7,11 +7,13 @@ import RadianceGrowthPanel from './components/charts/RadianceGrowthPanel.jsx';
 import LightGDPRatioPanel from './components/charts/LightGDPRatioPanel.jsx';
 import QuadrantPanel from './components/charts/QuadrantPanel.jsx';
 import HealthTrendPanel from './components/charts/HealthTrendPanel.jsx';
+import EnergyPanel from './components/charts/EnergyPanel.jsx';
+import IncomeGroupPanel from './components/charts/IncomeGroupPanel.jsx';
 import RightPanel from './components/layout/RightPanel.jsx';
+import MobilePanelCarousel from './components/layout/MobilePanelCarousel.jsx';
 import RankingPanel from './components/charts/RankingPanel.jsx';
 import OverviewBar from './components/layout/OverviewBar.jsx';
 import CompareBar from './components/layout/CompareBar.jsx';
-import Stack from './components/ui/Stack.jsx';
 import Timeline from './components/globe/Timeline.jsx';
 import DotField from './components/ui/DotField.jsx';
 import Galaxy from './components/ui/Galaxy.jsx';
@@ -249,23 +251,37 @@ export default function App() {
       )}
 
       {data && (() => {
-        const sharedMob = { lookup: data.lookup, country: selected, year, dark, healthMetric, inStack: true, compact: true, bgColor: mobileBg };
+        const sharedMob = { lookup: data.lookup, country: selected, compareCountry, year, dark, healthMetric, inStack: true, compact: true, bgColor: mobileBg };
         const mobileCards = [
-          <RadianceGDPPanel       key="left"       {...sharedMob} />,
           <RadianceGrowthPanel        key="lgi"        {...sharedMob} />,
+          <RadianceGDPPanel       key="left"       {...sharedMob} />,
           <LightGDPRatioPanel        key="lgr"        {...sharedMob} />,
-          <QuadrantPanel   key="quadrant"   {...sharedMob} />,
           <HealthTrendPanel key="trajectory" {...sharedMob} />,
+          <QuadrantPanel   key="quadrant"   {...sharedMob} />,
+          <EnergyPanel     key="energy"     {...sharedMob} />,
+          <IncomeGroupPanel key="income"    {...sharedMob} />,
         ];
 
         return isMobile ? (
           selected && mobileCards.length > 0 && (
-            <>
-              <div className="mobile-backdrop" onClick={() => setSelected(null)} />
-              <div className="mobile-stack-wrapper">
-                <Stack key={`mob-${selected}-${variable}`} sendToBackOnClick sensitivity={180} cards={mobileCards} />
-              </div>
-            </>
+            <MobilePanelCarousel
+              key={`mob-${selected}-${variable}`}
+              cards={mobileCards}
+              onClose={() => setSelected(null)}
+              footer={
+                <CompareBar
+                  compact
+                  selected={selected}
+                  compareCountry={compareCountry}
+                  compareMode={compareMode}
+                  countries={Object.keys(data.lookup)}
+                  onEnterCompare={() => setCompareMode(true)}
+                  onCancelCompare={() => setCompareMode(false)}
+                  onSelectCompare={(name) => { setCompareCountry(name); setCompareMode(false); }}
+                  onClearCompare={() => setCompareCountry(null)}
+                />
+              }
+            />
           )
         ) : (
           <RightPanel

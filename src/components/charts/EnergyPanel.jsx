@@ -12,7 +12,7 @@ const COLOR_B = '#38bdf8';
 const fmtEnergy = v => v == null ? '—' : d3.format(',.0f')(v) + ' kWh';
 const fmtUrban  = v => v == null ? '—' : d3.format('.1f')(v) + '%';
 
-export default function EnergyPanel({ lookup, country, compareCountry, year, dark, inStack = false }) {
+export default function EnergyPanel({ lookup, country, compareCountry, year, dark, onClose, inStack = false, bgColor }) {
   const [zoomedEnergy, setZoomedEnergy] = useState(false);
   const [zoomedUrban,  setZoomedUrban]  = useState(false);
 
@@ -20,7 +20,7 @@ export default function EnergyPanel({ lookup, country, compareCountry, year, dar
   const compareSeries = compareCountry ? getSeries(lookup, YEARS, compareCountry) : null;
   const cur           = country        && lookup[country]        ? lookup[country][year]        : null;
   const compareCur    = compareCountry && lookup[compareCountry] ? lookup[compareCountry][year] : null;
-  const bg            = dark ? 'rgba(13, 16, 28, 0.85)' : 'rgba(248, 249, 252, 0.90)';
+  const bg            = bgColor ?? (dark ? 'rgba(13, 16, 28, 0.85)' : 'rgba(248, 249, 252, 0.90)');
 
   return (
     <BorderGlow
@@ -53,6 +53,11 @@ export default function EnergyPanel({ lookup, country, compareCountry, year, dar
           )}
           <div className="meta">{year}</div>
         </div>
+        {onClose && (
+          <div className="fp-head-actions">
+            <button className="close-x" onClick={onClose}>✕</button>
+          </div>
+        )}
       </div>
 
       <p className="panel-desc">
