@@ -102,7 +102,9 @@ export default function DepthCarousel({
 
       el.style.transform = `translate(-50%, -50%) scale(${sc}) translateX(${tx.toFixed(2)}px) translateZ(${tz.toFixed(2)}px) rotateY(${ry.toFixed(3)}deg)`;
       el.style.opacity = opacity.toFixed(3);
-      el.style.filter = `brightness(${brightness.toFixed(3)}) blur(${blurPx.toFixed(2)}px)`;
+      // Skip the filter entirely for the (near-)active card — even a no-op blur(0px) still
+      // forces the browser into a separate, costlier compositing pass on mobile.
+      el.style.filter = (brightness > 0.995 && blurPx < 0.01) ? '' : `brightness(${brightness.toFixed(3)}) blur(${blurPx.toFixed(2)}px)`;
       el.style.zIndex = String(zi);
       el.style.pointerEvents = az < 0.5 ? 'auto' : 'none';
 

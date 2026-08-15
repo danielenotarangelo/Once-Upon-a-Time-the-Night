@@ -139,3 +139,19 @@
   overflow: auto;
   z-index: 1;
 }
+
+/* Touch devices: the glow (mesh-gradient border/fill + outer glow ring) only ever shows on
+   :hover, which touch doesn't reliably trigger — it's dead weight there. Drop it entirely,
+   along with the 6-layer box-shadow (a nicety meant for a stationary desktop card), which
+   otherwise repaints every frame of the carousel's transform/filter animation. The plain
+   border/background/rounding still applies, so cards keep their shape and definition. */
+@media (pointer: coarse) {
+  .border-glow-card {
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 10px 24px;
+  }
+  .border-glow-card::before,
+  .border-glow-card::after,
+  .border-glow-card > .edge-light {
+    display: none;
+  }
+}
