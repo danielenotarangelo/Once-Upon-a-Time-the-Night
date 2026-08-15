@@ -1791,7 +1791,9 @@ body.dark .chart-modal {
   .overview-bar { top: 16px; }
   .overview-search-wrap { width: min(200px, calc(100vw - 190px)); }
   .search-bar-row { padding: 8px 13px; gap: 8px; }
-  .search-bar-input { font-size: 13px; }
+  /* Keep this at 16px+ — iOS/Chrome auto-zoom the whole page on focus for inputs below 16px,
+     which also throws off the globe's viewport-based sizing once the zoom resets. */
+  .search-bar-input { font-size: 16px; }
   .overview-tabs { display: none; }
 }
 
