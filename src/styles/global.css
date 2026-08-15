@@ -2243,8 +2243,8 @@ body.dark .compare-picker-card-center {
 @media (pointer: coarse) {
   .panel-stack-card .chart {
     flex: 0 0 auto;
-    height: 220px;
-    min-height: 220px;
+    height: 190px;
+    min-height: 190px;
   }
   .panel-stack-card > .border-glow-inner {
     scrollbar-width: thin;

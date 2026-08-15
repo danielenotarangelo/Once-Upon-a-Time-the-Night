@@ -42,7 +42,6 @@ export default function CircularCarousel({
 }) {
   const total = items.length;
   const [activeIndex, setActiveIndex] = useState(0);
-  const dragRef = useRef(null);
   const rootRef = useRef(null);
 
   const goTo = useCallback(
@@ -57,47 +56,23 @@ export default function CircularCarousel({
   const next = useCallback(() => goTo(activeIndex + 1), [activeIndex, goTo]);
   const prev = useCallback(() => goTo(activeIndex - 1), [activeIndex, goTo]);
 
-  const onPointerDown = useCallback(e => {
-    if (total < 2) return;
-    dragRef.current = {
-      x: e.clientX, y: e.clientY,
-      lastX: e.clientX, lastY: e.clientY,
-      moved: false, vertical: false, id: e.pointerId,
-    };
-  }, [total]);
-
-  const onPointerMove = useCallback(e => {
-    const drag = dragRef.current;
-    if (!drag || drag.vertical) return;
-    const dx = e.clientX - drag.x;
-    const dy = e.clientY - drag.y;
-    if (!drag.moved) {
-      if (Math.abs(dy) > 8 && Math.abs(dy) > Math.abs(dx)) {
-        drag.vertical = true;
-        return;
-      }
-      if (Math.abs(dx) > 4) {
-        drag.moved = true;
-        rootRef.current?.setPointerCapture(drag.id);
-      }
-    }
-    // Track the last known-good position ourselves — pointerup/pointercancel don't reliably
-    // carry the true final coordinates (pointercancel in particular, e.g. when an OS-level
-    // edge-swipe gesture preempts the touch), which was making one swipe direction unreliable.
-    drag.lastX = e.clientX;
-    drag.lastY = e.clientY;
-  }, []);
-
-  const onPointerEnd = useCallback(e => {
-    const drag = dragRef.current;
-    if (!drag) return;
-    dragRef.current = null;
-    if (!drag.moved) return;
-    const endX = e.type === 'pointercancel' ? drag.lastX : (e.clientX || drag.lastX);
-    const dx = endX - drag.x;
-    if (Math.abs(dx) < 45) return;
-    if (dx < 0) next(); else prev();
-  }, [next, prev]);
+  // The whole card stack is one draggable "track" — while dragging, Motion moves it 1:1 with
+  // the finger (real tracking, not a threshold check after the fact), and on release we work
+  // out how many slots that drag crossed and settle there. The track's own x then animates
+  // back to 0 in the same transition as the cards re-arranging to the new active index, so the
+  // release reads as a continuation of the drag rather than a snap.
+  const handleDragEnd = useCallback(
+    (_, info) => {
+      if (total < 2) return;
+      // Distance-only — how far you actually dragged, not a velocity-projected guess. A fast
+      // flick and a slow drag of the same length land on the same slot, which reads as more
+      // predictable/"it's really following my hand" than fling-based prediction.
+      const stepPx = Math.max(cardWidth * 0.55, 90);
+      const steps = Math.round(-info.offset.x / stepPx);
+      if (steps !== 0) goTo(activeIndex + steps);
+    },
+    [total, cardWidth, activeIndex, goTo]
+  );
 
   useEffect(() => {
     const handler = e => {
@@ -117,53 +92,59 @@ export default function CircularCarousel({
       aria-label="Country panel carousel"
       aria-roledescription="carousel"
       className={`circular-carousel ${className}`.trim()}
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={onPointerEnd}
-      onPointerCancel={onPointerEnd}
     >
-      <AnimatePresence initial={false}>
-        {items.map((item, i) => {
-          const pos = getItemPosition(i, activeIndex, total, { visibleCount, radiusX, radiusY, renderWindow });
-          if (!pos) return null;
-          const isActive = i === activeIndex;
-          return (
-            <motion.div
-              key={i}
-              // Entering cards slide in from a touch further out (in the direction they're
-              // coming from) instead of just fading in place — reads as continuous motion
-              // rather than a pop, especially right at the moment a swipe crosses over.
-              initial={{
-                opacity: 0,
-                scale: pos.scale * 0.92,
-                x: pos.x - cardWidth / 2 + (pos.offset > 0 ? 26 : pos.offset < 0 ? -26 : 0),
-                y: pos.y - cardHeight / 2,
-              }}
-              animate={{
-                x: pos.x - cardWidth / 2,
-                y: pos.y - cardHeight / 2,
-                scale: pos.scale,
-                opacity: pos.opacity,
-                zIndex: pos.zIndex,
-              }}
-              exit={{ opacity: 0, scale: pos.scale * 0.92 }}
-              transition={{ duration, ease }}
-              onClick={() => !isActive && goTo(i)}
-              aria-label={`Slide ${i + 1} of ${total}`}
-              aria-hidden={!isActive}
-              className="circular-carousel__card"
-              style={{
-                width: cardWidth,
-                height: cardHeight,
-                borderRadius: radius,
-                pointerEvents: isActive ? 'auto' : 'none',
-              }}
-            >
-              <div className="circular-carousel__content">{item}</div>
-            </motion.div>
-          );
-        })}
-      </AnimatePresence>
+      <motion.div
+        className="circular-carousel__track"
+        drag={total > 1 ? 'x' : false}
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.85}
+        dragMomentum={false}
+        onDragEnd={handleDragEnd}
+        dragTransition={{ bounceStiffness: 380, bounceDamping: 32 }}
+      >
+        <AnimatePresence initial={false}>
+          {items.map((item, i) => {
+            const pos = getItemPosition(i, activeIndex, total, { visibleCount, radiusX, radiusY, renderWindow });
+            if (!pos) return null;
+            const isActive = i === activeIndex;
+            return (
+              <motion.div
+                key={i}
+                // Entering cards slide in from a touch further out (in the direction they're
+                // coming from) instead of just fading in place — reads as continuous motion
+                // rather than a pop, especially right at the moment a swipe crosses over.
+                initial={{
+                  opacity: 0,
+                  scale: pos.scale * 0.92,
+                  x: pos.x - cardWidth / 2 + (pos.offset > 0 ? 26 : pos.offset < 0 ? -26 : 0),
+                  y: pos.y - cardHeight / 2,
+                }}
+                animate={{
+                  x: pos.x - cardWidth / 2,
+                  y: pos.y - cardHeight / 2,
+                  scale: pos.scale,
+                  opacity: pos.opacity,
+                  zIndex: pos.zIndex,
+                }}
+                exit={{ opacity: 0, scale: pos.scale * 0.92 }}
+                transition={{ duration, ease }}
+                onClick={() => !isActive && goTo(i)}
+                aria-label={`Slide ${i + 1} of ${total}`}
+                aria-hidden={!isActive}
+                className="circular-carousel__card"
+                style={{
+                  width: cardWidth,
+                  height: cardHeight,
+                  borderRadius: radius,
+                  pointerEvents: isActive ? 'auto' : 'none',
+                }}
+              >
+                <div className="circular-carousel__content">{item}</div>
+              </motion.div>
+            );
+          })}
+        </AnimatePresence>
+      </motion.div>
     </div>
   );
 }
