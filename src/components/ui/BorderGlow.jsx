@@ -92,6 +92,10 @@ const BorderGlow = ({
   }, [getCenterOfElement]);
 
   const handlePointerMove = useCallback((e) => {
+    // The glow only ever becomes visible on `:hover` (see BorderGlow.css), which touch input
+    // doesn't reliably trigger — skip the layout read + style writes entirely on touch/coarse
+    // pointers, where this would otherwise run on every drag frame for no visible effect.
+    if (e.pointerType === 'touch') return;
     const card = cardRef.current;
     if (!card) return;
     const rect = card.getBoundingClientRect();

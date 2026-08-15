@@ -214,6 +214,7 @@ export default function App() {
           onSelect={handleSelect}
           zoomMult={selected ? 1 : (showRanking ? 1.12 : 0.95)}
           flyTo={flyTo}
+          paused={isMobile && !!selected}
         />
       )}
 

@@ -52,6 +52,7 @@ export default function Globe({
   onSelect,
   zoomMult = 1,
   flyTo = null,
+  paused = false,
 }) {
   const mountRef = useRef(null);
   const canvasRef = useRef(null);
@@ -69,8 +70,8 @@ export default function Globe({
   const autoRotateRef = useRef(true);
   const startIdleTimerRef = useRef(null);
   // Keep latest props accessible inside event handlers / RAF loop.
-  const propsRef = useRef({ data, geo, year, variable, healthMetric, selected, compareCountry, onSelect });
-  propsRef.current = { data, geo, year, variable, healthMetric, selected, compareCountry, onSelect };
+  const propsRef = useRef({ data, geo, year, variable, healthMetric, selected, compareCountry, onSelect, paused });
+  propsRef.current = { data, geo, year, variable, healthMetric, selected, compareCountry, onSelect, paused };
 
   const repaintOverlay = useCallback(() => {
     const { data, geo, year, variable, healthMetric, selected, compareCountry } = propsRef.current;
@@ -476,6 +477,9 @@ export default function Globe({
     let raf;
     const animate = () => {
       raf = requestAnimationFrame(animate);
+      // Keep the loop alive (cheap) but skip the expensive rotation/render work
+      // while the globe is hidden behind a full-screen mobile panel.
+      if (propsRef.current.paused) return;
       if (autoRotateRef.current) worldGroup.rotation.y += 0.0007;
       renderer.render(scene, camera);
     };

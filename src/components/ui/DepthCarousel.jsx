@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import './DepthCarousel.css';
 
 const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
+const RENDER_WINDOW = 2;
 
 export default function DepthCarousel({
   items = [],
@@ -348,25 +349,40 @@ export default function DepthCarousel({
       onKeyDown={onKeyDown}
     >
       <div className="depth-carousel__stage" ref={stageRef}>
-        {data.map((item, i) => (
-          <div
-            key={i}
-            className="depth-carousel__card"
-            ref={el => (cardRefs.current[i] = el)}
-            style={{ width: cardWidth, height: cardHeight, borderRadius: radius }}
-            aria-roledescription="slide"
-            aria-label={`${i + 1} of ${count}`}
-            aria-hidden={active !== i}
-            onClick={() => onCardClick(i)}
-          >
-            <div className="depth-carousel__content">{item}</div>
-            <span
-              className="depth-carousel__tint"
-              ref={el => (overlayRefs.current[i] = el)}
-              style={{ background: tint }}
-            />
-          </div>
-        ))}
+        {data.map((item, i) => {
+          // Only mount cards near the active one — each is a full chart panel (D3 + glow
+          // effects), so keeping all of them alive simultaneously is wasted work on mobile.
+          // The window is wide enough to cover a normal single-step swipe transition without
+          // any pop-in; only a very fast multi-card flick could show a brief pop for the rest.
+          let d = i - active;
+          if (count > 1) {
+            d = ((d % count) + count) % count;
+            if (d > count / 2) d -= count;
+          }
+          if (Math.abs(d) > RENDER_WINDOW) {
+            cardRefs.current[i] = null;
+            return null;
+          }
+          return (
+            <div
+              key={i}
+              className="depth-carousel__card"
+              ref={el => (cardRefs.current[i] = el)}
+              style={{ width: cardWidth, height: cardHeight, borderRadius: radius }}
+              aria-roledescription="slide"
+              aria-label={`${i + 1} of ${count}`}
+              aria-hidden={active !== i}
+              onClick={() => onCardClick(i)}
+            >
+              <div className="depth-carousel__content">{item}</div>
+              <span
+                className="depth-carousel__tint"
+                ref={el => (overlayRefs.current[i] = el)}
+                style={{ background: tint }}
+              />
+            </div>
+          );
+        })}
       </div>
 
       {showControls && count > 1 && (
