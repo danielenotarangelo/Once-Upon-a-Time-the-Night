@@ -2234,3 +2234,31 @@ body.dark .compare-picker-card-center {
     -webkit-backdrop-filter: none;
   }
 }
+
+/* Mobile carousel panels: the card has plenty of room (it's near-fullscreen there), so let
+   charts render at a comfortable, readable size instead of being squeezed by flex:1 into
+   whatever's left over — the panel already scrolls internally, so it's fine for content to
+   run taller than the card. A visible thin scrollbar replaces the hidden one so it reads as
+   scrollable rather than clipped. */
+@media (pointer: coarse) {
+  .panel-stack-card .chart {
+    flex: 0 0 auto;
+    height: 220px;
+    min-height: 220px;
+  }
+  .panel-stack-card > .border-glow-inner {
+    scrollbar-width: thin;
+    scrollbar-color: var(--panel-border) transparent;
+  }
+  .panel-stack-card > .border-glow-inner::-webkit-scrollbar {
+    display: block;
+    width: 5px;
+  }
+  .panel-stack-card > .border-glow-inner::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .panel-stack-card > .border-glow-inner::-webkit-scrollbar-thumb {
+    background: var(--panel-border);
+    border-radius: 3px;
+  }
+}
