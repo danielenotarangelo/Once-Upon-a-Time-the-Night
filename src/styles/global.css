@@ -2224,16 +2224,13 @@ body.dark .compare-picker-card-center {
   .timeline               { width: min(380px, calc(100vw - 32px)); }
 }
 
-/* ── Touch-device perf: backdrop-filter is one of the most expensive CSS
-   properties to composite on mobile GPUs — every element behind it has to be
-   re-sampled on repaint. It's purely decorative (frosted-glass), so on
-   touch/coarse-pointer devices we drop it everywhere rather than track down
-   every usage individually; panels already have a near-opaque background so
-   the loss is barely visible, and this removes a major source of jank
-   during the mobile carousel's swipe/open animations. */
+/* ── Touch-device perf: backdrop-filter is expensive to composite, but only where the
+   filtered element itself keeps moving — each frame it has to resample a different region
+   behind it. That's the mobile carousel's cards (translated every frame during swipe), not
+   the static full-screen backdrops or menus, which keep their blur. */
 @media (pointer: coarse) {
-  * {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
+  .border-glow-card.panel-stack-card {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 }

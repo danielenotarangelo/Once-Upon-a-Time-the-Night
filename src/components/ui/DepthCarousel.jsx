@@ -3,7 +3,11 @@ import gsap from 'gsap';
 import './DepthCarousel.css';
 
 const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
-const RENDER_WINDOW = 2;
+const RENDER_WINDOW = 1;
+// Touch devices: skip the `filter` (brightness/blur) entirely. Even tiny values force a
+// separate, costlier repaint pass every animation frame — the tint overlay + opacity already
+// convey "receding" cheaply via compositor-only properties.
+const SKIP_FILTER = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
 
 export default function DepthCarousel({
   items = [],
@@ -96,16 +100,25 @@ export default function DepthCarousel({
 
       const opacity = shown ? clamp(cfg.visibleCards + 0.5 - az, 0, 1) : 0;
 
-      const brightness = Math.max(0.15, 1 - az * cfg.falloff);
-      const blurPx = cfg.blur > 0 ? Math.min(cfg.blur, (az / Math.max(1, cfg.visibleCards)) * cfg.blur) : 0;
       const zi = Math.round(2000 - az * 20);
 
       el.style.transform = `translate(-50%, -50%) scale(${sc}) translateX(${tx.toFixed(2)}px) translateZ(${tz.toFixed(2)}px) rotateY(${ry.toFixed(3)}deg)`;
       el.style.opacity = opacity.toFixed(3);
-      // Skip the filter entirely for the (near-)active card — even a no-op blur(0px) still
-      // forces the browser into a separate, costlier compositing pass on mobile.
-      el.style.filter = (brightness > 0.995 && blurPx < 0.01) ? '' : `brightness(${brightness.toFixed(3)}) blur(${blurPx.toFixed(2)}px)`;
-      el.style.zIndex = String(zi);
+      if (SKIP_FILTER) {
+        if (el.style.filter) el.style.filter = '';
+      } else {
+        const brightness = Math.max(0.15, 1 - az * cfg.falloff);
+        const blurPx = cfg.blur > 0 ? Math.min(cfg.blur, (az / Math.max(1, cfg.visibleCards)) * cfg.blur) : 0;
+        // Skip the filter entirely for the (near-)active card — even a no-op blur(0px) still
+        // forces the browser into a separate, costlier compositing pass.
+        el.style.filter = (brightness > 0.995 && blurPx < 0.01) ? '' : `brightness(${brightness.toFixed(3)}) blur(${blurPx.toFixed(2)}px)`;
+      }
+      // Avoid rewriting z-index when it hasn't actually changed — reassigning it every frame
+      // can force the browser to re-sort the compositing/stacking tree needlessly.
+      if (el.dataset.zi !== String(zi)) {
+        el.style.zIndex = String(zi);
+        el.dataset.zi = String(zi);
+      }
       el.style.pointerEvents = az < 0.5 ? 'auto' : 'none';
 
       const ov = overlayRefs.current[i];
