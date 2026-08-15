@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, cloneElement } from 'react';
 import { createPortal } from 'react-dom';
-import DepthCarousel from '../ui/DepthCarousel.jsx';
+import CircularCarousel from '../ui/CircularCarousel.jsx';
 
 export default function MobilePanelCarousel({ cards, onClose, footer }) {
   const [closing, setClosing] = useState(false);
@@ -30,22 +30,15 @@ export default function MobilePanelCarousel({ cards, onClose, footer }) {
     <div className={`mobile-panel-backdrop${closing ? ' closing' : ''}`} onClick={handleClose}>
       <div className={`mobile-panel-modal${closing ? ' closing' : ''}`} onClick={e => e.stopPropagation()}>
         <div className="mobile-panel-carousel-area">
-          <DepthCarousel
+          <CircularCarousel
             items={items}
             cardWidth={300}
             cardHeight={560}
             radius={22}
-            depth={90}
-            spread={95}
-            tilt={18}
-            perspective={1100}
-            visibleCards={1.3}
-            falloff={0.12}
-            blur={1}
-            duration={450}
-            loop
-            showControls={false}
-            showIndicators={false}
+            visibleCount={5}
+            radiusX={160}
+            radiusY={24}
+            duration={0.5}
           />
         </div>
         {footer && <div className="mobile-panel-compare-footer">{footer}</div>}

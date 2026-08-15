@@ -1,0 +1,36 @@
+.circular-carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  touch-action: pan-y;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+}
+
+.circular-carousel:active {
+  cursor: grabbing;
+}
+
+.circular-carousel__card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+  /* Popovers (e.g. info tooltips) inside a panel need to escape the card bounds — the panel
+     content itself already handles its own rounding/clipping via BorderGlow. */
+  overflow: visible;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.circular-carousel__content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
