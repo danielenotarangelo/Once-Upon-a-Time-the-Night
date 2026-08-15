@@ -67,13 +67,25 @@ const NONE_SELECTED_ICON = (
   </svg>
 );
 
-const MENU_ICON = (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-    <line x1="3" y1="6" x2="21" y2="6" />
-    <line x1="3" y1="12" x2="21" y2="12" />
-    <line x1="3" y1="18" x2="21" y2="18" />
-  </svg>
-);
+function MenuIcon({ open }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+      <motion.line
+        animate={open ? { x1: 5, y1: 5, x2: 19, y2: 19 } : { x1: 3, y1: 6, x2: 21, y2: 6 }}
+        transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+      />
+      <motion.line
+        animate={{ opacity: open ? 0 : 1 }}
+        x1="3" y1="12" x2="21" y2="12"
+        transition={{ duration: 0.2 }}
+      />
+      <motion.line
+        animate={open ? { x1: 5, y1: 19, x2: 19, y2: 5 } : { x1: 3, y1: 18, x2: 21, y2: 18 }}
+        transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+      />
+    </svg>
+  );
+}
 
 const RANKINGS_ICON = (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -128,7 +140,7 @@ export default function Header({ variable, onVariableChange, dark, onToggleTheme
           aria-label="Menu"
           onClick={() => setMenuOpen(v => !v)}
         >
-          {MENU_ICON}
+          <MenuIcon open={menuOpen} />
         </button>
         <AnimatePresence>
           {menuOpen && (

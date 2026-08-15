@@ -277,13 +277,10 @@ header {
   white-space: nowrap;
   cursor: pointer;
   transition: color 0.3s ease, background 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.2s ease;
+    box-shadow 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .toggle-item:hover {
   color: var(--text);
-}
-.toggle-item:active {
-  transform: scale(0.96);
 }
 .toggle-item.active {
   color: #fff;
