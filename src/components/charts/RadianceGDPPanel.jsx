@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import RadianceGDPChart from './RadianceGDPChart.jsx';
 import BorderGlow from '../ui/BorderGlow.jsx';
 import ChartModal from './ChartModal.jsx';
@@ -9,6 +10,7 @@ const COLOR_A = '#f59e0b';
 const COLOR_B = '#38bdf8';
 
 export default function RadianceGDPPanel({ lookup, country, compareCountry, year, dark, open, onClose, inStack = false, inTab = false, bgColor, compact = false }) {
+  const { t } = useTranslation();
   const [zoomed, setZoomed] = useState(false);
   const visible = inTab ? !!country : (inStack ? !!country : (!!country && open));
   const series = country ? getSeries(lookup, YEARS, country) : [];
@@ -32,15 +34,15 @@ export default function RadianceGDPPanel({ lookup, country, compareCountry, year
     >
       <div className="fp-head">
         <div>
-          <div className="fp-label">Radiance &amp; GDP per capita</div>
-          <h2>Light &amp; Wealth</h2>
+          <div className="fp-label">{t('panels.radianceGdp.label')}</div>
+          <h2>{t('panels.radianceGdp.title')}</h2>
           {country && !compareCountry && <div className="fp-country">{country}</div>}
           {country && compareCountry && (
             <div className="fp-compare-countries">
               <span className="fp-compare-country" style={{ fontSize: 14 }}>
                 <span className="cmp-stat-dot" style={{ background: COLOR_A }} />{country}
               </span>
-              <span className="fp-vs">vs</span>
+              <span className="fp-vs">{t('common.vs')}</span>
               <span className="fp-compare-country" style={{ fontSize: 14 }}>
                 <span className="cmp-stat-dot" style={{ background: COLOR_B }} />{compareCountry}
               </span>
@@ -49,7 +51,7 @@ export default function RadianceGDPPanel({ lookup, country, compareCountry, year
           <div className="meta">{year}</div>
         </div>
         <div className="fp-head-actions">
-          {country && <button className="zoom-btn" onClick={e => { e.stopPropagation(); setZoomed(true); }} title="Expand chart">
+          {country && <button className="zoom-btn" onClick={e => { e.stopPropagation(); setZoomed(true); }} title={t('common.expandChart')}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
           </button>}
           {onClose && <button className="close-x" onClick={onClose}>✕</button>}
@@ -57,7 +59,7 @@ export default function RadianceGDPPanel({ lookup, country, compareCountry, year
       </div>
       <div className="stat-grid">
         <div className="stat">
-          <div className="label">Radiance</div>
+          <div className="label">{t('panels.radianceGdp.radiance')}</div>
           {compareCountry ? (
             <div className="cmp-stat-pair">
               <div className="cmp-stat-row" style={{ color: COLOR_A }}>
@@ -75,7 +77,7 @@ export default function RadianceGDPPanel({ lookup, country, compareCountry, year
           <div className="unit">nW/cm²/sr</div>
         </div>
         <div className="stat">
-          <div className="label">GDP / capita</div>
+          <div className="label">{t('panels.radianceGdp.gdp')}</div>
           {compareCountry ? (
             <div className="cmp-stat-pair">
               <div className="cmp-stat-row" style={{ color: COLOR_A }}>
@@ -94,13 +96,13 @@ export default function RadianceGDPPanel({ lookup, country, compareCountry, year
         </div>
       </div>
       <div className="chart-title">
-        {compareCountry ? 'Light · Wealth' : (
-          <><span className="dot" style={{ background: 'var(--radiance)' }} />Light <span className="dot" style={{ background: 'var(--gdp)' }} />Wealth</>
+        {compareCountry ? t('panels.radianceGdp.chartTitleCompare') : (
+          <><span className="dot" style={{ background: 'var(--radiance)' }} />{t('panels.radianceGdp.light')} <span className="dot" style={{ background: 'var(--gdp)' }} />{t('panels.radianceGdp.wealth')}</>
         )}
       </div>
       {visible && <RadianceGDPChart series={series} compareSeries={compareSeries} year={year} dark={dark} height={inStack ? null : (compact ? 150 : 240)} />}
       {zoomed && (
-        <ChartModal title="Light & Wealth" subtitle="Radiance & GDP per capita" country={country} meta={String(year)} onClose={() => setZoomed(false)}>
+        <ChartModal title={t('panels.radianceGdp.title')} subtitle={t('panels.radianceGdp.label')} country={country} meta={String(year)} onClose={() => setZoomed(false)}>
           <RadianceGDPChart series={series} compareSeries={compareSeries} year={year} dark={dark} height={500} />
           {compareCountry && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 10 }}>

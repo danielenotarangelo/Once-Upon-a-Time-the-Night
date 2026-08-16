@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import RadianceGDPPanel from '../charts/RadianceGDPPanel.jsx';
 import LightGDPRatioPanel from '../charts/LightGDPRatioPanel.jsx';
 import QuadrantPanel from '../charts/QuadrantPanel.jsx';
@@ -7,12 +8,7 @@ import EnergyPanel from '../charts/EnergyPanel.jsx';
 import IncomeGroupPanel from '../charts/IncomeGroupPanel.jsx';
 import Stack from '../ui/Stack.jsx';
 
-const TABS = [
-  { id: 'wealth',      label: 'Wealth' },
-  { id: 'health',      label: 'Health' },
-  { id: 'environment', label: 'Energy & Urbanization' },
-  { id: 'context',     label: 'Income Groups' },
-];
+const TABS = ['wealth', 'health', 'environment', 'context'];
 
 function ChevronLeft() {
   return (
@@ -31,6 +27,7 @@ function ChevronRight() {
 }
 
 export default function RightPanel({ lookup, country, compareCountry, year, dark, healthMetric = 'd' }) {
+  const { t } = useTranslation();
   const [tab, setTab] = useState('wealth');
   const [dir, setDir] = useState('left');
 
@@ -56,9 +53,9 @@ export default function RightPanel({ lookup, country, compareCountry, year, dark
     <IncomeGroupPanel key="tier" {...sharedH} />,
   ];
 
-  const tabIdx  = TABS.findIndex(t => t.id === tab);
-  const prevTab = () => { setDir('right'); setTab(TABS[(tabIdx - 1 + TABS.length) % TABS.length].id); };
-  const nextTab = () => { setDir('left');  setTab(TABS[(tabIdx + 1) % TABS.length].id); };
+  const tabIdx  = TABS.indexOf(tab);
+  const prevTab = () => { setDir('right'); setTab(TABS[(tabIdx - 1 + TABS.length) % TABS.length]); };
+  const nextTab = () => { setDir('left');  setTab(TABS[(tabIdx + 1) % TABS.length]); };
 
   const activeCards =
     tab === 'wealth'      ? wealthCards :
@@ -85,11 +82,11 @@ export default function RightPanel({ lookup, country, compareCountry, year, dark
 
       {/* Tab navigator — fixed below the panel */}
       <div className="rp-tab-nav">
-        <button className="rp-nav-arrow" onClick={prevTab} aria-label="Previous tab">
+        <button className="rp-nav-arrow" onClick={prevTab} aria-label={t('panels.tabs.prev')}>
           <ChevronLeft />
         </button>
-        <span className="rp-nav-label">{TABS[tabIdx >= 0 ? tabIdx : 0].label}</span>
-        <button className="rp-nav-arrow" onClick={nextTab} aria-label="Next tab">
+        <span className="rp-nav-label">{t(`panels.tabs.${TABS[tabIdx >= 0 ? tabIdx : 0]}`)}</span>
+        <button className="rp-nav-arrow" onClick={nextTab} aria-label={t('panels.tabs.next')}>
           <ChevronRight />
         </button>
       </div>

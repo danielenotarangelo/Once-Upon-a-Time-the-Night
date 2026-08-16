@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import BorderGlow from '../ui/BorderGlow.jsx';
 import RankingChart, { RANK_METRICS } from './RankingChart.jsx';
 import ChartModal from './ChartModal.jsx';
 
 export default function RankingPanel({ lookup, year, dark, visible, onSelect, mobileMode = false, onClose }) {
+  const { t } = useTranslation();
   const [metric,   setMetric]   = useState('r');
   const [expanded, setExpanded] = useState(false);
 
@@ -18,6 +20,7 @@ export default function RankingPanel({ lookup, year, dark, visible, onSelect, mo
   };
 
   const curMeta = RANK_METRICS.find(m => m.key === metric);
+  const curUnit = curMeta?.unitKey ? t(curMeta.unitKey) : curMeta?.unit;
   const bg = dark ? 'rgba(13, 16, 28, 0.92)' : 'rgba(248, 249, 252, 0.95)';
 
   return (
@@ -38,13 +41,13 @@ export default function RankingPanel({ lookup, year, dark, visible, onSelect, mo
           <div className="grp-head">
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
               <div>
-                <div className="fp-label">Global overview · {year}</div>
-                <h2>Top 10 Countries</h2>
+                <div className="fp-label">{t('panels.ranking.label', { year })}</div>
+                <h2>{t('panels.ranking.title')}</h2>
               </div>
               <button
                 className="zoom-btn"
                 onClick={e => { e.stopPropagation(); setExpanded(true); }}
-                title="Expand ranking"
+                title={t('panels.ranking.expand')}
                 style={{ marginTop: 4 }}
               >
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -54,7 +57,7 @@ export default function RankingPanel({ lookup, year, dark, visible, onSelect, mo
             </div>
           </div>
 
-          <p className="grp-hint">Click any country on the globe to explore its data</p>
+          <p className="grp-hint">{t('panels.ranking.hint')}</p>
 
           <div className="ranking-tabs">
             {RANK_METRICS.map(m => (
@@ -63,12 +66,12 @@ export default function RankingPanel({ lookup, year, dark, visible, onSelect, mo
                 className={`ranking-tab${metric === m.key ? ' active' : ''}`}
                 onClick={() => setMetric(m.key)}
               >
-                {m.label}
+                {t(m.labelKey)}
               </button>
             ))}
           </div>
 
-          <div className="grp-unit">{curMeta?.unit}</div>
+          <div className="grp-unit">{curUnit}</div>
 
           <div className="grp-chart-wrap">
             <RankingChart
@@ -86,8 +89,8 @@ export default function RankingPanel({ lookup, year, dark, visible, onSelect, mo
 
       {expanded && (
         <ChartModal
-          title="Full Global Ranking"
-          subtitle={curMeta?.unit}
+          title={t('panels.ranking.modalTitle')}
+          subtitle={curUnit}
           meta={String(year)}
           onClose={closeExpanded}
         >
@@ -98,7 +101,7 @@ export default function RankingPanel({ lookup, year, dark, visible, onSelect, mo
                 className={`ranking-tab${metric === m.key ? ' active' : ''}`}
                 onClick={() => setMetric(m.key)}
               >
-                {m.label}
+                {t(m.labelKey)}
               </button>
             ))}
           </div>

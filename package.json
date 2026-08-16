@@ -12,10 +12,13 @@
   "dependencies": {
     "d3": "^7.9.0",
     "gsap": "^3.15.0",
+    "i18next": "^26.3.6",
+    "i18next-browser-languagedetector": "^8.2.1",
     "motion": "^12.40.0",
     "ogl": "^1.0.11",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-i18next": "^17.0.11",
     "three": "^0.160.1"
   },
   "devDependencies": {

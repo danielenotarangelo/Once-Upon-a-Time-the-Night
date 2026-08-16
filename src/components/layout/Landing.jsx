@@ -1,37 +1,15 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import './Landing.css';
 
+// Copy lives in the locale files under landing.slides.<id>
 const SLIDES = [
-  {
-    title: 'Once upon a time...\n the Night',
-    body: 'Explore the relationship between artificial light pollution, economic development, and mental health across a decade of global data.',
-    big: true,
-  },
-  {
-    eyebrow: 'The Globe',
-    title: 'An Interactive Map',
-    body: 'Drag to rotate, scroll to zoom, and click any country to select it. Switch between Radiance, GDP, and mental health in the header — each metric recolours the globe instantly.',
-    icon: 'globe',
-  },
-  {
-    eyebrow: 'Country Panels',
-    title: 'Dive Into the Data',
-    body: 'Click any country to open a set of charts covering its light pollution trends, economic context, health correlations, and how it compares to the rest of the world.',
-    icon: 'chart',
-  },
-  {
-    eyebrow: 'Compare Mode',
-    title: 'Country vs. Country',
-    body: 'Use the Compare button in the search bar to pick a second country. All panels update to show both countries side by side with colour-coded values and highlighted dots.',
-    icon: 'compare',
-  },
-  {
-    eyebrow: 'Timeline & Results',
-    title: 'Play & Discover',
-    body: 'Scrub the timeline to animate the globe across 2013–2023. When you\'re ready, open Key Findings in the header for a summary of the main patterns across all countries.',
-    icon: 'timeline',
-  },
+  { id: 'intro',    big: true          },
+  { id: 'globe',    icon: 'globe'      },
+  { id: 'panels',   icon: 'chart'      },
+  { id: 'compare',  icon: 'compare'    },
+  { id: 'timeline', icon: 'timeline'   },
 ];
 
 const ICONS = {
@@ -91,6 +69,7 @@ const slideVariants = {
 const transition = { duration: 0.36, ease: [0.4, 0, 0.2, 1] };
 
 export default function Landing({ onEnter }) {
+  const { t } = useTranslation();
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
   const [leaving, setLeaving] = useState(false);
@@ -169,6 +148,9 @@ export default function Landing({ onEnter }) {
   }, []);
 
   const slide = SLIDES[current];
+  const base  = `landing.slides.${slide.id}`;
+  const eyebrow = t(`${base}.eyebrow`, { defaultValue: '' });
+  const body    = t(`${base}.body`,    { defaultValue: '' });
 
   return (
     <div className={`landing${leaving ? ' leaving' : ''}`}>
@@ -188,14 +170,14 @@ export default function Landing({ onEnter }) {
             {slide.icon && (
               <div className="landing-icon">{ICONS[slide.icon]}</div>
             )}
-            {slide.eyebrow && <p className="landing-eyebrow">{slide.eyebrow}</p>}
-            <h1 className={`landing-title${slide.big ? ' big' : ''}`}>{slide.title}</h1>
-            {slide.body && <p className="landing-desc">{slide.body}</p>}
+            {eyebrow && <p className="landing-eyebrow">{eyebrow}</p>}
+            <h1 className={`landing-title${slide.big ? ' big' : ''}`}>{t(`${base}.title`)}</h1>
+            {body && <p className="landing-desc">{body}</p>}
           </motion.div>
         </AnimatePresence>
       </div>
 
-      <button className="landing-arrow-btn" onClick={advance} aria-label={isLast ? 'Enter site' : 'Next slide'}>
+      <button className="landing-arrow-btn" onClick={advance} aria-label={isLast ? t('landing.enterSite') : t('landing.nextSlide')}>
         <svg
           className="landing-arrow"
           width="28"
@@ -211,13 +193,13 @@ export default function Landing({ onEnter }) {
         </svg>
       </button>
 
-      <nav className="landing-dots" aria-label="Carousel navigation">
-        {SLIDES.map((_, i) => (
+      <nav className="landing-dots" aria-label={t('landing.carouselNav')}>
+        {SLIDES.map((s, i) => (
           <button
-            key={i}
+            key={s.id}
             className={`landing-dot${i === current ? ' active' : ''}`}
             onClick={() => goTo(i)}
-            aria-label={`Slide ${i + 1} of ${total}`}
+            aria-label={t('common.slideOf', { current: i + 1, total })}
           />
         ))}
       </nav>

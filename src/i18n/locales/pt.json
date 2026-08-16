@@ -1,0 +1,281 @@
+{
+  "common": {
+    "vs": "vs",
+    "noData": "sem dados",
+    "searchCountry": "Procurar um país…",
+    "selectedTerritory": "Território selecionado",
+    "expandChart": "Ampliar o gráfico",
+    "moreInfo": "Mais informações",
+    "countryCarousel": "Carrossel de painéis por país",
+    "slideOf": "Slide {{current}} de {{total}}",
+    "depressive": "Depressivos",
+    "anxiety": "Ansiedade",
+    "depression": "Depressão",
+    "healthDisclaimer": "Os dados de saúde mental representam a prevalência de perturbações depressivas e de ansiedade, e não especificamente de perturbações do sono. Dada a natureza indireta da relação com a poluição luminosa, estes resultados devem ser interpretados com cautela."
+  },
+  "app": {
+    "brand": "Era uma vez...\n a Noite",
+    "dataError": "Não foi possível carregar os dados. Verifica se os ficheiros estão em <1>/public/data</1>."
+  },
+  "menu": {
+    "aria": "Menu",
+    "rankings": "Classificações",
+    "results": "Resultados interessantes",
+    "lightMode": "Tema claro",
+    "darkMode": "Tema escuro",
+    "translateAria": "Traduzir o site para {{language}}"
+  },
+  "header": {
+    "resultsBtn": "Resultados interessantes",
+    "chooseVariable": "Escolher variável",
+    "toggleTheme": "Mudar de tema",
+    "light": "Luz",
+    "wealth": "Riqueza",
+    "health": "Saúde"
+  },
+  "landing": {
+    "enterSite": "Entrar no site",
+    "nextSlide": "Slide seguinte",
+    "carouselNav": "Navegação do carrossel",
+    "slides": {
+      "intro": {
+        "title": "Era uma vez...\n a Noite",
+        "body": "Explora a relação entre a poluição luminosa artificial, o desenvolvimento económico e a saúde mental ao longo de uma década de dados globais."
+      },
+      "globe": {
+        "eyebrow": "O globo",
+        "title": "Um mapa interativo",
+        "body": "Arrasta para rodar, desliza para aproximar e toca num país para o selecionar. Alterna entre Luz, Riqueza e saúde mental no cabeçalho: cada métrica recolore o globo instantaneamente."
+      },
+      "panels": {
+        "eyebrow": "Painéis por país",
+        "title": "Mergulha nos dados",
+        "body": "Toca num país para abrir um conjunto de gráficos sobre as suas tendências de poluição luminosa, o contexto económico, as correlações com a saúde e a comparação com o resto do mundo."
+      },
+      "compare": {
+        "eyebrow": "Modo de comparação",
+        "title": "País contra país",
+        "body": "Usa o botão Comparar na barra de pesquisa para escolher um segundo país. Todos os painéis se atualizam e mostram os dois países lado a lado, com valores e pontos destacados por cor."
+      },
+      "timeline": {
+        "eyebrow": "Cronologia e resultados",
+        "title": "Reproduz e descobre",
+        "body": "Percorre a cronologia para animar o globo entre 2013 e 2023. Quando quiseres, abre os Resultados interessantes no cabeçalho para um resumo dos principais padrões em todos os países."
+      }
+    }
+  },
+  "results": {
+    "close": "Fechar os resultados",
+    "tiers": {
+      "low": "Rendimento baixo",
+      "lowerMid": "Médio-baixo",
+      "upperMid": "Médio-alto",
+      "high": "Rendimento alto"
+    },
+    "scatterX": "Radiância nW/cm²/sr (escala log) →",
+    "scatterY": "Depressão por 100k",
+    "slides": {
+      "intro": {
+        "title": "O que os satélites encontraram",
+        "body": "Dez anos de dados do satélite VIIRS, 192 países e três conjuntos de dados recolhidos de forma independente: radiância noturna, PIB per capita e prevalência de perturbações de saúde mental. Os padrões que emergem ligam a luz artificial ao desenvolvimento económico, ao consumo de energia e à saúde pública de formas tão marcantes quanto merecedoras de uma leitura cuidadosa."
+      },
+      "brighter": {
+        "eyebrow": "Radiância global · 2013–2023",
+        "stat": "+82%",
+        "title": "Um mundo cada vez mais luminoso",
+        "body": "A radiância noturna mediana global subiu 82,5% na década, uma tendência em aceleração que nenhum grande acontecimento travou: nem a queda das matérias-primas de 2015, nem a pandemia de 2020. O crescimento foi mais rápido na África Subsariana e no Sul da Ásia, onde a eletrificação avança depressa, mas as regiões de rendimento alto também contribuíram através da expansão urbana, da iluminação comercial e das infraestruturas."
+      },
+      "africa": {
+        "eyebrow": "Emissores de crescimento mais rápido",
+        "stat": "+16.000%",
+        "statNote": "Comores, 2013 → 2023",
+        "title": "A África Subsariana acendeu-se",
+        "body": "As Comores tornaram-se mais de 160 vezes mais luminosas na década, o aumento mais acentuado registado no conjunto de dados. Seguem-se de perto os Camarões (+3.131%), a Etiópia (+1.806%) e o Botsuana (+1.948%). Não é um fracasso ambiental: é a pegada visível de milhões de famílias com acesso a eletricidade pela primeira vez. Abre o painel Tendência de radiância e saúde para qualquer um destes países e a subida quase vertical da radiância é inconfundível."
+      },
+      "covid": {
+        "eyebrow": "O paradoxo da COVID · 2020",
+        "title": "Os confinamentos não apagaram as luzes",
+        "body": "Em 2020, com as fábricas paradas, a aviação quase a zero e os escritórios vazios, a radiância mediana global atingiu ainda assim um máximo histórico. A iluminação residencial, a logística 24 horas e as infraestruturas revelaram-se imunes aos confinamentos. Países como a Índia e o Brasil, apesar das fortes contrações económicas nesse ano, não mostraram qualquer quebra no brilho noturno. A luz que um país produz é mais estrutural do que cíclica: reflete o parque de iluminação instalado, não apenas a atividade económica."
+      },
+      "income": {
+        "eyebrow": "Rendimento e luz",
+        "stat": "4×",
+        "statNote": "Radiância mediana: rendimento alto vs. baixo (2023)",
+        "title": "Os países mais ricos brilham 4× mais",
+        "body": "A radiância mediana dos países de rendimento alto é quase quatro vezes a dos de rendimento baixo, um gradiente consistente e estável ao longo dos onze anos. Singapura emite mais de 50 vezes a radiância do Chade. O painel Grupos de rendimento torna isto visível num relance: cada coluna da distribuição sobe à medida que se passa do escalão baixo para o alto, com quase nenhuma sobreposição entre os extremos."
+      },
+      "energy": {
+        "eyebrow": "Energia e urbanização",
+        "title": "O consumo de energia impulsiona a luz",
+        "body": "O consumo de energia per capita e a taxa de urbanização são os dois preditores estruturais mais fortes da radiância noturna. Os países de rendimento alto consomem 5 a 10 vezes mais eletricidade por pessoa do que os de rendimento baixo, e a sua maior percentagem urbana concentra essa energia em cidades densas e muito iluminadas. Comparar os painéis de Energia e urbanização do Kuwait (consumo altíssimo, radiância intensa) com os de Moçambique (pouca energia, pouca luz) mostra a relação de forma clara."
+      },
+      "depression": {
+        "eyebrow": "Saúde mental · Depressão",
+        "stat": "+35%",
+        "statNote": "Prevalência da depressão · rendimento baixo → alto (2023)",
+        "title": "A depressão sobe em cada escalão de rendimento",
+        "body": "A prevalência mediana da depressão sobe 35% do quartil de rendimento mais baixo para o mais alto, acompanhando o mesmo gradiente da radiância. Isto pode refletir um melhor diagnóstico nos países mais ricos, um ritmo de vida mais stressante ou um contributo real da luz artificial que perturba os ritmos circadianos. O efeito mantém-se em todos os anos do conjunto de dados e a diferença entre o escalão superior e o inferior alargou-se ligeiramente desde 2013."
+      },
+      "anxiety": {
+        "eyebrow": "Saúde mental · Ansiedade",
+        "title": "O mesmo gradiente aplica-se à ansiedade",
+        "body": "A prevalência das perturbações de ansiedade segue um gradiente por escalão de rendimento quase idêntico ao da depressão. Os países de rendimento alto apresentam taxas de ansiedade sistematicamente superiores às dos de rendimento baixo em todos os anos. Países como os Estados Unidos, a Austrália e os Países Baixos situam-se no topo tanto da escala de radiância como da de ansiedade dentro do seu grupo de rendimento. De notar que alguns países de rendimento médio e radiância elevada, como o Kuwait e a Arábia Saudita, apresentam taxas de ansiedade acima do esperado para o seu escalão, sugerindo que a intensidade luminosa possa contribuir independentemente da riqueza."
+      },
+      "highIncome": {
+        "eyebrow": "O teste decisivo · Países de rendimento alto",
+        "title": "Mesmo entre os ricos, a radiância acompanha a depressão",
+        "body": "Se o gradiente de saúde dependesse apenas do rendimento e do acesso aos cuidados, deveria achatar-se dentro do grupo de rendimento alto. Não acontece. Entre as nações abastadas, as mais intensamente iluminadas (Kuwait, Catar, Emirados Árabes Unidos, Israel) surgem sistematicamente no topo da prevalência da depressão. Já os países nórdicos como a Finlândia e a Noruega, com níveis de radiância mais moderados, registam taxas comparativamente mais baixas. Este sinal dentro do próprio escalão, visível no gráfico de quadrantes de qualquer país de rendimento alto, é o indício mais sugestivo de que a própria luz possa ter um papel autónomo."
+      },
+      "darker": {
+        "eyebrow": "As exceções",
+        "stat": "17",
+        "statNote": "países que reduziram a radiância noturna entre 2013 e 2023",
+        "title": "Dezassete países ficaram mais escuros",
+        "body": "Os Países Baixos (−36,8%), Portugal (−6,7%) e o Luxemburgo (−6,8%) lideram um grupo de 17 países que chegaram a reduzir a sua radiância noturna ao longo da década, sobretudo através da conversão da iluminação pública para LED e de legislação de proteção do céu noturno. Fundamental: o seu PIB e a sua produção de energia continuaram a crescer nesse período, demonstrando que separar o desenvolvimento económico da poluição luminosa é técnica e economicamente viável. Os seus gráficos de trajetória mostram um padrão raro: a radiância desloca-se para a esquerda enquanto o sinal de saúde se mantém estável."
+      },
+      "synthesis": {
+        "eyebrow": "Síntese",
+        "title": "A luz é ao mesmo tempo sintoma e sinal",
+        "body": "A radiância noturna acompanha de perto o desenvolvimento económico: as nações mais ricas, mais urbanizadas e mais intensivas em energia são mais luminosas. Mas dentro de cada grupo de rendimento, os países mais luminosos carregam um peso maior em saúde mental. Se a luz artificial é uma causa, um sintoma paralelo do ritmo da vida moderna ou um indicador de algo não medido continua a ser uma questão em aberto. O que os dados mostram é que a poluição luminosa não é apenas uma questão ambiental: correlaciona-se com todo o espectro do desenvolvimento humano, do acesso à eletricidade ao bem-estar psicológico. Os dados de saúde mental aqui dizem respeito a perturbações depressivas e de ansiedade, não especificamente às do sono, uma limitação a ter presente ao interpretar estes padrões."
+      }
+    }
+  },
+  "overview": {
+    "explore": "Explorar",
+    "rankings": "Classificações"
+  },
+  "compare": {
+    "compareWith": "Comparar com…",
+    "hint": "ou toca num país no globo"
+  },
+  "timeline": {
+    "play": "Reproduzir",
+    "pause": "Pausa",
+    "captions": {
+      "2013": "O início da série VIIRS.",
+      "2014": "As economias emergentes começam a iluminar-se.",
+      "2015": "A conversão para LED acelera em todo o mundo.",
+      "2016": "Eletrificação rápida na África Subsariana.",
+      "2017": "As megacidades asiáticas atingem o pico de luminosidade.",
+      "2018": "A luz continua a crescer mais do que a população.",
+      "2019": "O último ano completo antes da pandemia.",
+      "2020": "A COVID-19 apaga as economias, não as luzes.",
+      "2021": "A recuperação é desigual entre regiões.",
+      "2022": "As crises energéticas levam a alguns apagões na Europa.",
+      "2023": "O ano completo mais recente registado."
+    }
+  },
+  "vars": {
+    "r": "Radiância média",
+    "g": "PIB per capita",
+    "d": "Perturbações depressivas",
+    "a": "Perturbações de ansiedade"
+  },
+  "panels": {
+    "tabs": {
+      "wealth": "Riqueza",
+      "health": "Saúde",
+      "environment": "Energia e urbanização",
+      "context": "Grupos de rendimento",
+      "prev": "Separador anterior",
+      "next": "Separador seguinte"
+    },
+    "radianceGdp": {
+      "label": "Radiância e PIB per capita",
+      "title": "Luz e riqueza",
+      "radiance": "Radiância",
+      "gdp": "PIB / hab.",
+      "light": "Luz",
+      "wealth": "Riqueza",
+      "chartTitleCompare": "Luz · Riqueza",
+      "miniRadiance": "RADIÂNCIA",
+      "miniGdp": "PIB / HAB."
+    },
+    "growth": {
+      "label": "Variação anual da radiância",
+      "title": "Crescimento da luminosidade",
+      "thisYear": "Este ano",
+      "change": "variação",
+      "avgGrowth": "Crescimento médio",
+      "perYear": "por ano",
+      "chartTitle": "Taxa de crescimento anual da radiância"
+    },
+    "ratio": {
+      "label": "Radiância por unidade de riqueza",
+      "title": "Rácio luz / PIB",
+      "desc": "Quanta luz este país emite por cada dólar de produção económica. Uma linha descendente significa que a economia cresce mais depressa do que o uso de luz: mais riqueza sem um aumento proporcional da poluição luminosa.",
+      "stat": "Luz / PIB",
+      "since": "Desde 2013",
+      "change": "variação",
+      "chartTitle": "Evolução do rácio radiância/PIB"
+    },
+    "healthTrend": {
+      "label": "Trajetória ano a ano",
+      "title": "Tendência de radiância e saúde",
+      "desc": "Cada ponto é um ano: o eixo x é a radiância, o eixo y é a prevalência de perturbações mentais. Segue a seta para ver se ambas subiram em conjunto, divergiram ou inverteram ao longo do período.",
+      "deltaRadiance": "Δ Radiância",
+      "deltaNote": "Os valores Δ são a diferença entre {{from}} e {{to}}",
+      "axisX": "radiância média →"
+    },
+    "quadrant": {
+      "label": "Todos os países · {{year}}",
+      "title": "Quadrantes de radiância e saúde",
+      "desc": "Cada ponto é um país, posicionado pela sua radiância (eixo x) e pela prevalência de perturbações de saúde mental (eixo y). Os eixos cruzam-se na mediana global, dividindo os países em quatro grupos consoante estejam acima ou abaixo da média em cada dimensão.",
+      "brightHigh": "Luminoso · perturbações altas",
+      "brightLow": "Luminoso · perturbações baixas",
+      "dimHigh": "Escuro · perturbações altas",
+      "dimLow": "Escuro · perturbações baixas",
+      "axisX": "radiância média (log) →"
+    },
+    "energy": {
+      "label": "Fatores de contexto",
+      "title": "Consumo de energia e urbanização",
+      "desc": "O consumo de energia e a urbanização são dois dos principais motores da luz artificial noturna. Os países que usam mais eletricidade e têm uma maior percentagem de população urbana tendem a produzir muito mais poluição luminosa.",
+      "energyUse": "Consumo energia",
+      "perCapita": "per capita",
+      "urbanPop": "Pop. urbana",
+      "ofTotal": "% do total",
+      "energyChart": "Consumo de energia elétrica (kWh/hab.)",
+      "urbanChart": "População urbana (% do total)",
+      "energyModalTitle": "Consumo de energia",
+      "energyModalSubtitle": "Consumo de energia elétrica (kWh per capita)",
+      "urbanModalTitle": "Taxa de urbanização",
+      "urbanModalSubtitle": "População urbana em % do total"
+    },
+    "income": {
+      "label": "Grupos de rendimento (PIB) · {{year}}",
+      "title": "Luz e saúde por nível de rendimento",
+      "desc": "Os países são agrupados em quatro níveis de rendimento com base no PIB per capita. Cada coluna mostra a dispersão da radiância e das taxas de perturbações mentais dentro do grupo: os países mais ricos tendem a emitir muito mais luz, enquanto o quadro de saúde é mais matizado.",
+      "highlighted": "está destacado.",
+      "radianceChart": "Radiância por escalão de rendimento",
+      "healthChart": "Prevalência por escalão de rendimento: {{metric}}",
+      "radianceModalTitle": "Radiância por nível de rendimento",
+      "depressiveModalTitle": "Perturbações depressivas",
+      "anxietyModalTitle": "Perturbações de ansiedade",
+      "modalSubtitle": "Distribuição pelos quatro grupos de rendimento (PIB)",
+      "tiers": {
+        "low": "Baixo",
+        "lowerMid": "Médio-baixo",
+        "upperMid": "Médio-alto",
+        "high": "Alto"
+      }
+    },
+    "ranking": {
+      "label": "Panorama global · {{year}}",
+      "title": "Os 10 principais países",
+      "hint": "Toca num país no globo para explorar os seus dados",
+      "expand": "Ampliar a classificação",
+      "modalTitle": "Classificação global completa",
+      "metrics": {
+        "radiance": "Radiância",
+        "growth": "Crescimento",
+        "energy": "Energia",
+        "urban": "Urbano"
+      },
+      "units": {
+        "growth": "% vs 2013",
+        "urban": "% da pop."
+      }
+    }
+  }
+}

@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import * as d3 from 'd3';
+import { useTranslation } from 'react-i18next';
 import './Results.css';
 
 const YEARS = [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
-const TIER_LABELS = ['Low income', 'Lower-mid', 'Upper-mid', 'High income'];
 const TIER_COLORS = ['#60a5fa', '#818cf8', '#a78bfa', '#c084fc'];
 
 
@@ -93,7 +93,7 @@ function HBarChart({ vals, labels, fmt = (v) => v.toFixed(2) }) {
   );
 }
 
-function ScatterPlot({ points }) {
+function ScatterPlot({ points, xLabel, yLabel }) {
   const W = 540, H = 150, PL = 32, PR = 16, PT = 10, PB = 26;
   const cW = W - PL - PR, cH = H - PT - PB;
   if (!points || points.length === 0) return null;
@@ -139,12 +139,12 @@ function ScatterPlot({ points }) {
       ))}
       <text x={PL + cW / 2} y={H - 1} textAnchor="middle"
         fontSize={8.5} fill="currentColor" opacity={0.35}>
-        Radiance nW/cm²/sr (log scale) →
+        {xLabel}
       </text>
       <text x={10} y={PT + cH / 2} textAnchor="middle"
         fontSize={8.5} fill="currentColor" opacity={0.35}
         transform={`rotate(-90, 10, ${PT + cH / 2})`}>
-        Depression per 100k
+        {yLabel}
       </text>
     </svg>
   );
@@ -152,81 +152,19 @@ function ScatterPlot({ points }) {
 
 // ── Slide definitions ────────────────────────────────────────────────────────
 
+// Copy lives in the locale files under results.slides.<id>
 const SLIDES = [
-  {
-    title: 'What the Satellites Found',
-    body: 'Ten years of VIIRS satellite data, 192 countries, and three independently collected datasets: nighttime radiance, GDP per capita, and mental health disorder prevalence. The patterns that emerge connect artificial light to economic development, energy use, and public health in ways that are both striking and worth interpreting carefully.',
-    big: true,
-  },
-  {
-    eyebrow: 'Global Radiance · 2013–2023',
-    stat: '+82%',
-    title: 'A World Getting Brighter',
-    body: 'The global median nighttime radiance rose 82.5% over the decade, an accelerating trend that paused for no major event, not the 2015 commodity crash, not the 2020 pandemic. Growth was fastest in Sub-Saharan Africa and South Asia, where electrification is expanding rapidly, but high-income regions also contributed through urban sprawl, commercial lighting, and infrastructure expansion.',
-    chart: 'trend',
-  },
-  {
-    eyebrow: 'Fastest Growing Emitters',
-    stat: '+16,000%',
-    statNote: 'Comoros, 2013 → 2023',
-    title: 'Sub-Saharan Africa Lit Up',
-    body: 'Comoros grew more than 160 times brighter over the decade, the steepest recorded increase in the dataset. Cameroon (+3,131%), Ethiopia (+1,806%), and Botswana (+1,948%) follow close behind. This is not pollution failure: it is the visible footprint of millions of households gaining electricity access for the first time. Open the Radiance & Health Trend panel for any of these countries and the near-vertical rise in radiance is unmistakable.',
-    icon: 'growth',
-  },
-  {
-    eyebrow: 'The COVID Paradox · 2020',
-    title: "Lockdowns Didn't Dim the Lights",
-    body: 'In 2020, with factories idle, aviation near zero, and offices emptied, the global median radiance still hit a then-record high. Residential lighting, 24-hour logistics, and infrastructure proved impervious to lockdowns. Countries like India and Brazil, despite severe economic contractions that year, showed no dip in nighttime brightness. The light a country produces is more structural than cyclical: it reflects the installed base of lighting, not just economic activity.',
-    chart: 'covid',
-  },
-  {
-    eyebrow: 'Income vs. Light',
-    stat: '4×',
-    statNote: 'High-income vs. low-income median radiance (2023)',
-    title: 'Richer Countries Shine 4× Brighter',
-    body: 'The median radiance of high-income nations is nearly four times that of low-income ones, a gradient that has been consistent and stable across all eleven years. Singapore emits over 50 times the radiance of Chad. The Income Groups panel makes this visible at a glance: every column in the distribution shifts upward as you move from Low to High income tier, with almost no overlap between the extremes.',
-    chart: 'tier-r',
-  },
-  {
-    eyebrow: 'Energy & Urbanization',
-    title: 'Power Consumption Drives the Light',
-    body: 'Energy use per capita and urbanization rate are the two strongest structural predictors of nighttime radiance. High-income countries consume 5 to 10 times more electricity per person than low-income ones, and their higher urban share concentrates that energy into dense, brightly-lit cities. Comparing the Energy and Urbanization panels of Kuwait (very high energy use, intense radiance) with Mozambique (low energy, dim) shows the relationship in stark relief.',
-    chart: 'tier-e',
-  },
-  {
-    eyebrow: 'Mental Health · Depression',
-    stat: '+35%',
-    statNote: 'Depression prevalence · Low → High income (2023)',
-    title: 'Depression Rises With Every Income Tier',
-    body: 'Median depression prevalence climbs 35% from the lowest to the highest income quartile, tracking the same income gradient as radiance. This could reflect better diagnosis in richer countries, higher life-pace stress, or a genuine contribution of artificial light disrupting circadian rhythms. The effect holds across every year in the dataset, and the gap between the top and bottom tier has widened slightly since 2013.',
-    chart: 'tier-d',
-  },
-  {
-    eyebrow: 'Mental Health · Anxiety',
-    title: 'The Same Gradient Holds for Anxiety',
-    body: 'Anxiety disorder prevalence follows an almost identical income-tier gradient to depression. High-income countries show consistently higher anxiety rates than low-income ones across all years. Countries like the United States, Australia, and the Netherlands sit near the top of both the radiance and anxiety scales within their income group. Notably, some middle-income high-radiance countries, such as Kuwait and Saudi Arabia, show anxiety rates that exceed expectations for their income tier, suggesting that light intensity may contribute independently of wealth.',
-    chart: 'tier-a',
-  },
-  {
-    eyebrow: 'The Critical Test · High-Income Countries',
-    title: 'Even Among the Rich, Radiance Tracks Depression',
-    body: 'If the health gradient were purely about income and healthcare access, it should flatten within the high-income group. It does not. Among wealthy nations, the most intensely lit (Kuwait, Qatar, the United Arab Emirates, Israel) consistently rank highest for depression prevalence. Meanwhile Nordic countries like Finland and Norway, with more moderate radiance levels, report comparatively lower rates. This within-tier signal, visible in the Quadrant chart for any high-income country, is the most suggestive evidence that light itself may play an independent role.',
-    chart: 'scatter',
-  },
-  {
-    eyebrow: 'The Exceptions',
-    stat: '17',
-    statNote: 'countries that reduced nighttime radiance 2013–2023',
-    title: 'Seventeen Countries Got Darker',
-    body: 'Netherlands (−36.8%), Portugal (−6.7%), and Luxembourg (−6.8%) lead a group of 17 countries that actually reduced their nighttime radiance over the decade, primarily through LED street-light retrofits and dark-sky legislation. Crucially, their GDP and energy output continued to grow throughout this period, demonstrating that decoupling economic development from light pollution is technically and economically feasible. Their Trajectory charts show a rare pattern: radiance moving left while the health signal stays stable.',
-    icon: 'dim',
-  },
-  {
-    eyebrow: 'Synthesis',
-    title: 'Light Is Both Symptom and Signal',
-    body: 'Nighttime radiance closely tracks economic development: richer, more urbanised, more energy-intensive nations are brighter. But within every income group, the brightest countries carry a heavier mental-health burden. Whether artificial light is a cause, a co-symptom of modern life pace, or a proxy for something unmeasured remains an open question. What the data does show is that light pollution is not just an environmental issue: it correlates with the full spectrum of human development, from electrification access to psychological wellbeing. The mental health data here represents depressive and anxiety disorders, not sleep disorders specifically, a limitation worth keeping in mind when interpreting these patterns.',
-    icon: 'globe',
-  },
+  { id: 'intro',      big:   true      },
+  { id: 'brighter',   chart: 'trend'   },
+  { id: 'africa',     icon:  'growth'  },
+  { id: 'covid',      chart: 'covid'   },
+  { id: 'income',     chart: 'tier-r'  },
+  { id: 'energy',     chart: 'tier-e'  },
+  { id: 'depression', chart: 'tier-d'  },
+  { id: 'anxiety',    chart: 'tier-a'  },
+  { id: 'highIncome', chart: 'scatter' },
+  { id: 'darker',     icon:  'dim'     },
+  { id: 'synthesis',  icon:  'globe'   },
 ];
 
 const ICONS = {
@@ -257,6 +195,7 @@ const ICONS = {
 // ── Main component ───────────────────────────────────────────────────────────
 
 export default function Results({ onClose, data }) {
+  const { t } = useTranslation();
   const [leaving,  setLeaving]  = useState(false);
   const [visible,  setVisible]  = useState(() => new Array(SLIDES.length).fill(false));
   const sectionRefs = useRef([]);
@@ -304,6 +243,13 @@ export default function Results({ onClose, data }) {
     return { globalRadiance, tierRadiance, tierDepression, tierAnxiety, tierEnergy, scatterPoints };
   }, [data]);
 
+  const tierLabels = [
+    t('results.tiers.low'),
+    t('results.tiers.lowerMid'),
+    t('results.tiers.upperMid'),
+    t('results.tiers.high'),
+  ];
+
   const close = useCallback(() => {
     if (leaving) return;
     setLeaving(true);
@@ -342,7 +288,7 @@ export default function Results({ onClose, data }) {
   return (
     <div className={`results${leaving ? ' leaving' : ''}`}>
 
-      <button className="results-close" onClick={close} aria-label="Close findings">
+      <button className="results-close" onClick={close} aria-label={t('results.close')}>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
           <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
         </svg>
@@ -352,35 +298,39 @@ export default function Results({ onClose, data }) {
         {SLIDES.map((slide, i) => {
           const hasChart = !!slide.chart;
           const isIntro  = i === 0;
+          const base     = `results.slides.${slide.id}`;
+          const eyebrow  = t(`${base}.eyebrow`,  { defaultValue: '' });
+          const stat     = t(`${base}.stat`,     { defaultValue: '' });
+          const statNote = t(`${base}.statNote`, { defaultValue: '' });
           return (
             <section
-              key={i}
+              key={slide.id}
               ref={(el) => { sectionRefs.current[i] = el; }}
               data-idx={i}
               className={`results-section${visible[i] ? ' visible' : ''}${hasChart ? ' has-chart' : ''}${isIntro ? ' is-intro' : ''}`}
             >
               <div className="results-section-text">
                 {slide.icon && <div className="results-icon">{ICONS[slide.icon]}</div>}
-                {slide.eyebrow && <p className="results-eyebrow">{slide.eyebrow}</p>}
-                {slide.stat && (
+                {eyebrow && <p className="results-eyebrow">{eyebrow}</p>}
+                {stat && (
                   <div className="results-stat-block">
-                    <span className="results-stat">{slide.stat}</span>
-                    {slide.statNote && <span className="results-stat-note">{slide.statNote}</span>}
+                    <span className="results-stat">{stat}</span>
+                    {statNote && <span className="results-stat-note">{statNote}</span>}
                   </div>
                 )}
-                <h2 className={`results-title${slide.big ? ' big' : ''}`}>{slide.title}</h2>
-                <p className="results-desc">{slide.body}</p>
+                <h2 className={`results-title${slide.big ? ' big' : ''}`}>{t(`${base}.title`)}</h2>
+                <p className="results-desc">{t(`${base}.body`)}</p>
               </div>
 
               {hasChart && computed && visible[i] && (
                 <div className="results-section-chart">
                   {slide.chart === 'trend'   && <TrendBars vals={computed.globalRadiance} years={YEARS} />}
                   {slide.chart === 'covid'   && <TrendBars vals={computed.globalRadiance} years={YEARS} highlightYear={2020} />}
-                  {slide.chart === 'tier-r'  && <HBarChart vals={computed.tierRadiance}   labels={TIER_LABELS} fmt={(v) => `${v.toFixed(2)} nW`} />}
-                  {slide.chart === 'tier-d'  && <HBarChart vals={computed.tierDepression} labels={TIER_LABELS} fmt={(v) => v.toFixed(0)} />}
-                  {slide.chart === 'tier-a'  && <HBarChart vals={computed.tierAnxiety}    labels={TIER_LABELS} fmt={(v) => v.toFixed(0)} />}
-                  {slide.chart === 'tier-e'  && <HBarChart vals={computed.tierEnergy}     labels={TIER_LABELS} fmt={(v) => `${(v / 1000).toFixed(1)}k kWh`} />}
-                  {slide.chart === 'scatter' && <ScatterPlot points={computed.scatterPoints} />}
+                  {slide.chart === 'tier-r'  && <HBarChart vals={computed.tierRadiance}   labels={tierLabels} fmt={(v) => `${v.toFixed(2)} nW`} />}
+                  {slide.chart === 'tier-d'  && <HBarChart vals={computed.tierDepression} labels={tierLabels} fmt={(v) => v.toFixed(0)} />}
+                  {slide.chart === 'tier-a'  && <HBarChart vals={computed.tierAnxiety}    labels={tierLabels} fmt={(v) => v.toFixed(0)} />}
+                  {slide.chart === 'tier-e'  && <HBarChart vals={computed.tierEnergy}     labels={tierLabels} fmt={(v) => `${(v / 1000).toFixed(1)}k kWh`} />}
+                  {slide.chart === 'scatter' && <ScatterPlot points={computed.scatterPoints} xLabel={t('results.scatterX')} yLabel={t('results.scatterY')} />}
                 </div>
               )}
             </section>

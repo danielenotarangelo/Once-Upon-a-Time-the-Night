@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import { getFlagEmoji } from '../../utils/countryFlags.js';
 
 export default function OverviewBar({ countries, onSelect, showRanking, onToggleRanking }) {
+  const { t } = useTranslation();
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [activeIdx, setActiveIdx] = useState(-1);
@@ -75,7 +77,7 @@ export default function OverviewBar({ countries, onSelect, showRanking, onToggle
             value={query}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
-            placeholder="Search a country…"
+            placeholder={t('common.searchCountry')}
             autoComplete="off"
             spellCheck={false}
           />
@@ -122,13 +124,13 @@ export default function OverviewBar({ countries, onSelect, showRanking, onToggle
           className={`overview-tab${!showRanking ? ' active' : ''}`}
           onClick={() => showRanking && onToggleRanking()}
         >
-          Explore
+          {t('overview.explore')}
         </button>
         <button
           className={`overview-tab${showRanking ? ' active' : ''}`}
           onClick={() => !showRanking && onToggleRanking()}
         >
-          Rankings
+          {t('overview.rankings')}
         </button>
       </div>
     </motion.div>

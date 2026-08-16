@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import './CircularCarousel.css';
 
 function getItemPosition(index, activeIndex, total, { visibleCount, radiusX, radiusY, renderWindow }) {
@@ -40,6 +41,7 @@ export default function CircularCarousel({
   onChange,
   className = '',
 }) {
+  const { t } = useTranslation();
   const total = items.length;
   const [activeIndex, setActiveIndex] = useState(0);
   const dragRef = useRef(null);
@@ -114,7 +116,7 @@ export default function CircularCarousel({
       ref={rootRef}
       tabIndex={0}
       role="region"
-      aria-label="Country panel carousel"
+      aria-label={t('common.countryCarousel')}
       aria-roledescription="carousel"
       className={`circular-carousel ${className}`.trim()}
       onPointerDown={onPointerDown}
@@ -149,7 +151,7 @@ export default function CircularCarousel({
               exit={{ opacity: 0, scale: pos.scale * 0.92 }}
               transition={{ duration, ease }}
               onClick={() => !isActive && goTo(i)}
-              aria-label={`Slide ${i + 1} of ${total}`}
+              aria-label={t('common.slideOf', { current: i + 1, total })}
               aria-hidden={!isActive}
               className="circular-carousel__card"
               style={{

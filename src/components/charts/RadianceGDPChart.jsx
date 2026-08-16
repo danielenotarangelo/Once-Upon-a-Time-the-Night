@@ -1,10 +1,12 @@
 import { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
+import { useTranslation } from 'react-i18next';
 
 const COLOR_A = '#f59e0b';
 const COLOR_B = '#38bdf8';
 
 export default function RadianceGDPChart({ series, compareSeries, year, dark, height }) {
+  const { t } = useTranslation();
   const containerRef = useRef(null);
   const d3Ref = useRef(null);
 
@@ -110,8 +112,8 @@ export default function RadianceGDPChart({ series, compareSeries, year, dark, he
       const fmtR = d3.format('.1f');
       const fmtG = d => d >= 1000 ? d3.format('.0s')(d) : d;
 
-      const chartR = buildMini('r', 'RADIANCE', fmtR);
-      const chartG = buildMini('g', 'GDP / CAPITA', fmtG);
+      const chartR = buildMini('r', t('panels.radianceGdp.miniRadiance'), fmtR);
+      const chartG = buildMini('g', t('panels.radianceGdp.miniGdp'), fmtG);
 
       d3Ref.current = { isCompare: true, chartR, chartG };
       return;
@@ -200,7 +202,7 @@ export default function RadianceGDPChart({ series, compareSeries, year, dark, he
       });
 
     d3Ref.current = { isCompare: false, x, yR, yG, markerG, mLine, mDotR, mDotG };
-  }, [series, compareSeries, dark, height]);
+  }, [series, compareSeries, dark, height, t]);
 
   useEffect(() => {
     const state = d3Ref.current;

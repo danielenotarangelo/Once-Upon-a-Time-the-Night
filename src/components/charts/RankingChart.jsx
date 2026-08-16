@@ -5,11 +5,12 @@ const ROW_H  = 34;
 const MARGIN_WIDE   = { top: 8, right: 72, bottom: 24, left: 130 };
 const MARGIN_NARROW = { top: 8, right: 48, bottom: 24, left: 96 };
 
+// labelKey / unitKey resolve through i18n; literal units stay as symbols.
 export const RANK_METRICS = [
-  { key: 'r',   label: 'Radiance',  unit: 'nW/cm²/sr', fmt: v => d3.format('.2f')(v) },
-  { key: 'lgi', label: 'Growth',    unit: '% vs 2013',  fmt: v => (v >= 0 ? '+' : '') + d3.format('.1f')(v) + '%' },
-  { key: 'e',   label: 'Energy',    unit: 'kWh/cap',    fmt: v => d3.format(',.0f')(v) },
-  { key: 'u',   label: 'Urban',     unit: '% of pop.',  fmt: v => d3.format('.1f')(v) + '%' },
+  { key: 'r',   labelKey: 'panels.ranking.metrics.radiance', unit: 'nW/cm²/sr', fmt: v => d3.format('.2f')(v) },
+  { key: 'lgi', labelKey: 'panels.ranking.metrics.growth',   unitKey: 'panels.ranking.units.growth', fmt: v => (v >= 0 ? '+' : '') + d3.format('.1f')(v) + '%' },
+  { key: 'e',   labelKey: 'panels.ranking.metrics.energy',   unit: 'kWh/cap',   fmt: v => d3.format(',.0f')(v) },
+  { key: 'u',   labelKey: 'panels.ranking.metrics.urban',    unitKey: 'panels.ranking.units.urban',  fmt: v => d3.format('.1f')(v) + '%' },
 ];
 
 function getRanked(lookup, year, metricKey, topN) {

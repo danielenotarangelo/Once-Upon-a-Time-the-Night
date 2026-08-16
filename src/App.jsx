@@ -20,9 +20,11 @@ import Galaxy from './components/ui/Galaxy.jsx';
 import Landing from './components/layout/Landing.jsx';
 import Results from './components/layout/Results.jsx';
 import { AnimatePresence } from 'motion/react';
+import { Trans, useTranslation } from 'react-i18next';
 import { useData } from './hooks/useData.js';
 
 export default function App() {
+  const { t } = useTranslation();
   const { data, geo, loading, error } = useData();
   const [year, setYear] = useState(2013);
   const [variable, setVariable] = useState(null);
@@ -120,7 +122,11 @@ export default function App() {
   if (error) {
     return (
       <div className="fatal">
-        <p>Could not load data. Make sure the files exist in <code>/public/data</code>.</p>
+        <p>
+          <Trans i18nKey="app.dataError">
+            Could not load data. Make sure the files exist in <code>/public/data</code>.
+          </Trans>
+        </p>
       </div>
     );
   }
@@ -197,7 +203,7 @@ export default function App() {
       {/* Mobile: keep the original top-right badge */}
       {selected && !isSmallPhone && isMobile && (
         <div className="country-badge">
-          <div className="country-badge-label">Selected territory</div>
+          <div className="country-badge-label">{t('common.selectedTerritory')}</div>
           {selected}
         </div>
       )}

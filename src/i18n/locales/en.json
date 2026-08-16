@@ -1,0 +1,281 @@
+{
+  "common": {
+    "vs": "vs",
+    "noData": "no data",
+    "searchCountry": "Search a country…",
+    "selectedTerritory": "Selected territory",
+    "expandChart": "Expand chart",
+    "moreInfo": "More information",
+    "countryCarousel": "Country panel carousel",
+    "slideOf": "Slide {{current}} of {{total}}",
+    "depressive": "Depressive",
+    "anxiety": "Anxiety",
+    "depression": "Depression",
+    "healthDisclaimer": "The mental health data represents the prevalence of depressive and anxiety disorders, not sleep disorders specifically. Given the indirect nature of the relationship with light pollution, these results should be interpreted with caution."
+  },
+  "app": {
+    "brand": "Once upon a time...\n the Night",
+    "dataError": "Could not load data. Make sure the files exist in <1>/public/data</1>."
+  },
+  "menu": {
+    "aria": "Menu",
+    "rankings": "Rankings",
+    "results": "Interesting Results",
+    "lightMode": "Light mode",
+    "darkMode": "Dark mode",
+    "translateAria": "Translate the site into {{language}}"
+  },
+  "header": {
+    "resultsBtn": "Interesting Results",
+    "chooseVariable": "Choose variable",
+    "toggleTheme": "Toggle theme",
+    "light": "Light",
+    "wealth": "Wealth",
+    "health": "Health"
+  },
+  "landing": {
+    "enterSite": "Enter site",
+    "nextSlide": "Next slide",
+    "carouselNav": "Carousel navigation",
+    "slides": {
+      "intro": {
+        "title": "Once upon a time...\n the Night",
+        "body": "Explore the relationship between artificial light pollution, economic development, and mental health across a decade of global data."
+      },
+      "globe": {
+        "eyebrow": "The Globe",
+        "title": "An Interactive Map",
+        "body": "Drag to rotate, scroll to zoom, and click any country to select it. Switch between Radiance, GDP, and mental health in the header — each metric recolours the globe instantly."
+      },
+      "panels": {
+        "eyebrow": "Country Panels",
+        "title": "Dive Into the Data",
+        "body": "Click any country to open a set of charts covering its light pollution trends, economic context, health correlations, and how it compares to the rest of the world."
+      },
+      "compare": {
+        "eyebrow": "Compare Mode",
+        "title": "Country vs. Country",
+        "body": "Use the Compare button in the search bar to pick a second country. All panels update to show both countries side by side with colour-coded values and highlighted dots."
+      },
+      "timeline": {
+        "eyebrow": "Timeline & Results",
+        "title": "Play & Discover",
+        "body": "Scrub the timeline to animate the globe across 2013–2023. When you're ready, open Key Findings in the header for a summary of the main patterns across all countries."
+      }
+    }
+  },
+  "results": {
+    "close": "Close findings",
+    "tiers": {
+      "low": "Low income",
+      "lowerMid": "Lower-mid",
+      "upperMid": "Upper-mid",
+      "high": "High income"
+    },
+    "scatterX": "Radiance nW/cm²/sr (log scale) →",
+    "scatterY": "Depression per 100k",
+    "slides": {
+      "intro": {
+        "title": "What the Satellites Found",
+        "body": "Ten years of VIIRS satellite data, 192 countries, and three independently collected datasets: nighttime radiance, GDP per capita, and mental health disorder prevalence. The patterns that emerge connect artificial light to economic development, energy use, and public health in ways that are both striking and worth interpreting carefully."
+      },
+      "brighter": {
+        "eyebrow": "Global Radiance · 2013–2023",
+        "stat": "+82%",
+        "title": "A World Getting Brighter",
+        "body": "The global median nighttime radiance rose 82.5% over the decade, an accelerating trend that paused for no major event, not the 2015 commodity crash, not the 2020 pandemic. Growth was fastest in Sub-Saharan Africa and South Asia, where electrification is expanding rapidly, but high-income regions also contributed through urban sprawl, commercial lighting, and infrastructure expansion."
+      },
+      "africa": {
+        "eyebrow": "Fastest Growing Emitters",
+        "stat": "+16,000%",
+        "statNote": "Comoros, 2013 → 2023",
+        "title": "Sub-Saharan Africa Lit Up",
+        "body": "Comoros grew more than 160 times brighter over the decade, the steepest recorded increase in the dataset. Cameroon (+3,131%), Ethiopia (+1,806%), and Botswana (+1,948%) follow close behind. This is not pollution failure: it is the visible footprint of millions of households gaining electricity access for the first time. Open the Radiance & Health Trend panel for any of these countries and the near-vertical rise in radiance is unmistakable."
+      },
+      "covid": {
+        "eyebrow": "The COVID Paradox · 2020",
+        "title": "Lockdowns Didn't Dim the Lights",
+        "body": "In 2020, with factories idle, aviation near zero, and offices emptied, the global median radiance still hit a then-record high. Residential lighting, 24-hour logistics, and infrastructure proved impervious to lockdowns. Countries like India and Brazil, despite severe economic contractions that year, showed no dip in nighttime brightness. The light a country produces is more structural than cyclical: it reflects the installed base of lighting, not just economic activity."
+      },
+      "income": {
+        "eyebrow": "Income vs. Light",
+        "stat": "4×",
+        "statNote": "High-income vs. low-income median radiance (2023)",
+        "title": "Richer Countries Shine 4× Brighter",
+        "body": "The median radiance of high-income nations is nearly four times that of low-income ones, a gradient that has been consistent and stable across all eleven years. Singapore emits over 50 times the radiance of Chad. The Income Groups panel makes this visible at a glance: every column in the distribution shifts upward as you move from Low to High income tier, with almost no overlap between the extremes."
+      },
+      "energy": {
+        "eyebrow": "Energy & Urbanization",
+        "title": "Power Consumption Drives the Light",
+        "body": "Energy use per capita and urbanization rate are the two strongest structural predictors of nighttime radiance. High-income countries consume 5 to 10 times more electricity per person than low-income ones, and their higher urban share concentrates that energy into dense, brightly-lit cities. Comparing the Energy and Urbanization panels of Kuwait (very high energy use, intense radiance) with Mozambique (low energy, dim) shows the relationship in stark relief."
+      },
+      "depression": {
+        "eyebrow": "Mental Health · Depression",
+        "stat": "+35%",
+        "statNote": "Depression prevalence · Low → High income (2023)",
+        "title": "Depression Rises With Every Income Tier",
+        "body": "Median depression prevalence climbs 35% from the lowest to the highest income quartile, tracking the same income gradient as radiance. This could reflect better diagnosis in richer countries, higher life-pace stress, or a genuine contribution of artificial light disrupting circadian rhythms. The effect holds across every year in the dataset, and the gap between the top and bottom tier has widened slightly since 2013."
+      },
+      "anxiety": {
+        "eyebrow": "Mental Health · Anxiety",
+        "title": "The Same Gradient Holds for Anxiety",
+        "body": "Anxiety disorder prevalence follows an almost identical income-tier gradient to depression. High-income countries show consistently higher anxiety rates than low-income ones across all years. Countries like the United States, Australia, and the Netherlands sit near the top of both the radiance and anxiety scales within their income group. Notably, some middle-income high-radiance countries, such as Kuwait and Saudi Arabia, show anxiety rates that exceed expectations for their income tier, suggesting that light intensity may contribute independently of wealth."
+      },
+      "highIncome": {
+        "eyebrow": "The Critical Test · High-Income Countries",
+        "title": "Even Among the Rich, Radiance Tracks Depression",
+        "body": "If the health gradient were purely about income and healthcare access, it should flatten within the high-income group. It does not. Among wealthy nations, the most intensely lit (Kuwait, Qatar, the United Arab Emirates, Israel) consistently rank highest for depression prevalence. Meanwhile Nordic countries like Finland and Norway, with more moderate radiance levels, report comparatively lower rates. This within-tier signal, visible in the Quadrant chart for any high-income country, is the most suggestive evidence that light itself may play an independent role."
+      },
+      "darker": {
+        "eyebrow": "The Exceptions",
+        "stat": "17",
+        "statNote": "countries that reduced nighttime radiance 2013–2023",
+        "title": "Seventeen Countries Got Darker",
+        "body": "Netherlands (−36.8%), Portugal (−6.7%), and Luxembourg (−6.8%) lead a group of 17 countries that actually reduced their nighttime radiance over the decade, primarily through LED street-light retrofits and dark-sky legislation. Crucially, their GDP and energy output continued to grow throughout this period, demonstrating that decoupling economic development from light pollution is technically and economically feasible. Their Trajectory charts show a rare pattern: radiance moving left while the health signal stays stable."
+      },
+      "synthesis": {
+        "eyebrow": "Synthesis",
+        "title": "Light Is Both Symptom and Signal",
+        "body": "Nighttime radiance closely tracks economic development: richer, more urbanised, more energy-intensive nations are brighter. But within every income group, the brightest countries carry a heavier mental-health burden. Whether artificial light is a cause, a co-symptom of modern life pace, or a proxy for something unmeasured remains an open question. What the data does show is that light pollution is not just an environmental issue: it correlates with the full spectrum of human development, from electrification access to psychological wellbeing. The mental health data here represents depressive and anxiety disorders, not sleep disorders specifically, a limitation worth keeping in mind when interpreting these patterns."
+      }
+    }
+  },
+  "overview": {
+    "explore": "Explore",
+    "rankings": "Rankings"
+  },
+  "compare": {
+    "compareWith": "Compare with…",
+    "hint": "or click a country on the globe"
+  },
+  "timeline": {
+    "play": "Play",
+    "pause": "Pause",
+    "captions": {
+      "2013": "The dawn of the VIIRS record.",
+      "2014": "Emerging economies begin to brighten.",
+      "2015": "LED conversion accelerates worldwide.",
+      "2016": "Rapid electrification across Sub-Saharan Africa.",
+      "2017": "Asia’s megacities reach peak luminosity.",
+      "2018": "Light continues outpacing population growth.",
+      "2019": "The last full year before the pandemic.",
+      "2020": "COVID-19 dims economies, not the lights.",
+      "2021": "Recovery is uneven across regions.",
+      "2022": "Energy crises prompt some dimming in Europe.",
+      "2023": "The most recent complete year on record."
+    }
+  },
+  "vars": {
+    "r": "Mean radiance",
+    "g": "GDP per capita",
+    "d": "Depressive disorders",
+    "a": "Anxiety disorders"
+  },
+  "panels": {
+    "tabs": {
+      "wealth": "Wealth",
+      "health": "Health",
+      "environment": "Energy & Urbanization",
+      "context": "Income Groups",
+      "prev": "Previous tab",
+      "next": "Next tab"
+    },
+    "radianceGdp": {
+      "label": "Radiance & GDP per capita",
+      "title": "Light & Wealth",
+      "radiance": "Radiance",
+      "gdp": "GDP / capita",
+      "light": "Light",
+      "wealth": "Wealth",
+      "chartTitleCompare": "Light · Wealth",
+      "miniRadiance": "RADIANCE",
+      "miniGdp": "GDP / CAPITA"
+    },
+    "growth": {
+      "label": "Year-over-year radiance change",
+      "title": "Luminosity Growth",
+      "thisYear": "This year",
+      "change": "change",
+      "avgGrowth": "Avg growth",
+      "perYear": "per year",
+      "chartTitle": "Annual radiance growth rate"
+    },
+    "ratio": {
+      "label": "Radiance per unit of wealth",
+      "title": "Light / GDP Ratio",
+      "desc": "How much light this country emits per dollar of economic output. A falling line means the economy is growing faster than light use — producing more wealth without a proportional rise in light pollution.",
+      "stat": "Light / GDP",
+      "since": "Since 2013",
+      "change": "change",
+      "chartTitle": "Radiance-to-GDP ratio trend"
+    },
+    "healthTrend": {
+      "label": "Year-over-year path",
+      "title": "Radiance & Health Trend",
+      "desc": "Each dot is one year: x-axis is radiance, y-axis is mental-health prevalence. Follow the arrow to see whether both rose together, diverged, or reversed over the period.",
+      "deltaRadiance": "Δ Radiance",
+      "deltaNote": "Δ values are the difference between {{from}} and {{to}}",
+      "axisX": "mean radiance →"
+    },
+    "quadrant": {
+      "label": "All countries · {{year}}",
+      "title": "Radiance & Health Quadrants",
+      "desc": "Each dot is a country, positioned by its radiance (x-axis) and mental health disorder prevalence (y-axis). The axes cross at the global median, dividing countries into four groups based on whether they are above or below average on each dimension.",
+      "brightHigh": "Bright · high disorders",
+      "brightLow": "Bright · low disorders",
+      "dimHigh": "Dim · high disorders",
+      "dimLow": "Dim · low disorders",
+      "axisX": "mean radiance (log) →"
+    },
+    "energy": {
+      "label": "Contextual factors",
+      "title": "Energy Use & Urbanization",
+      "desc": "Energy consumption and urbanization are two of the main drivers of artificial light at night. Countries that use more electricity and have a larger share of urban population tend to produce significantly more light pollution.",
+      "energyUse": "Energy use",
+      "perCapita": "per capita",
+      "urbanPop": "Urban pop.",
+      "ofTotal": "% of total",
+      "energyChart": "Electric power consumption (kWh/capita)",
+      "urbanChart": "Urban population (% of total)",
+      "energyModalTitle": "Energy Use",
+      "energyModalSubtitle": "Electric power consumption (kWh per capita)",
+      "urbanModalTitle": "Urbanization Rate",
+      "urbanModalSubtitle": "Urban population as % of total"
+    },
+    "income": {
+      "label": "GDP income groups · {{year}}",
+      "title": "Light & Health by Income Level",
+      "desc": "Countries are grouped into four income levels based on GDP per capita. Each column shows the spread of radiance and mental health disorder rates within that group: richer countries tend to emit significantly more light, while the health picture is more nuanced.",
+      "highlighted": "is highlighted.",
+      "radianceChart": "Radiance by income tier",
+      "healthChart": "{{metric}} prevalence by income tier",
+      "radianceModalTitle": "Radiance by Income Level",
+      "depressiveModalTitle": "Depressive Disorders",
+      "anxietyModalTitle": "Anxiety Disorders",
+      "modalSubtitle": "Distribution across four GDP income groups",
+      "tiers": {
+        "low": "Low",
+        "lowerMid": "Lower-Mid",
+        "upperMid": "Upper-Mid",
+        "high": "High"
+      }
+    },
+    "ranking": {
+      "label": "Global overview · {{year}}",
+      "title": "Top 10 Countries",
+      "hint": "Click any country on the globe to explore its data",
+      "expand": "Expand ranking",
+      "modalTitle": "Full Global Ranking",
+      "metrics": {
+        "radiance": "Radiance",
+        "growth": "Growth",
+        "energy": "Energy",
+        "urban": "Urban"
+      },
+      "units": {
+        "growth": "% vs 2013",
+        "urban": "% of pop."
+      }
+    }
+  }
+}

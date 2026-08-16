@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { useTranslation } from 'react-i18next';
 import { getFlagEmoji } from '../../utils/countryFlags.js';
 
 const ANIM_MS = 180;
@@ -19,6 +20,7 @@ export default function CompareBar({
   onClearCompare,
   compact = false,
 }) {
+  const { t } = useTranslation();
   const [query,       setQuery]       = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [activeIdx,   setActiveIdx]   = useState(-1);
@@ -32,11 +34,11 @@ export default function CompareBar({
   useEffect(() => {
     if (targetState === displayState) return;
     setExiting(true);
-    const t = setTimeout(() => {
+    const timer = setTimeout(() => {
       setDisplayState(targetState);
       setExiting(false);
     }, ANIM_MS);
-    return () => clearTimeout(t);
+    return () => clearTimeout(timer);
   }, [targetState]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -44,8 +46,8 @@ export default function CompareBar({
       setQuery(''); setSuggestions([]); setActiveIdx(-1);
       return;
     }
-    const t = setTimeout(() => inputRef.current?.focus(), ANIM_MS + 10);
-    return () => clearTimeout(t);
+    const timer = setTimeout(() => inputRef.current?.focus(), ANIM_MS + 10);
+    return () => clearTimeout(timer);
   }, [compareMode]);
 
   useEffect(() => {
@@ -78,7 +80,7 @@ export default function CompareBar({
   const handleKeyDown = (e) => {
     if (e.key === 'ArrowDown')  { e.preventDefault(); setActiveIdx(i => Math.min(i + 1, suggestions.length - 1)); }
     else if (e.key === 'ArrowUp') { e.preventDefault(); setActiveIdx(i => Math.max(i - 1, 0)); }
-    else if (e.key === 'Enter') { const t = activeIdx >= 0 ? suggestions[activeIdx] : suggestions[0]; if (t) commit(t); }
+    else if (e.key === 'Enter') { const target = activeIdx >= 0 ? suggestions[activeIdx] : suggestions[0]; if (target) commit(target); }
     else if (e.key === 'Escape') { onCancelCompare(); }
   };
 
@@ -93,7 +95,7 @@ export default function CompareBar({
         <div className={`compare-bar-mobile-dual${animClass}`}>
           <span className="compare-badge-dot" style={{ background: COLOR_A }} />
           <span className="compare-bar-mobile-name">{flag1 && `${flag1} `}{selected}</span>
-          <span className="compare-vs-separator">vs</span>
+          <span className="compare-vs-separator">{t('common.vs')}</span>
           <span className="compare-badge-dot" style={{ background: COLOR_B }} />
           <span className="compare-bar-mobile-name">{flag2 && `${flag2} `}{compareCountry}</span>
           <button className="close-x" onClick={onClearCompare}>✕</button>
@@ -114,7 +116,7 @@ export default function CompareBar({
                 value={query}
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}
-                placeholder="Search a country…"
+                placeholder={t('common.searchCountry')}
                 autoComplete="off"
                 spellCheck={false}
               />
@@ -133,7 +135,7 @@ export default function CompareBar({
                 })}
               </ul>
             )}
-            <div className="compare-hint">or click a country on the globe</div>
+            <div className="compare-hint">{t('compare.hint')}</div>
           </div>
         </div>,
         document.body
@@ -143,7 +145,7 @@ export default function CompareBar({
       <div className="compare-bar-mobile">
         {displayState === 'trigger' && (
           <button className={`compare-trigger-btn compare-trigger-btn-mobile${animClass}`} onClick={onEnterCompare}>
-            Compare with…
+            {t('compare.compareWith')}
           </button>
         )}
       </div>
@@ -165,7 +167,7 @@ export default function CompareBar({
           <button className="close-x" onClick={onCloseSelected}>✕</button>
         </div>
 
-        <span className="compare-vs-separator">vs</span>
+        <span className="compare-vs-separator">{t('common.vs')}</span>
 
         <div className="country-badge-center">
           <span className="compare-badge-dot" style={{ background: COLOR_B }} />
@@ -186,7 +188,7 @@ export default function CompareBar({
     <div className="compare-bar-stack">
       <div className="country-badge-center">
         <div className="country-badge-center-info">
-          <span className="country-badge-center-label">Selected territory</span>
+          <span className="country-badge-center-label">{t('common.selectedTerritory')}</span>
           <span className="country-badge-center-name">
             {flag1 && <span style={{ marginRight: 6 }}>{flag1}</span>}
             {selected}
@@ -197,7 +199,7 @@ export default function CompareBar({
 
       {displayState === 'trigger' && (
         <button className={`compare-trigger-btn${animClass}`} onClick={onEnterCompare}>
-          Compare with…
+          {t('compare.compareWith')}
         </button>
       )}
 
@@ -213,7 +215,7 @@ export default function CompareBar({
               value={query}
               onChange={handleChange}
               onKeyDown={handleKeyDown}
-              placeholder="Search a country…"
+              placeholder={t('common.searchCountry')}
               autoComplete="off"
               spellCheck={false}
             />
@@ -234,7 +236,7 @@ export default function CompareBar({
             </ul>
           )}
 
-          <div className="compare-hint">or click a country on the globe</div>
+          <div className="compare-hint">{t('compare.hint')}</div>
         </div>
       )}
     </div>

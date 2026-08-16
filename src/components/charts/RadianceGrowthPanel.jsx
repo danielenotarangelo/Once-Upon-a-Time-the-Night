@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import RadianceGrowthChart from './RadianceGrowthChart.jsx';
 import BorderGlow from '../ui/BorderGlow.jsx';
 import ChartModal from './ChartModal.jsx';
@@ -22,6 +23,7 @@ const avgOf = (arr, key) => {
 };
 
 export default function RadianceGrowthPanel({ lookup, country, compareCountry, year, dark, open, onClose, inStack = false, inTab = false, bgColor, compact = false }) {
+  const { t } = useTranslation();
   const [zoomed, setZoomed] = useState(false);
   const visible = inTab ? !!country : (inStack ? !!country : (!!country && open));
 
@@ -56,8 +58,8 @@ export default function RadianceGrowthPanel({ lookup, country, compareCountry, y
     >
       <div className="fp-head">
         <div>
-          <div className="fp-label">Year-over-year radiance change</div>
-          <h2>Luminosity Growth</h2>
+          <div className="fp-label">{t('panels.growth.label')}</div>
+          <h2>{t('panels.growth.title')}</h2>
 
           {country && !compareCountry && <div className="fp-country">{country}</div>}
           {country && compareCountry && (
@@ -65,7 +67,7 @@ export default function RadianceGrowthPanel({ lookup, country, compareCountry, y
               <span className="fp-compare-country" style={{ fontSize: 14 }}>
                 <span className="cmp-stat-dot" style={{ background: COLOR_A }} />{country}
               </span>
-              <span className="fp-vs">vs</span>
+              <span className="fp-vs">{t('common.vs')}</span>
               <span className="fp-compare-country" style={{ fontSize: 14 }}>
                 <span className="cmp-stat-dot" style={{ background: COLOR_B }} />{compareCountry}
               </span>
@@ -75,7 +77,7 @@ export default function RadianceGrowthPanel({ lookup, country, compareCountry, y
           <div className="meta">{year}</div>
         </div>
         <div className="fp-head-actions">
-          {country && <button className="zoom-btn" onClick={e => { e.stopPropagation(); setZoomed(true); }} title="Expand chart">
+          {country && <button className="zoom-btn" onClick={e => { e.stopPropagation(); setZoomed(true); }} title={t('common.expandChart')}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
           </button>}
           {onClose && <button className="close-x" onClick={onClose}>✕</button>}
@@ -84,7 +86,7 @@ export default function RadianceGrowthPanel({ lookup, country, compareCountry, y
 
       <div className="stat-grid">
         <div className="stat">
-          <div className="label">This year</div>
+          <div className="label">{t('panels.growth.thisYear')}</div>
           {compareCountry ? (
             <div className="cmp-stat-pair">
               <div className="cmp-stat-row" style={{ color: COLOR_A }}>
@@ -99,11 +101,11 @@ export default function RadianceGrowthPanel({ lookup, country, compareCountry, y
           ) : (
             <div className="value" style={{ color: lgiColor(curLGI) }}>{fmtLGI(curLGI)}</div>
           )}
-          <div className="unit">change</div>
+          <div className="unit">{t('panels.growth.change')}</div>
         </div>
 
         <div className="stat">
-          <div className="label">Avg growth</div>
+          <div className="label">{t('panels.growth.avgGrowth')}</div>
           {compareCountry ? (
             <div className="cmp-stat-pair">
               <div className="cmp-stat-row" style={{ color: COLOR_A }}>
@@ -118,20 +120,20 @@ export default function RadianceGrowthPanel({ lookup, country, compareCountry, y
           ) : (
             <div className="value" style={{ color: lgiColor(avgLGI) }}>{fmtLGI(avgLGI)}</div>
           )}
-          <div className="unit">per year</div>
+          <div className="unit">{t('panels.growth.perYear')}</div>
         </div>
       </div>
 
       <div className="chart-title">
-        {compareCountry ? 'Annual radiance growth rate' : (
-          <><span className="dot" style={{ background: 'var(--lgi)' }} />Annual radiance growth rate</>
+        {compareCountry ? t('panels.growth.chartTitle') : (
+          <><span className="dot" style={{ background: 'var(--lgi)' }} />{t('panels.growth.chartTitle')}</>
         )}
       </div>
 
       {visible && <RadianceGrowthChart series={series} compareSeries={cmpSeries} year={year} dark={dark} height={inStack ? null : (compact ? 150 : 200)} />}
 
       {zoomed && (
-        <ChartModal title="Luminosity Growth" subtitle="Year-over-year radiance change" country={country} meta={String(year)} onClose={() => setZoomed(false)}>
+        <ChartModal title={t('panels.growth.title')} subtitle={t('panels.growth.label')} country={country} meta={String(year)} onClose={() => setZoomed(false)}>
           <RadianceGrowthChart series={series} compareSeries={cmpSeries} year={year} dark={dark} height={480} />
           {compareCountry && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 10 }}>

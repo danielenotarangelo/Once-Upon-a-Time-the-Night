@@ -1,7 +1,9 @@
+import { useTranslation } from 'react-i18next';
 import { VAR_META } from '../../lib/constants.js';
 import { activeVarKey, fmt } from '../../lib/data.js';
 
 export default function Legend({ domains, variable, healthMetric, hidden = false }) {
+  const { t } = useTranslation();
   const k = activeVarKey(variable, healthMetric);
   const meta = VAR_META[k];
   const dom = domains[k];
@@ -12,7 +14,7 @@ export default function Legend({ domains, variable, healthMetric, hidden = false
 
   return (
     <div className={`legend${hidden ? ' legend-hidden' : ''}`}>
-      <div className="legend-title">{meta.label}</div>
+      <div className="legend-title">{t(meta.labelKey)}</div>
       <div className="legend-bar" style={{ background: gradient }} />
       <div className="legend-scale">
         <span>{fmt(dom.min, k)}</span>

@@ -1,5 +1,6 @@
 import { useRef, useEffect, useCallback } from 'react';
 import * as THREE from 'three';
+import { useTranslation } from 'react-i18next';
 import { TEXTURES, GLOBE_RADIUS as R } from '../../lib/constants.js';
 import {
   vec3ToLatLon,
@@ -54,6 +55,7 @@ export default function Globe({
   flyTo = null,
   paused = false,
 }) {
+  const { t } = useTranslation();
   const mountRef = useRef(null);
   const canvasRef = useRef(null);
   const tooltipRef = useRef(null);
@@ -70,8 +72,8 @@ export default function Globe({
   const autoRotateRef = useRef(true);
   const startIdleTimerRef = useRef(null);
   // Keep latest props accessible inside event handlers / RAF loop.
-  const propsRef = useRef({ data, geo, year, variable, healthMetric, selected, compareCountry, onSelect, paused });
-  propsRef.current = { data, geo, year, variable, healthMetric, selected, compareCountry, onSelect, paused };
+  const propsRef = useRef({ data, geo, year, variable, healthMetric, selected, compareCountry, onSelect, paused, t });
+  propsRef.current = { data, geo, year, variable, healthMetric, selected, compareCountry, onSelect, paused, t };
 
   const repaintOverlay = useCallback(() => {
     const { data, geo, year, variable, healthMetric, selected, compareCountry } = propsRef.current;
@@ -381,14 +383,14 @@ export default function Globe({
           tip.style.opacity = '0';
           return;
         }
-        const { data, year, variable, healthMetric } = propsRef.current;
+        const { data, year, variable, healthMetric, t } = propsRef.current;
         const v = getVal(data.lookup, name, year, variable, healthMetric);
         const meta = VAR_META[activeVarKey(variable, healthMetric)];
         tip.style.opacity = '1';
         tip.style.left = e.clientX + 14 + 'px';
         tip.style.top = e.clientY + 14 + 'px';
         tip.innerHTML = `<div class="tt-name">${name}</div><div class="tt-val">${
-          v == null ? 'no data' : fmt(v, activeVarKey(variable, healthMetric)) + ' ' + meta.unit
+          v == null ? t('common.noData') : fmt(v, activeVarKey(variable, healthMetric)) + ' ' + meta.unit
         }</div>`;
         canvas.style.cursor = 'pointer';
       }

@@ -1,7 +1,9 @@
 import { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
+import { useTranslation } from 'react-i18next';
 
 export default function HealthTrendChart({ series, compareSeries, year, healthMetric, dark, height }) {
+  const { t } = useTranslation();
   const ref = useRef(null);
   const d3Ref = useRef(null);
 
@@ -94,7 +96,7 @@ export default function HealthTrendChart({ series, compareSeries, year, healthMe
     g.append('text')
       .attr('x', iw / 2).attr('y', ih + 30)
       .attr('text-anchor', 'middle').attr('fill', ac).style('font-size', '9px')
-      .text('mean radiance →');
+      .text(t('panels.healthTrend.axisX'));
 
     // Compare trajectory (drawn first, behind primary)
     if (cmpData.length >= 2) {
@@ -182,7 +184,7 @@ export default function HealthTrendChart({ series, compareSeries, year, healthMe
       .on('mouseleave', () => tip.style('display', 'none'));
 
     d3Ref.current = { x, y, data, cmpData, highlight, highlightCmp, hKey: healthMetric };
-  }, [series, compareSeries, healthMetric, dark, height]);
+  }, [series, compareSeries, healthMetric, dark, height, t]);
 
   // Year effect: move the rings to the selected year's dots
   useEffect(() => {

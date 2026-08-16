@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import LightGDPRatioChart from './LightGDPRatioChart.jsx';
 import BorderGlow from '../ui/BorderGlow.jsx';
 import ChartModal from './ChartModal.jsx';
@@ -17,6 +18,7 @@ const fmtChange = (cur, first) => {
 };
 
 export default function LightGDPRatioPanel({ lookup, country, compareCountry, year, dark, open, onClose, inStack = false, inTab = false, bgColor, compact = false }) {
+  const { t } = useTranslation();
   const [zoomed, setZoomed] = useState(false);
   const visible = inTab ? !!country : (inStack ? !!country : (!!country && open));
   const series = country ? getSeries(lookup, YEARS, country) : [];
@@ -43,9 +45,9 @@ export default function LightGDPRatioPanel({ lookup, country, compareCountry, ye
     >
       <div className="fp-head">
         <div>
-          <div className="fp-label">Radiance per unit of wealth</div>
+          <div className="fp-label">{t('panels.ratio.label')}</div>
           <div className="fp-title-row">
-            <h2>Light / GDP Ratio</h2>
+            <h2>{t('panels.ratio.title')}</h2>
           </div>
           {country && !compareCountry && <div className="fp-country">{country}</div>}
           {country && compareCountry && (
@@ -53,7 +55,7 @@ export default function LightGDPRatioPanel({ lookup, country, compareCountry, ye
               <span className="fp-compare-country" style={{ fontSize: 14 }}>
                 <span className="cmp-stat-dot" style={{ background: COLOR_A }} />{country}
               </span>
-              <span className="fp-vs">vs</span>
+              <span className="fp-vs">{t('common.vs')}</span>
               <span className="fp-compare-country" style={{ fontSize: 14 }}>
                 <span className="cmp-stat-dot" style={{ background: COLOR_B }} />{compareCountry}
               </span>
@@ -62,20 +64,18 @@ export default function LightGDPRatioPanel({ lookup, country, compareCountry, ye
           <div className="meta">×10⁻⁴ · {year}</div>
         </div>
         <div className="fp-head-actions">
-          {country && <button className="zoom-btn" onClick={e => { e.stopPropagation(); setZoomed(true); }} title="Expand chart">
+          {country && <button className="zoom-btn" onClick={e => { e.stopPropagation(); setZoomed(true); }} title={t('common.expandChart')}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
           </button>}
           {onClose && <button className="close-x" onClick={onClose}>✕</button>}
         </div>
       </div>
 
-      <p className="panel-desc">
-        How much light this country emits per dollar of economic output. A falling line means the economy is growing faster than light use — producing more wealth without a proportional rise in light pollution.
-      </p>
+      <p className="panel-desc">{t('panels.ratio.desc')}</p>
 
       <div className="stat-grid">
         <div className="stat">
-          <div className="label">Light / GDP</div>
+          <div className="label">{t('panels.ratio.stat')}</div>
           {compareCountry ? (
             <div className="cmp-stat-pair">
               <div className="cmp-stat-row" style={{ color: COLOR_A }}>
@@ -94,7 +94,7 @@ export default function LightGDPRatioPanel({ lookup, country, compareCountry, ye
         </div>
 
         <div className="stat">
-          <div className="label">Since 2013</div>
+          <div className="label">{t('panels.ratio.since')}</div>
           {compareCountry ? (
             <div className="cmp-stat-pair">
               <div className="cmp-stat-row" style={{ color: COLOR_A }}>
@@ -109,20 +109,20 @@ export default function LightGDPRatioPanel({ lookup, country, compareCountry, ye
           ) : (
             <div className="value" style={{ color: 'var(--lgr)' }}>{fmtChange(cur?.lgr, firstEntry?.lgr)}</div>
           )}
-          <div className="unit">change</div>
+          <div className="unit">{t('panels.ratio.change')}</div>
         </div>
       </div>
 
       <div className="chart-title">
-        {compareCountry ? 'Radiance-to-GDP ratio trend' : (
-          <><span className="dot" style={{ background: 'var(--lgr)' }} />Radiance-to-GDP ratio trend</>
+        {compareCountry ? t('panels.ratio.chartTitle') : (
+          <><span className="dot" style={{ background: 'var(--lgr)' }} />{t('panels.ratio.chartTitle')}</>
         )}
       </div>
 
       {visible && <LightGDPRatioChart series={series} compareSeries={compareSeries} year={year} dark={dark} height={inStack ? null : (compact ? 150 : 200)} />}
 
       {zoomed && (
-        <ChartModal title="Light / GDP Ratio" subtitle="Radiance per unit of wealth" country={country} meta={`×10⁻⁴ · ${year}`} onClose={() => setZoomed(false)}>
+        <ChartModal title={t('panels.ratio.title')} subtitle={t('panels.ratio.label')} country={country} meta={`×10⁻⁴ · ${year}`} onClose={() => setZoomed(false)}>
           <LightGDPRatioChart series={series} compareSeries={compareSeries} year={year} dark={dark} height={480} />
           {compareCountry && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 10 }}>

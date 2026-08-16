@@ -1,8 +1,10 @@
 import { useEffect, useRef } from 'react';
-import { YEARS, YEAR_CAPTIONS } from '../../lib/constants.js';
+import { useTranslation } from 'react-i18next';
+import { YEARS } from '../../lib/constants.js';
 import ElasticSlider from '../ui/ElasticSlider.jsx';
 
 export default function Timeline({ year, onYearChange, playing, onTogglePlay }) {
+  const { t } = useTranslation();
   const timerRef = useRef(null);
 
   useEffect(() => {
@@ -26,10 +28,10 @@ export default function Timeline({ year, onYearChange, playing, onTogglePlay }) 
     <div className="timeline">
       <div className="tl-head">
         <div className="year-display">{year}</div>
-        <div className="year-caption">{YEAR_CAPTIONS[year] || ''}</div>
+        <div className="year-caption">{t(`timeline.captions.${year}`, { defaultValue: '' })}</div>
       </div>
       <div className="tl-controls">
-        <button className="play-btn" onClick={onTogglePlay} aria-label={playing ? 'Pause' : 'Play'}>
+        <button className="play-btn" onClick={onTogglePlay} aria-label={playing ? t('timeline.pause') : t('timeline.play')}>
           {playing ? (
             <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
               <rect x="1" y="1" width="4" height="12" rx="1" />

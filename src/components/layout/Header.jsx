@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import StarBorder from '../ui/StarBorder.jsx';
+import { LANGUAGES, applyLanguageAndReload, detectBrowserLanguage } from '../../i18n/index.js';
 
 const menuListVariants = {
   open: {
@@ -95,6 +97,13 @@ const RANKINGS_ICON = (
   </svg>
 );
 
+// Google's classic "translate" glyph (文 + A), from Material Symbols.
+const TRANSLATE_ICON = (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z" />
+  </svg>
+);
+
 const RESULTS_ICON = (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -102,11 +111,21 @@ const RESULTS_ICON = (
 );
 
 export default function Header({ variable, onVariableChange, dark, onToggleTheme, onResultsClick, showResults, onOpenRankings }) {
+  const { t, i18n } = useTranslation();
+
   const toggles = [
-    { key: 'r',      label: 'Light'  },
-    { key: 'g',      label: 'Wealth' },
-    { key: 'health', label: 'Health' },
+    { key: 'r',      label: t('header.light')  },
+    { key: 'g',      label: t('header.wealth') },
+    { key: 'health', label: t('header.health') },
   ];
+
+  // The visitor's own language, resolved once from the browser preferences.
+  const browserLang = useMemo(detectBrowserLanguage, []);
+  const currentLang = i18n.resolvedLanguage || 'en';
+  // Offer the browser language; once the site is already in it, offer English back.
+  const langTarget =
+    currentLang !== browserLang ? browserLang :
+    currentLang !== 'en'        ? 'en'        : null;
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const togglesRef = useRef(null);
@@ -137,7 +156,7 @@ export default function Header({ variable, onVariableChange, dark, onToggleTheme
       <div className="mobile-menu-wrap" ref={menuRef}>
         <button
           className="mobile-menu-btn"
-          aria-label="Menu"
+          aria-label={t('menu.aria')}
           onClick={() => setMenuOpen(v => !v)}
         >
           <MenuIcon open={menuOpen} />
@@ -158,7 +177,7 @@ export default function Header({ variable, onVariableChange, dark, onToggleTheme
                   onClick={() => { onOpenRankings?.(); setMenuOpen(false); }}
                 >
                   {RANKINGS_ICON}
-                  <span>Rankings</span>
+                  <span>{t('menu.rankings')}</span>
                 </motion.button>
                 {showResults && (
                   <motion.button
@@ -167,7 +186,7 @@ export default function Header({ variable, onVariableChange, dark, onToggleTheme
                     onClick={() => { onResultsClick(); setMenuOpen(false); }}
                   >
                     {RESULTS_ICON}
-                    <span>Interesting Results</span>
+                    <span>{t('menu.results')}</span>
                   </motion.button>
                 )}
                 <motion.button
@@ -185,15 +204,30 @@ export default function Header({ variable, onVariableChange, dark, onToggleTheme
                       <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
                     </svg>
                   )}
-                  <span>{dark ? 'Light mode' : 'Dark mode'}</span>
+                  <span>{dark ? t('menu.lightMode') : t('menu.darkMode')}</span>
                 </motion.button>
+
+                {/* Last item: switch the whole site to the visitor's own language.
+                    Reloading drops them back on the landing page, now translated. */}
+                {langTarget && (
+                  <motion.button
+                    className="mobile-menu-fab-item"
+                    variants={menuItemVariants}
+                    lang={langTarget}
+                    aria-label={t('menu.translateAria', { language: LANGUAGES[langTarget].name })}
+                    onClick={() => { setMenuOpen(false); applyLanguageAndReload(langTarget); }}
+                  >
+                    {TRANSLATE_ICON}
+                    <span>{LANGUAGES[langTarget].invite}</span>
+                  </motion.button>
+                )}
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
       <div className="brand">
-        <h1>{'Once upon a time...\n the Night'}</h1>
+        <h1>{t('app.brand')}</h1>
         {showResults && (
           <StarBorder
             as="div"
@@ -216,7 +250,7 @@ export default function Header({ variable, onVariableChange, dark, onToggleTheme
               backdropFilter: 'blur(14px)',
               borderRadius: 999,
             }}>
-              Interesting Results
+              {t('header.resultsBtn')}
             </span>
           </StarBorder>
         )}
@@ -241,7 +275,7 @@ export default function Header({ variable, onVariableChange, dark, onToggleTheme
           <button
             className={`toggle-trigger${variable ? ' active' : ''}`}
             data-var={variable || toggles[0].key}
-            aria-label="Choose variable"
+            aria-label={t('header.chooseVariable')}
             onClick={() => setMobileOpen(v => !v)}
           >
             {variable ? TOGGLE_ICONS[variable] : NONE_SELECTED_ICON}
@@ -276,7 +310,7 @@ export default function Header({ variable, onVariableChange, dark, onToggleTheme
             )}
           </AnimatePresence>
         </div>
-        <button className="theme-btn" title="Toggle theme" onClick={onToggleTheme}>
+        <button className="theme-btn" title={t('header.toggleTheme')} onClick={onToggleTheme}>
           {dark ? (
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />

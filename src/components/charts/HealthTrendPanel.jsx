@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import * as d3 from 'd3';
+import { useTranslation } from 'react-i18next';
 import HealthTrendChart from './HealthTrendChart.jsx';
 import BorderGlow from '../ui/BorderGlow.jsx';
 import ChartModal from './ChartModal.jsx';
@@ -12,6 +13,7 @@ const COLOR_B = '#38bdf8';
 const fmtSigned = (v, fn) => v == null ? '—' : (v >= 0 ? '+' : '') + fn(v);
 
 export default function HealthTrendPanel({ lookup, country, compareCountry, year, healthMetric = 'd', dark, open, onClose, inStack = false, inTab = false, bgColor, compact = false }) {
+  const { t } = useTranslation();
   const [zoomed, setZoomed] = useState(false);
   const [metric, setMetric] = useState(healthMetric);
   const [infoOpen, setInfoOpen] = useState(false);
@@ -20,7 +22,7 @@ export default function HealthTrendPanel({ lookup, country, compareCountry, year
   const compareSeries = compareCountry ? getSeries(lookup, YEARS, compareCountry) : null;
   const bg = bgColor ?? (dark ? 'rgba(13, 16, 28, 0.85)' : 'rgba(248, 249, 252, 0.90)');
 
-  const metricShort = metric === 'd' ? 'Depressive' : 'Anxiety';
+  const metricShort = metric === 'd' ? t('common.depressive') : t('common.anxiety');
 
   const valid    = series.filter(d => d.r != null && d[metric] != null);
   const first    = valid[0];
@@ -51,20 +53,18 @@ export default function HealthTrendPanel({ lookup, country, compareCountry, year
     >
       <div className="fp-head">
         <div>
-          <div className="fp-label">Year-over-year path</div>
+          <div className="fp-label">{t('panels.healthTrend.label')}</div>
           <div className="fp-title-row">
-            <h2>Radiance &amp; Health Trend</h2>
+            <h2>{t('panels.healthTrend.title')}</h2>
             <span
               className={`info-btn${infoOpen ? ' open' : ''}`}
               tabIndex={0}
               role="button"
-              aria-label="More information"
+              aria-label={t('common.moreInfo')}
               onClick={(e) => { e.stopPropagation(); setInfoOpen(v => !v); }}
               onBlur={() => setInfoOpen(false)}
             >i
-              <span className="info-tooltip">
-                The mental health data represents the prevalence of depressive and anxiety disorders, not sleep disorders specifically. Given the indirect nature of the relationship with light pollution, these results should be interpreted with caution.
-              </span>
+              <span className="info-tooltip">{t('common.healthDisclaimer')}</span>
             </span>
           </div>
           {country && !compareCountry && <div className="fp-country">{country}</div>}
@@ -73,7 +73,7 @@ export default function HealthTrendPanel({ lookup, country, compareCountry, year
               <span className="fp-compare-country" style={{ fontSize: 14 }}>
                 <span className="cmp-stat-dot" style={{ background: COLOR_A }} />{country}
               </span>
-              <span className="fp-vs">vs</span>
+              <span className="fp-vs">{t('common.vs')}</span>
               <span className="fp-compare-country" style={{ fontSize: 14 }}>
                 <span className="cmp-stat-dot" style={{ background: COLOR_B }} />{compareCountry}
               </span>
@@ -81,25 +81,23 @@ export default function HealthTrendPanel({ lookup, country, compareCountry, year
           )}
         </div>
         <div className="fp-head-actions">
-          {country && <button className="zoom-btn" onClick={e => { e.stopPropagation(); setZoomed(true); }} title="Expand chart">
+          {country && <button className="zoom-btn" onClick={e => { e.stopPropagation(); setZoomed(true); }} title={t('common.expandChart')}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
           </button>}
           {onClose && <button className="close-x" onClick={onClose}>✕</button>}
         </div>
       </div>
 
-      <p className="panel-desc">
-        Each dot is one year: x-axis is radiance, y-axis is mental-health prevalence. Follow the arrow to see whether both rose together, diverged, or reversed over the period.
-      </p>
+      <p className="panel-desc">{t('panels.healthTrend.desc')}</p>
 
       <div className="panel-metric-toggle">
-        <button className={`panel-metric-btn${metric === 'd' ? ' active' : ''}`} onClick={e => { e.stopPropagation(); setMetric('d'); }}>Depressive</button>
-        <button className={`panel-metric-btn${metric === 'a' ? ' active' : ''}`} onClick={e => { e.stopPropagation(); setMetric('a'); }}>Anxiety</button>
+        <button className={`panel-metric-btn${metric === 'd' ? ' active' : ''}`} onClick={e => { e.stopPropagation(); setMetric('d'); }}>{t('common.depressive')}</button>
+        <button className={`panel-metric-btn${metric === 'a' ? ' active' : ''}`} onClick={e => { e.stopPropagation(); setMetric('a'); }}>{t('common.anxiety')}</button>
       </div>
 
       <div className="stat-grid">
         <div className="stat">
-          <div className="label">Δ Radiance</div>
+          <div className="label">{t('panels.healthTrend.deltaRadiance')}</div>
           {compareCountry ? (
             <div className="cmp-stat-pair">
               <div className="cmp-stat-row" style={{ color: COLOR_A }}>
@@ -142,7 +140,7 @@ export default function HealthTrendPanel({ lookup, country, compareCountry, year
       </div>
       {first && last && (
         <p style={{ fontSize: 11, color: 'var(--text-faint)', margin: '-4px 0 10px' }}>
-          Δ values are the difference between {first.year} and {last.year}
+          {t('panels.healthTrend.deltaNote', { from: first.year, to: last.year })}
         </p>
       )}
 
@@ -158,15 +156,15 @@ export default function HealthTrendPanel({ lookup, country, compareCountry, year
       )}
 
       {zoomed && (
-        <ChartModal title="Radiance & Health Trend" subtitle="Year-over-year path" country={country} onClose={() => setZoomed(false)}>
+        <ChartModal title={t('panels.healthTrend.title')} subtitle={t('panels.healthTrend.label')} country={country} onClose={() => setZoomed(false)}>
           <div className="panel-metric-toggle" style={{ marginBottom: 12 }}>
-            <button className={`panel-metric-btn${metric === 'd' ? ' active' : ''}`} onClick={e => { e.stopPropagation(); setMetric('d'); }}>Depressive</button>
-            <button className={`panel-metric-btn${metric === 'a' ? ' active' : ''}`} onClick={e => { e.stopPropagation(); setMetric('a'); }}>Anxiety</button>
+            <button className={`panel-metric-btn${metric === 'd' ? ' active' : ''}`} onClick={e => { e.stopPropagation(); setMetric('d'); }}>{t('common.depressive')}</button>
+            <button className={`panel-metric-btn${metric === 'a' ? ' active' : ''}`} onClick={e => { e.stopPropagation(); setMetric('a'); }}>{t('common.anxiety')}</button>
           </div>
           <HealthTrendChart series={series} compareSeries={compareSeries} year={year} healthMetric={metric} dark={dark} height={500} />
           {first && last && (
             <p style={{ fontSize: 11, color: 'var(--text-faint)', margin: '8px 0 0' }}>
-              Δ values are the difference between {first.year} and {last.year}
+              {t('panels.healthTrend.deltaNote', { from: first.year, to: last.year })}
             </p>
           )}
           {compareCountry && (

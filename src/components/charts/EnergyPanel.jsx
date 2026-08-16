@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import * as d3 from 'd3';
+import { useTranslation } from 'react-i18next';
 import BorderGlow from '../ui/BorderGlow.jsx';
 import MetricChart from './MetricChart.jsx';
 import ChartModal from './ChartModal.jsx';
@@ -13,6 +14,7 @@ const fmtEnergy = v => v == null ? '—' : d3.format(',.0f')(v) + ' kWh';
 const fmtUrban  = v => v == null ? '—' : d3.format('.1f')(v) + '%';
 
 export default function EnergyPanel({ lookup, country, compareCountry, year, dark, onClose, inStack = false, bgColor }) {
+  const { t } = useTranslation();
   const [zoomedEnergy, setZoomedEnergy] = useState(false);
   const [zoomedUrban,  setZoomedUrban]  = useState(false);
 
@@ -37,15 +39,15 @@ export default function EnergyPanel({ lookup, country, compareCountry, year, dar
     >
       <div className="fp-head">
         <div>
-          <div className="fp-label">Contextual factors</div>
-          <h2>Energy Use &amp; Urbanization</h2>
+          <div className="fp-label">{t('panels.energy.label')}</div>
+          <h2>{t('panels.energy.title')}</h2>
           {country && !compareCountry && <div className="fp-country">{country}</div>}
           {country && compareCountry && (
             <div className="fp-compare-countries">
               <span className="fp-compare-country" style={{ fontSize: 14 }}>
                 <span className="cmp-stat-dot" style={{ background: COLOR_A }} />{country}
               </span>
-              <span className="fp-vs">vs</span>
+              <span className="fp-vs">{t('common.vs')}</span>
               <span className="fp-compare-country" style={{ fontSize: 14 }}>
                 <span className="cmp-stat-dot" style={{ background: COLOR_B }} />{compareCountry}
               </span>
@@ -60,13 +62,11 @@ export default function EnergyPanel({ lookup, country, compareCountry, year, dar
         )}
       </div>
 
-      <p className="panel-desc">
-        Energy consumption and urbanization are two of the main drivers of artificial light at night. Countries that use more electricity and have a larger share of urban population tend to produce significantly more light pollution.
-      </p>
+      <p className="panel-desc">{t('panels.energy.desc')}</p>
 
       <div className="stat-grid" style={{ marginBottom: 12, gap: 7 }}>
         <div className="stat" style={{ padding: '7px 10px' }}>
-          <div className="label">Energy use</div>
+          <div className="label">{t('panels.energy.energyUse')}</div>
           {compareCountry ? (
             <div className="cmp-stat-pair">
               <div className="cmp-stat-row" style={{ color: COLOR_A }}>
@@ -81,10 +81,10 @@ export default function EnergyPanel({ lookup, country, compareCountry, year, dar
           ) : (
             <div className="value" style={{ color: '#10b981', fontSize: 18 }}>{fmtEnergy(cur?.e)}</div>
           )}
-          <div className="unit">per capita</div>
+          <div className="unit">{t('panels.energy.perCapita')}</div>
         </div>
         <div className="stat" style={{ padding: '7px 10px' }}>
-          <div className="label">Urban pop.</div>
+          <div className="label">{t('panels.energy.urbanPop')}</div>
           {compareCountry ? (
             <div className="cmp-stat-pair">
               <div className="cmp-stat-row" style={{ color: COLOR_A }}>
@@ -99,18 +99,18 @@ export default function EnergyPanel({ lookup, country, compareCountry, year, dar
           ) : (
             <div className="value" style={{ color: '#06b6d4', fontSize: 18 }}>{fmtUrban(cur?.u)}</div>
           )}
-          <div className="unit">% of total</div>
+          <div className="unit">{t('panels.energy.ofTotal')}</div>
         </div>
       </div>
 
       {/* Energy chart */}
       <div className="chart-title">
         {compareCountry
-          ? 'Electric power consumption (kWh/capita)'
-          : <><span className="dot" style={{ background: '#10b981' }} />Electric power consumption (kWh/capita)</>
+          ? t('panels.energy.energyChart')
+          : <><span className="dot" style={{ background: '#10b981' }} />{t('panels.energy.energyChart')}</>
         }
         {country && (
-          <button className="zoom-btn" onClick={e => { e.stopPropagation(); setZoomedEnergy(true); }} title="Expand chart">
+          <button className="zoom-btn" onClick={e => { e.stopPropagation(); setZoomedEnergy(true); }} title={t('common.expandChart')}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
           </button>
         )}
@@ -131,11 +131,11 @@ export default function EnergyPanel({ lookup, country, compareCountry, year, dar
       {/* Urbanization chart */}
       <div className="chart-title" style={{ marginTop: 10 }}>
         {compareCountry
-          ? 'Urban population (% of total)'
-          : <><span className="dot" style={{ background: '#06b6d4' }} />Urban population (% of total)</>
+          ? t('panels.energy.urbanChart')
+          : <><span className="dot" style={{ background: '#06b6d4' }} />{t('panels.energy.urbanChart')}</>
         }
         {country && (
-          <button className="zoom-btn" onClick={e => { e.stopPropagation(); setZoomedUrban(true); }} title="Expand chart">
+          <button className="zoom-btn" onClick={e => { e.stopPropagation(); setZoomedUrban(true); }} title={t('common.expandChart')}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
           </button>
         )}
@@ -154,7 +154,7 @@ export default function EnergyPanel({ lookup, country, compareCountry, year, dar
       )}
 
       {zoomedEnergy && (
-        <ChartModal title="Energy Use" subtitle="Electric power consumption (kWh per capita)" country={country} meta={String(year)} onClose={() => setZoomedEnergy(false)}>
+        <ChartModal title={t('panels.energy.energyModalTitle')} subtitle={t('panels.energy.energyModalSubtitle')} country={country} meta={String(year)} onClose={() => setZoomedEnergy(false)}>
           <MetricChart series={series} compareSeries={compareSeries} metricKey="e" year={year} color="#10b981" dark={dark} height={440} fmt={v => d3.format(',.0f')(v)} />
           {compareCountry && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 10 }}>
@@ -169,7 +169,7 @@ export default function EnergyPanel({ lookup, country, compareCountry, year, dar
         </ChartModal>
       )}
       {zoomedUrban && (
-        <ChartModal title="Urbanization Rate" subtitle="Urban population as % of total" country={country} meta={String(year)} onClose={() => setZoomedUrban(false)}>
+        <ChartModal title={t('panels.energy.urbanModalTitle')} subtitle={t('panels.energy.urbanModalSubtitle')} country={country} meta={String(year)} onClose={() => setZoomedUrban(false)}>
           <MetricChart series={series} compareSeries={compareSeries} metricKey="u" year={year} color="#06b6d4" dark={dark} height={440} fmt={v => d3.format('.1f')(v) + '%'} />
           {compareCountry && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 10 }}>

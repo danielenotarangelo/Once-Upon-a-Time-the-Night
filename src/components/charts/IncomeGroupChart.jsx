@@ -1,7 +1,8 @@
 import { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
+import { useTranslation } from 'react-i18next';
 
-const TIER_LABELS = ['Low', 'Lower-Mid', 'Upper-Mid', 'High'];
+const TIER_KEYS = ['low', 'lowerMid', 'upperMid', 'high'];
 
 function boxStats(values) {
   const sorted = [...values].sort(d3.ascending);
@@ -24,6 +25,7 @@ function jitterOf(name, width) {
 const COLOR_CMP = '#38bdf8';
 
 export default function IncomeGroupChart({ points, country, compareCountry, color, ylabel, dark, height, logScale = false }) {
+  const { t } = useTranslation();
   const ref = useRef(null);
 
   useEffect(() => {
@@ -83,7 +85,7 @@ export default function IncomeGroupChart({ points, country, compareCountry, colo
 
     // X axis
     g.append('g').attr('transform', `translate(0,${ih})`)
-      .call(d3.axisBottom(x).tickFormat(i => TIER_LABELS[i]))
+      .call(d3.axisBottom(x).tickFormat(i => t(`panels.income.tiers.${TIER_KEYS[i]}`)))
       .call(s => {
         s.selectAll('text').attr('fill', ac).style('font-size', '9px');
         s.selectAll('line,path').attr('stroke', gc);
@@ -238,7 +240,7 @@ export default function IncomeGroupChart({ points, country, compareCountry, colo
         .text(lbl);
     }
 
-  }, [points, country, compareCountry, color, ylabel, dark, height, logScale]);
+  }, [points, country, compareCountry, color, ylabel, dark, height, logScale, t]);
 
   return <div ref={ref} className="chart" style={{ ...(height != null ? { height } : {}), position: 'relative' }} />;
 }

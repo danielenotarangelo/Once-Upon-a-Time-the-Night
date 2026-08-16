@@ -1,7 +1,9 @@
 import { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
+import { useTranslation } from 'react-i18next';
 
 export default function QuadrantChart({ lookup, year, selected, compareCountry, healthMetric, dark, height }) {
+  const { t } = useTranslation();
   const ref = useRef(null);
 
   useEffect(() => {
@@ -68,7 +70,7 @@ export default function QuadrantChart({ lookup, year, selected, compareCountry, 
     g.append('text')
       .attr('x', iw / 2).attr('y', ih + 30)
       .attr('text-anchor', 'middle').attr('fill', ac).style('font-size', '9px')
-      .text('mean radiance (log) →');
+      .text(t('panels.quadrant.axisX'));
 
     // Median dividers
     g.append('line').attr('x1', qx).attr('x2', qx).attr('y1', 0).attr('y2', ih)
@@ -154,7 +156,7 @@ export default function QuadrantChart({ lookup, year, selected, compareCountry, 
       })
       .on('mouseleave', () => tip.style('display', 'none'));
 
-  }, [lookup, year, selected, compareCountry, healthMetric, dark, height]);
+  }, [lookup, year, selected, compareCountry, healthMetric, dark, height, t]);
 
   return <div ref={ref} className="chart" style={height != null ? { height } : undefined} />;
 }

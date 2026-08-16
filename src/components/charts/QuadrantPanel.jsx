@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import * as d3 from 'd3';
+import { useTranslation } from 'react-i18next';
 import QuadrantChart from './QuadrantChart.jsx';
 import BorderGlow from '../ui/BorderGlow.jsx';
 import ChartModal from './ChartModal.jsx';
@@ -8,6 +9,7 @@ const COLOR_A = '#f59e0b';
 const COLOR_B = '#38bdf8';
 
 export default function QuadrantPanel({ lookup, country, compareCountry, year, healthMetric = 'd', dark, open, onClose, inStack = false, inTab = false, bgColor, compact = false }) {
+  const { t } = useTranslation();
   const [zoomed, setZoomed] = useState(false);
   const [metric, setMetric] = useState(healthMetric);
   const [infoOpen, setInfoOpen] = useState(false);
@@ -16,7 +18,7 @@ export default function QuadrantPanel({ lookup, country, compareCountry, year, h
   const compareCur = compareCountry && lookup[compareCountry] ? lookup[compareCountry][year] : null;
   const bg = bgColor ?? (dark ? 'rgba(13, 16, 28, 0.85)' : 'rgba(248, 249, 252, 0.90)');
 
-  const metricShort = metric === 'd' ? 'Depressive' : 'Anxiety';
+  const metricShort = metric === 'd' ? t('common.depressive') : t('common.anxiety');
 
   const pts = [];
   for (const c in lookup) {
@@ -31,10 +33,10 @@ export default function QuadrantPanel({ lookup, country, compareCountry, year, h
     if (entry.r == null) return null;
     const bright = entry.r > medR;
     const high   = entry[metric] > medH;
-    if (bright && high)   return 'Bright · high disorders';
-    if (bright && !high)  return 'Bright · low disorders';
-    if (!bright && high)  return 'Dim · high disorders';
-    return 'Dim · low disorders';
+    if (bright && high)   return t('panels.quadrant.brightHigh');
+    if (bright && !high)  return t('panels.quadrant.brightLow');
+    if (!bright && high)  return t('panels.quadrant.dimHigh');
+    return t('panels.quadrant.dimLow');
   };
 
   const quadrantA = getQuadrant(cur);
@@ -55,20 +57,18 @@ export default function QuadrantPanel({ lookup, country, compareCountry, year, h
     >
       <div className="fp-head">
         <div>
-          <div className="fp-label">All countries · {year}</div>
+          <div className="fp-label">{t('panels.quadrant.label', { year })}</div>
           <div className="fp-title-row">
-            <h2>Radiance &amp; Health Quadrants</h2>
+            <h2>{t('panels.quadrant.title')}</h2>
             <span
               className={`info-btn${infoOpen ? ' open' : ''}`}
               tabIndex={0}
               role="button"
-              aria-label="More information"
+              aria-label={t('common.moreInfo')}
               onClick={(e) => { e.stopPropagation(); setInfoOpen(v => !v); }}
               onBlur={() => setInfoOpen(false)}
             >i
-              <span className="info-tooltip">
-                The mental health data represents the prevalence of depressive and anxiety disorders, not sleep disorders specifically. Given the indirect nature of the relationship with light pollution, these results should be interpreted with caution.
-              </span>
+              <span className="info-tooltip">{t('common.healthDisclaimer')}</span>
             </span>
           </div>
           {country && !compareCountry && <div className="fp-country">{country}</div>}
@@ -77,7 +77,7 @@ export default function QuadrantPanel({ lookup, country, compareCountry, year, h
               <span className="fp-compare-country" style={{ fontSize: 14 }}>
                 <span className="cmp-stat-dot" style={{ background: COLOR_A }} />{country}
               </span>
-              <span className="fp-vs">vs</span>
+              <span className="fp-vs">{t('common.vs')}</span>
               <span className="fp-compare-country" style={{ fontSize: 14 }}>
                 <span className="cmp-stat-dot" style={{ background: COLOR_B }} />{compareCountry}
               </span>
@@ -85,25 +85,23 @@ export default function QuadrantPanel({ lookup, country, compareCountry, year, h
           )}
         </div>
         <div className="fp-head-actions">
-          {country && <button className="zoom-btn" onClick={e => { e.stopPropagation(); setZoomed(true); }} title="Expand chart">
+          {country && <button className="zoom-btn" onClick={e => { e.stopPropagation(); setZoomed(true); }} title={t('common.expandChart')}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
           </button>}
           {onClose && <button className="close-x" onClick={onClose}>✕</button>}
         </div>
       </div>
 
-      <p className="panel-desc">
-        Each dot is a country, positioned by its radiance (x-axis) and mental health disorder prevalence (y-axis). The axes cross at the global median, dividing countries into four groups based on whether they are above or below average on each dimension.
-      </p>
+      <p className="panel-desc">{t('panels.quadrant.desc')}</p>
 
       <div className="panel-metric-toggle">
-        <button className={`panel-metric-btn${metric === 'd' ? ' active' : ''}`} onClick={e => { e.stopPropagation(); setMetric('d'); }}>Depressive</button>
-        <button className={`panel-metric-btn${metric === 'a' ? ' active' : ''}`} onClick={e => { e.stopPropagation(); setMetric('a'); }}>Anxiety</button>
+        <button className={`panel-metric-btn${metric === 'd' ? ' active' : ''}`} onClick={e => { e.stopPropagation(); setMetric('d'); }}>{t('common.depressive')}</button>
+        <button className={`panel-metric-btn${metric === 'a' ? ' active' : ''}`} onClick={e => { e.stopPropagation(); setMetric('a'); }}>{t('common.anxiety')}</button>
       </div>
 
       <div className="stat-grid" style={{ marginBottom: 12, gap: 7 }}>
         <div className="stat" style={{ padding: '7px 10px' }}>
-          <div className="label">Radiance</div>
+          <div className="label">{t('panels.radianceGdp.radiance')}</div>
           {compareCountry ? (
             <div className="cmp-stat-pair">
               <div className="cmp-stat-row" style={{ color: COLOR_A }}>
@@ -155,10 +153,10 @@ export default function QuadrantPanel({ lookup, country, compareCountry, year, h
         />
       )}
       {zoomed && (
-        <ChartModal title="Radiance & Health Quadrants" subtitle={`All countries · ${year}`} country={country} onClose={() => setZoomed(false)}>
+        <ChartModal title={t('panels.quadrant.title')} subtitle={t('panels.quadrant.label', { year })} country={country} onClose={() => setZoomed(false)}>
           <div className="panel-metric-toggle" style={{ marginBottom: 12 }}>
-            <button className={`panel-metric-btn${metric === 'd' ? ' active' : ''}`} onClick={e => { e.stopPropagation(); setMetric('d'); }}>Depressive</button>
-            <button className={`panel-metric-btn${metric === 'a' ? ' active' : ''}`} onClick={e => { e.stopPropagation(); setMetric('a'); }}>Anxiety</button>
+            <button className={`panel-metric-btn${metric === 'd' ? ' active' : ''}`} onClick={e => { e.stopPropagation(); setMetric('d'); }}>{t('common.depressive')}</button>
+            <button className={`panel-metric-btn${metric === 'a' ? ' active' : ''}`} onClick={e => { e.stopPropagation(); setMetric('a'); }}>{t('common.anxiety')}</button>
           </div>
           <QuadrantChart lookup={lookup} year={year} selected={country} compareCountry={compareCountry} healthMetric={metric} dark={dark} height={560} />
         </ChartModal>

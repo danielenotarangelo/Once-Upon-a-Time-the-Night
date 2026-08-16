@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import * as d3 from 'd3';
+import { useTranslation } from 'react-i18next';
 import BorderGlow from '../ui/BorderGlow.jsx';
 import IncomeGroupChart from './IncomeGroupChart.jsx';
 import ChartModal from './ChartModal.jsx';
@@ -29,6 +30,7 @@ const COLOR_A = '#f59e0b';
 const COLOR_B = '#38bdf8';
 
 export default function IncomeGroupPanel({ lookup, country, compareCountry, year, dark, healthMetric = 'd', onClose, inStack = false, bgColor }) {
+  const { t } = useTranslation();
   const [zoomedR, setZoomedR] = useState(false);
   const [zoomedH, setZoomedH] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
@@ -38,8 +40,10 @@ export default function IncomeGroupPanel({ lookup, country, compareCountry, year
   const rPoints = useMemo(() => computePoints(lookup, year, 'r'),           [lookup, year]);
   const hPoints = useMemo(() => computePoints(lookup, year, healthMetric),  [lookup, year, healthMetric]);
 
-  const hLabel = healthMetric === 'd' ? 'Depression prevalence (/100k)' : 'Anxiety prevalence (/100k)';
-  const hTitle = healthMetric === 'd' ? 'Depressive Disorders'          : 'Anxiety Disorders';
+  const hMetric = healthMetric === 'd' ? t('common.depression') : t('common.anxiety');
+  const hTitle  = healthMetric === 'd'
+    ? t('panels.income.depressiveModalTitle')
+    : t('panels.income.anxietyModalTitle');
 
   return (
     <BorderGlow
@@ -56,20 +60,18 @@ export default function IncomeGroupPanel({ lookup, country, compareCountry, year
     >
       <div className="fp-head">
         <div>
-          <div className="fp-label">GDP income groups · {year}</div>
+          <div className="fp-label">{t('panels.income.label', { year })}</div>
           <div className="fp-title-row">
-            <h2>Light &amp; Health by Income Level</h2>
+            <h2>{t('panels.income.title')}</h2>
             <span
               className={`info-btn${infoOpen ? ' open' : ''}`}
               tabIndex={0}
               role="button"
-              aria-label="More information"
+              aria-label={t('common.moreInfo')}
               onClick={(e) => { e.stopPropagation(); setInfoOpen(v => !v); }}
               onBlur={() => setInfoOpen(false)}
             >i
-              <span className="info-tooltip">
-                The mental health data represents the prevalence of depressive and anxiety disorders, not sleep disorders specifically. Given the indirect nature of the relationship with light pollution, these results should be interpreted with caution.
-              </span>
+              <span className="info-tooltip">{t('common.healthDisclaimer')}</span>
             </span>
           </div>
           {country && !compareCountry && <div className="fp-country">{country}</div>}
@@ -78,7 +80,7 @@ export default function IncomeGroupPanel({ lookup, country, compareCountry, year
               <span className="fp-compare-country" style={{ fontSize: 14 }}>
                 <span className="cmp-stat-dot" style={{ background: COLOR_A }} />{country}
               </span>
-              <span className="fp-vs">vs</span>
+              <span className="fp-vs">{t('common.vs')}</span>
               <span className="fp-compare-country" style={{ fontSize: 14 }}>
                 <span className="cmp-stat-dot" style={{ background: COLOR_B }} />{compareCountry}
               </span>
@@ -93,17 +95,15 @@ export default function IncomeGroupPanel({ lookup, country, compareCountry, year
       </div>
 
       <p className="panel-desc">
-        Countries are grouped into four income levels based on GDP per capita. Each column shows
-        the spread of radiance and mental health disorder rates within that group: richer countries
-        tend to emit significantly more light, while the health picture is more nuanced.
-        {country && <> <strong>{country}</strong> is highlighted.</>}
+        {t('panels.income.desc')}
+        {country && <> <strong>{country}</strong> {t('panels.income.highlighted')}</>}
       </p>
 
       <div className="chart-title">
         <span className="dot" style={{ background: R_COLOR }} />
-        Radiance by income tier
+        {t('panels.income.radianceChart')}
         {country && (
-          <button className="zoom-btn" onClick={e => { e.stopPropagation(); setZoomedR(true); }} title="Expand chart">
+          <button className="zoom-btn" onClick={e => { e.stopPropagation(); setZoomedR(true); }} title={t('common.expandChart')}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
           </button>
         )}
@@ -121,9 +121,9 @@ export default function IncomeGroupPanel({ lookup, country, compareCountry, year
 
       <div className="chart-title" style={{ marginTop: 10 }}>
         <span className="dot" style={{ background: H_COLOR }} />
-        {healthMetric === 'd' ? 'Depression' : 'Anxiety'} prevalence by income tier
+        {t('panels.income.healthChart', { metric: hMetric })}
         {country && (
-          <button className="zoom-btn" onClick={e => { e.stopPropagation(); setZoomedH(true); }} title="Expand chart">
+          <button className="zoom-btn" onClick={e => { e.stopPropagation(); setZoomedH(true); }} title={t('common.expandChart')}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
           </button>
         )}
@@ -140,8 +140,8 @@ export default function IncomeGroupPanel({ lookup, country, compareCountry, year
 
       {zoomedR && (
         <ChartModal
-          title="Radiance by Income Level"
-          subtitle="Distribution across four GDP income groups"
+          title={t('panels.income.radianceModalTitle')}
+          subtitle={t('panels.income.modalSubtitle')}
           country={country}
           meta={String(year)}
           onClose={() => setZoomedR(false)}
@@ -152,7 +152,7 @@ export default function IncomeGroupPanel({ lookup, country, compareCountry, year
       {zoomedH && (
         <ChartModal
           title={hTitle}
-          subtitle="Distribution across four GDP income groups"
+          subtitle={t('panels.income.modalSubtitle')}
           country={country}
           meta={String(year)}
           onClose={() => setZoomedH(false)}

@@ -1,0 +1,281 @@
+{
+  "common": {
+    "vs": "vs",
+    "noData": "keine Daten",
+    "searchCountry": "Land suchen…",
+    "selectedTerritory": "Ausgewähltes Gebiet",
+    "expandChart": "Diagramm vergrößern",
+    "moreInfo": "Weitere Informationen",
+    "countryCarousel": "Länder-Panel-Karussell",
+    "slideOf": "Folie {{current}} von {{total}}",
+    "depressive": "Depressiv",
+    "anxiety": "Angst",
+    "depression": "Depression",
+    "healthDisclaimer": "Die Daten zur psychischen Gesundheit bilden die Prävalenz depressiver und Angststörungen ab, nicht speziell die von Schlafstörungen. Da der Zusammenhang mit Lichtverschmutzung indirekter Natur ist, sollten diese Ergebnisse mit Vorsicht interpretiert werden."
+  },
+  "app": {
+    "brand": "Es war einmal...\n die Nacht",
+    "dataError": "Daten konnten nicht geladen werden. Stelle sicher, dass die Dateien in <1>/public/data</1> liegen."
+  },
+  "menu": {
+    "aria": "Menü",
+    "rankings": "Ranglisten",
+    "results": "Interessante Ergebnisse",
+    "lightMode": "Helles Design",
+    "darkMode": "Dunkles Design",
+    "translateAria": "Die Website auf {{language}} übersetzen"
+  },
+  "header": {
+    "resultsBtn": "Interessante Ergebnisse",
+    "chooseVariable": "Variable wählen",
+    "toggleTheme": "Design wechseln",
+    "light": "Licht",
+    "wealth": "Wohlstand",
+    "health": "Gesundheit"
+  },
+  "landing": {
+    "enterSite": "Website betreten",
+    "nextSlide": "Nächste Folie",
+    "carouselNav": "Karussell-Navigation",
+    "slides": {
+      "intro": {
+        "title": "Es war einmal...\n die Nacht",
+        "body": "Erkunde den Zusammenhang zwischen künstlicher Lichtverschmutzung, wirtschaftlicher Entwicklung und psychischer Gesundheit über ein Jahrzehnt globaler Daten hinweg."
+      },
+      "globe": {
+        "eyebrow": "Der Globus",
+        "title": "Eine interaktive Karte",
+        "body": "Ziehen zum Drehen, Scrollen zum Zoomen und ein Land antippen, um es auszuwählen. Wechsle in der Kopfzeile zwischen Licht, Wohlstand und psychischer Gesundheit – jede Kennzahl färbt den Globus sofort neu ein."
+      },
+      "panels": {
+        "eyebrow": "Länder-Panels",
+        "title": "Tauche in die Daten ein",
+        "body": "Tippe ein Land an, um eine Reihe von Diagrammen zu öffnen: Trends der Lichtverschmutzung, wirtschaftlicher Kontext, Zusammenhänge mit der Gesundheit und der Vergleich mit dem Rest der Welt."
+      },
+      "compare": {
+        "eyebrow": "Vergleichsmodus",
+        "title": "Land gegen Land",
+        "body": "Wähle über die Schaltfläche Vergleichen in der Suchleiste ein zweites Land. Alle Panels zeigen daraufhin beide Länder nebeneinander, mit farblich unterschiedenen Werten und hervorgehobenen Punkten."
+      },
+      "timeline": {
+        "eyebrow": "Zeitleiste & Ergebnisse",
+        "title": "Abspielen & entdecken",
+        "body": "Ziehe die Zeitleiste, um den Globus von 2013 bis 2023 zu animieren. Wenn du so weit bist, öffne die Interessanten Ergebnisse in der Kopfzeile für eine Zusammenfassung der wichtigsten Muster über alle Länder hinweg."
+      }
+    }
+  },
+  "results": {
+    "close": "Ergebnisse schließen",
+    "tiers": {
+      "low": "Niedriges Einkommen",
+      "lowerMid": "Unteres Mittel",
+      "upperMid": "Oberes Mittel",
+      "high": "Hohes Einkommen"
+    },
+    "scatterX": "Radianz nW/cm²/sr (log. Skala) →",
+    "scatterY": "Depression je 100k",
+    "slides": {
+      "intro": {
+        "title": "Was die Satelliten fanden",
+        "body": "Zehn Jahre VIIRS-Satellitendaten, 192 Länder und drei unabhängig erhobene Datensätze: nächtliche Radianz, BIP pro Kopf und Prävalenz psychischer Störungen. Die Muster, die sich abzeichnen, verbinden künstliches Licht mit wirtschaftlicher Entwicklung, Energieverbrauch und öffentlicher Gesundheit – auf ebenso auffällige wie sorgfältig zu deutende Weise."
+      },
+      "brighter": {
+        "eyebrow": "Globale Radianz · 2013–2023",
+        "stat": "+82 %",
+        "title": "Eine Welt, die immer heller wird",
+        "body": "Die globale mediane nächtliche Radianz stieg im Jahrzehnt um 82,5 % – ein sich beschleunigender Trend, den kein Großereignis aufhielt, weder der Rohstoffeinbruch 2015 noch die Pandemie 2020. Am schnellsten wuchs sie in Subsahara-Afrika und Südasien, wo die Elektrifizierung rasch voranschreitet; doch auch einkommensstarke Regionen trugen durch Zersiedelung, kommerzielle Beleuchtung und Infrastrukturausbau dazu bei."
+      },
+      "africa": {
+        "eyebrow": "Am schnellsten wachsende Emittenten",
+        "stat": "+16.000 %",
+        "statNote": "Komoren, 2013 → 2023",
+        "title": "Subsahara-Afrika ging ans Licht",
+        "body": "Die Komoren wurden im Jahrzehnt mehr als 160-mal heller – der steilste im Datensatz erfasste Anstieg. Kamerun (+3.131 %), Äthiopien (+1.806 %) und Botswana (+1.948 %) folgen dicht dahinter. Das ist kein Umweltversagen: Es ist der sichtbare Fußabdruck von Millionen Haushalten, die zum ersten Mal Zugang zu Strom erhalten. Öffne für eines dieser Länder das Panel Radianz- und Gesundheitstrend, und der nahezu senkrechte Anstieg der Radianz ist unverkennbar."
+      },
+      "covid": {
+        "eyebrow": "Das COVID-Paradox · 2020",
+        "title": "Lockdowns dimmten die Lichter nicht",
+        "body": "2020 – stillstehende Fabriken, nahezu kein Flugverkehr, leere Büros – erreichte die globale mediane Radianz dennoch einen damaligen Höchststand. Wohnbeleuchtung, Rund-um-die-Uhr-Logistik und Infrastruktur erwiesen sich als immun gegen Lockdowns. Länder wie Indien und Brasilien zeigten trotz schwerer wirtschaftlicher Einbrüche in jenem Jahr keinen Rückgang der nächtlichen Helligkeit. Das Licht, das ein Land erzeugt, ist eher strukturell als zyklisch: Es spiegelt den installierten Beleuchtungsbestand wider, nicht nur die Wirtschaftstätigkeit."
+      },
+      "income": {
+        "eyebrow": "Einkommen und Licht",
+        "stat": "4×",
+        "statNote": "Mediane Radianz: hohes vs. niedriges Einkommen (2023)",
+        "title": "Reichere Länder leuchten 4× heller",
+        "body": "Die mediane Radianz einkommensstarker Nationen ist fast viermal so hoch wie die einkommensschwacher – ein Gefälle, das über alle elf Jahre hinweg konstant und stabil war. Singapur strahlt über 50-mal so viel Radianz aus wie der Tschad. Das Panel Einkommensgruppen macht das auf einen Blick sichtbar: Jede Spalte der Verteilung verschiebt sich nach oben, wenn man von der niedrigen zur hohen Einkommensstufe geht, mit kaum Überschneidung zwischen den Extremen."
+      },
+      "energy": {
+        "eyebrow": "Energie und Urbanisierung",
+        "title": "Der Stromverbrauch treibt das Licht an",
+        "body": "Energieverbrauch pro Kopf und Urbanisierungsgrad sind die beiden stärksten strukturellen Prädiktoren der nächtlichen Radianz. Einkommensstarke Länder verbrauchen 5- bis 10-mal mehr Strom pro Person als einkommensschwache, und ihr höherer städtischer Anteil bündelt diese Energie in dichten, hell erleuchteten Städten. Der Vergleich der Energie- und Urbanisierungs-Panels von Kuwait (sehr hoher Verbrauch, intensive Radianz) und Mosambik (wenig Energie, dunkel) zeigt den Zusammenhang deutlich."
+      },
+      "depression": {
+        "eyebrow": "Psychische Gesundheit · Depression",
+        "stat": "+35 %",
+        "statNote": "Depressionsprävalenz · niedriges → hohes Einkommen (2023)",
+        "title": "Depression steigt mit jeder Einkommensstufe",
+        "body": "Die mediane Depressionsprävalenz steigt vom niedrigsten zum höchsten Einkommensquartil um 35 % und folgt damit demselben Einkommensgefälle wie die Radianz. Das kann bessere Diagnostik in reicheren Ländern, ein höheres Lebenstempo und mehr Stress oder einen tatsächlichen Beitrag künstlichen Lichts widerspiegeln, das den zirkadianen Rhythmus stört. Der Effekt gilt in jedem Jahr des Datensatzes, und der Abstand zwischen oberster und unterster Stufe hat sich seit 2013 leicht vergrößert."
+      },
+      "anxiety": {
+        "eyebrow": "Psychische Gesundheit · Angst",
+        "title": "Dasselbe Gefälle gilt für Angststörungen",
+        "body": "Die Prävalenz von Angststörungen folgt einem nahezu identischen Einkommensgefälle wie die Depression. Einkommensstarke Länder weisen in allen Jahren durchgehend höhere Angstraten auf als einkommensschwache. Länder wie die Vereinigten Staaten, Australien und die Niederlande liegen innerhalb ihrer Einkommensgruppe sowohl bei der Radianz als auch bei der Angst weit oben. Bemerkenswert: Einige Länder mit mittlerem Einkommen und hoher Radianz, etwa Kuwait und Saudi-Arabien, zeigen Angstraten über dem für ihre Stufe zu Erwartenden – ein Hinweis darauf, dass die Lichtintensität unabhängig vom Wohlstand wirken könnte."
+      },
+      "highIncome": {
+        "eyebrow": "Der entscheidende Test · Einkommensstarke Länder",
+        "title": "Auch unter den Reichen folgt die Radianz der Depression",
+        "body": "Ginge es beim Gesundheitsgefälle allein um Einkommen und Zugang zur Versorgung, müsste es sich innerhalb der einkommensstarken Gruppe abflachen. Das tut es nicht. Unter den wohlhabenden Nationen liegen die am intensivsten beleuchteten (Kuwait, Katar, Vereinigte Arabische Emirate, Israel) bei der Depressionsprävalenz durchweg vorn. Nordische Länder wie Finnland und Norwegen mit moderateren Radianzwerten melden dagegen vergleichsweise niedrigere Raten. Dieses Signal innerhalb der Stufe, sichtbar im Quadranten-Diagramm jedes einkommensstarken Landes, ist der deutlichste Hinweis darauf, dass das Licht selbst eine eigenständige Rolle spielen könnte."
+      },
+      "darker": {
+        "eyebrow": "Die Ausnahmen",
+        "stat": "17",
+        "statNote": "Länder, die ihre nächtliche Radianz 2013–2023 senkten",
+        "title": "Siebzehn Länder wurden dunkler",
+        "body": "Die Niederlande (−36,8 %), Portugal (−6,7 %) und Luxemburg (−6,8 %) führen eine Gruppe von 17 Ländern an, die ihre nächtliche Radianz im Jahrzehnt tatsächlich verringert haben – vor allem durch die Umrüstung der Straßenbeleuchtung auf LED und Gesetze zum Schutz des Nachthimmels. Entscheidend: BIP und Energieproduktion wuchsen in diesem Zeitraum weiter, was zeigt, dass sich wirtschaftliche Entwicklung und Lichtverschmutzung technisch und wirtschaftlich entkoppeln lassen. Ihre Verlaufsdiagramme zeigen ein seltenes Muster: Die Radianz wandert nach links, während das Gesundheitssignal stabil bleibt."
+      },
+      "synthesis": {
+        "eyebrow": "Synthese",
+        "title": "Licht ist Symptom und Signal zugleich",
+        "body": "Die nächtliche Radianz folgt der wirtschaftlichen Entwicklung sehr genau: reichere, stärker urbanisierte, energieintensivere Nationen sind heller. Doch innerhalb jeder Einkommensgruppe tragen die hellsten Länder die größere Last psychischer Erkrankungen. Ob künstliches Licht eine Ursache, ein Begleitsymptom des modernen Lebenstempos oder ein Stellvertreter für etwas Ungemessenes ist, bleibt offen. Die Daten zeigen jedoch, dass Lichtverschmutzung nicht nur ein Umweltthema ist: Sie korreliert mit dem gesamten Spektrum menschlicher Entwicklung, vom Zugang zu Strom bis zum psychischen Wohlbefinden. Die Daten zur psychischen Gesundheit betreffen hier depressive und Angststörungen, nicht speziell Schlafstörungen – eine Einschränkung, die man bei der Deutung dieser Muster im Blick behalten sollte."
+      }
+    }
+  },
+  "overview": {
+    "explore": "Erkunden",
+    "rankings": "Ranglisten"
+  },
+  "compare": {
+    "compareWith": "Vergleichen mit…",
+    "hint": "oder tippe ein Land auf dem Globus an"
+  },
+  "timeline": {
+    "play": "Abspielen",
+    "pause": "Pause",
+    "captions": {
+      "2013": "Der Beginn der VIIRS-Aufzeichnungen.",
+      "2014": "Schwellenländer beginnen heller zu werden.",
+      "2015": "Die Umstellung auf LED beschleunigt sich weltweit.",
+      "2016": "Rasche Elektrifizierung in Subsahara-Afrika.",
+      "2017": "Asiens Megastädte erreichen ihre höchste Leuchtkraft.",
+      "2018": "Das Licht wächst weiterhin schneller als die Bevölkerung.",
+      "2019": "Das letzte volle Jahr vor der Pandemie.",
+      "2020": "COVID-19 dimmt die Wirtschaft, nicht die Lichter.",
+      "2021": "Die Erholung verläuft regional ungleich.",
+      "2022": "Energiekrisen führen in Europa zu etwas weniger Licht.",
+      "2023": "Das jüngste vollständig erfasste Jahr."
+    }
+  },
+  "vars": {
+    "r": "Mittlere Radianz",
+    "g": "BIP pro Kopf",
+    "d": "Depressive Störungen",
+    "a": "Angststörungen"
+  },
+  "panels": {
+    "tabs": {
+      "wealth": "Wohlstand",
+      "health": "Gesundheit",
+      "environment": "Energie & Urbanisierung",
+      "context": "Einkommensgruppen",
+      "prev": "Vorheriger Tab",
+      "next": "Nächster Tab"
+    },
+    "radianceGdp": {
+      "label": "Radianz & BIP pro Kopf",
+      "title": "Licht & Wohlstand",
+      "radiance": "Radianz",
+      "gdp": "BIP / Kopf",
+      "light": "Licht",
+      "wealth": "Wohlstand",
+      "chartTitleCompare": "Licht · Wohlstand",
+      "miniRadiance": "RADIANZ",
+      "miniGdp": "BIP / KOPF"
+    },
+    "growth": {
+      "label": "Radianzveränderung zum Vorjahr",
+      "title": "Helligkeitswachstum",
+      "thisYear": "Dieses Jahr",
+      "change": "Veränderung",
+      "avgGrowth": "Ø Wachstum",
+      "perYear": "pro Jahr",
+      "chartTitle": "Jährliche Wachstumsrate der Radianz"
+    },
+    "ratio": {
+      "label": "Radianz je Einheit Wohlstand",
+      "title": "Verhältnis Licht / BIP",
+      "desc": "Wie viel Licht dieses Land pro Dollar Wirtschaftsleistung abstrahlt. Eine fallende Linie bedeutet, dass die Wirtschaft schneller wächst als der Lichteinsatz – mehr Wohlstand ohne proportionalen Anstieg der Lichtverschmutzung.",
+      "stat": "Licht / BIP",
+      "since": "Seit 2013",
+      "change": "Veränderung",
+      "chartTitle": "Verlauf des Verhältnisses Radianz/BIP"
+    },
+    "healthTrend": {
+      "label": "Verlauf Jahr für Jahr",
+      "title": "Radianz- & Gesundheitstrend",
+      "desc": "Jeder Punkt ist ein Jahr: Die x-Achse zeigt die Radianz, die y-Achse die Prävalenz psychischer Erkrankungen. Folge dem Pfeil, um zu sehen, ob beide gemeinsam gestiegen sind, auseinandergelaufen sind oder sich umgekehrt haben.",
+      "deltaRadiance": "Δ Radianz",
+      "deltaNote": "Δ-Werte sind die Differenz zwischen {{from}} und {{to}}",
+      "axisX": "mittlere Radianz →"
+    },
+    "quadrant": {
+      "label": "Alle Länder · {{year}}",
+      "title": "Radianz- & Gesundheitsquadranten",
+      "desc": "Jeder Punkt ist ein Land, positioniert nach seiner Radianz (x-Achse) und der Prävalenz psychischer Erkrankungen (y-Achse). Die Achsen kreuzen sich am globalen Median und teilen die Länder in vier Gruppen – je nachdem, ob sie in der jeweiligen Dimension über oder unter dem Durchschnitt liegen.",
+      "brightHigh": "Hell · hohe Erkrankungsraten",
+      "brightLow": "Hell · niedrige Erkrankungsraten",
+      "dimHigh": "Dunkel · hohe Erkrankungsraten",
+      "dimLow": "Dunkel · niedrige Erkrankungsraten",
+      "axisX": "mittlere Radianz (log) →"
+    },
+    "energy": {
+      "label": "Kontextfaktoren",
+      "title": "Energieverbrauch & Urbanisierung",
+      "desc": "Energieverbrauch und Urbanisierung sind zwei der wichtigsten Treiber künstlichen Lichts bei Nacht. Länder, die mehr Strom verbrauchen und einen größeren Anteil städtischer Bevölkerung haben, erzeugen tendenziell deutlich mehr Lichtverschmutzung.",
+      "energyUse": "Energieverbrauch",
+      "perCapita": "pro Kopf",
+      "urbanPop": "Stadtbev.",
+      "ofTotal": "% der Gesamtbev.",
+      "energyChart": "Stromverbrauch (kWh/Kopf)",
+      "urbanChart": "Städtische Bevölkerung (% der Gesamtbev.)",
+      "energyModalTitle": "Energieverbrauch",
+      "energyModalSubtitle": "Stromverbrauch (kWh pro Kopf)",
+      "urbanModalTitle": "Urbanisierungsgrad",
+      "urbanModalSubtitle": "Städtische Bevölkerung in % der Gesamtbevölkerung"
+    },
+    "income": {
+      "label": "BIP-Einkommensgruppen · {{year}}",
+      "title": "Licht & Gesundheit nach Einkommensniveau",
+      "desc": "Die Länder werden anhand des BIP pro Kopf in vier Einkommensstufen eingeteilt. Jede Spalte zeigt die Streuung von Radianz und psychischen Erkrankungsraten innerhalb der Gruppe: Reichere Länder strahlen deutlich mehr Licht ab, während das Gesundheitsbild vielschichtiger ist.",
+      "highlighted": "ist hervorgehoben.",
+      "radianceChart": "Radianz nach Einkommensstufe",
+      "healthChart": "Prävalenz nach Einkommensstufe: {{metric}}",
+      "radianceModalTitle": "Radianz nach Einkommensniveau",
+      "depressiveModalTitle": "Depressive Störungen",
+      "anxietyModalTitle": "Angststörungen",
+      "modalSubtitle": "Verteilung über vier BIP-Einkommensgruppen",
+      "tiers": {
+        "low": "Niedrig",
+        "lowerMid": "Unt. Mittel",
+        "upperMid": "Ob. Mittel",
+        "high": "Hoch"
+      }
+    },
+    "ranking": {
+      "label": "Globaler Überblick · {{year}}",
+      "title": "Top 10 der Länder",
+      "hint": "Tippe ein Land auf dem Globus an, um seine Daten zu erkunden",
+      "expand": "Rangliste vergrößern",
+      "modalTitle": "Vollständige globale Rangliste",
+      "metrics": {
+        "radiance": "Radianz",
+        "growth": "Wachstum",
+        "energy": "Energie",
+        "urban": "Stadt"
+      },
+      "units": {
+        "growth": "% ggü. 2013",
+        "urban": "% der Bev."
+      }
+    }
+  }
+}
