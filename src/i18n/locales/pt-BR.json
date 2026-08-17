@@ -11,7 +11,8 @@
     "depressive": "Depressivos",
     "anxiety": "Ansiedade",
     "depression": "Depressão",
-    "healthDisclaimer": "Os dados de saúde mental representam a prevalência de transtornos depressivos e de ansiedade, e não especificamente de transtornos do sono. Dada a natureza indireta da relação com a poluição luminosa, estes resultados devem ser interpretados com cautela."
+    "healthDisclaimer": "Os dados de saúde mental representam a prevalência de transtornos depressivos e de ansiedade, e não especificamente de transtornos do sono. Dada a natureza indireta da relação com a poluição luminosa, estes resultados devem ser interpretados com cautela.",
+    "translateAria": "Traduzir o site para {{language}}"
   },
   "app": {
     "brand": "Era uma vez...\n a Noite",
@@ -21,9 +22,16 @@
     "aria": "Menu",
     "rankings": "Rankings",
     "results": "Resultados interessantes",
-    "lightMode": "Tema claro",
-    "darkMode": "Tema escuro",
-    "translateAria": "Traduzir o site para {{language}}"
+    "settings": "Configurações"
+  },
+  "settings": {
+    "title": "Configurações",
+    "close": "Fechar as configurações",
+    "theme": "Tema",
+    "themeLight": "Claro",
+    "themeDark": "Escuro",
+    "language": "Idioma",
+    "detected": "detectado"
   },
   "header": {
     "resultsBtn": "Resultados interessantes",

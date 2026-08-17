@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useTranslation } from 'react-i18next';
 import StarBorder from '../ui/StarBorder.jsx';
-import { LANGUAGES, applyLanguageAndReload, detectBrowserLanguage } from '../../i18n/index.js';
+import SettingsPanel from './SettingsPanel.jsx';
 
 const menuListVariants = {
   open: {
@@ -97,10 +97,10 @@ const RANKINGS_ICON = (
   </svg>
 );
 
-// Google's classic "translate" glyph (文 + A), from Material Symbols.
-const TRANSLATE_ICON = (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z" />
+const SETTINGS_ICON = (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="3.2" />
+    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
   </svg>
 );
 
@@ -111,21 +111,13 @@ const RESULTS_ICON = (
 );
 
 export default function Header({ variable, onVariableChange, dark, onToggleTheme, onResultsClick, showResults, onOpenRankings }) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const toggles = [
     { key: 'r',      label: t('header.light')  },
     { key: 'g',      label: t('header.wealth') },
     { key: 'health', label: t('header.health') },
   ];
-
-  // The visitor's own language, resolved once from the browser preferences.
-  const browserLang = useMemo(detectBrowserLanguage, []);
-  const currentLang = i18n.resolvedLanguage || 'en';
-  // Offer the browser language; once the site is already in it, offer English back.
-  const langTarget =
-    currentLang !== browserLang ? browserLang :
-    currentLang !== 'en'        ? 'en'        : null;
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const togglesRef = useRef(null);
@@ -140,6 +132,7 @@ export default function Header({ variable, onVariableChange, dark, onToggleTheme
   }, [mobileOpen]);
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -189,40 +182,26 @@ export default function Header({ variable, onVariableChange, dark, onToggleTheme
                     <span>{t('menu.results')}</span>
                   </motion.button>
                 )}
+                {/* Theme and language both live in the settings panel. */}
                 <motion.button
                   className="mobile-menu-fab-item"
                   variants={menuItemVariants}
-                  onClick={() => { onToggleTheme(); setMenuOpen(false); }}
+                  onClick={() => { setMenuOpen(false); setSettingsOpen(true); }}
                 >
-                  {dark ? (
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <circle cx="12" cy="12" r="4" />
-                      <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
-                    </svg>
-                  ) : (
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
-                    </svg>
-                  )}
-                  <span>{dark ? t('menu.lightMode') : t('menu.darkMode')}</span>
+                  {SETTINGS_ICON}
+                  <span>{t('menu.settings')}</span>
                 </motion.button>
-
-                {/* Last item: switch the whole site to the visitor's own language.
-                    Reloading drops them back on the landing page, now translated. */}
-                {langTarget && (
-                  <motion.button
-                    className="mobile-menu-fab-item"
-                    variants={menuItemVariants}
-                    lang={langTarget}
-                    aria-label={t('menu.translateAria', { language: LANGUAGES[langTarget].name })}
-                    onClick={() => { setMenuOpen(false); applyLanguageAndReload(langTarget); }}
-                  >
-                    {TRANSLATE_ICON}
-                    <span>{LANGUAGES[langTarget].invite}</span>
-                  </motion.button>
-                )}
               </div>
             </motion.div>
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {settingsOpen && (
+            <SettingsPanel
+              dark={dark}
+              onToggleTheme={onToggleTheme}
+              onClose={() => setSettingsOpen(false)}
+            />
           )}
         </AnimatePresence>
       </div>

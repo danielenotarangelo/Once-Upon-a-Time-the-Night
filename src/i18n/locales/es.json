@@ -11,7 +11,8 @@
     "depressive": "Depresivos",
     "anxiety": "Ansiedad",
     "depression": "Depresión",
-    "healthDisclaimer": "Los datos de salud mental representan la prevalencia de los trastornos depresivos y de ansiedad, no de los trastornos del sueño en particular. Dada la naturaleza indirecta de la relación con la contaminación lumínica, estos resultados deben interpretarse con cautela."
+    "healthDisclaimer": "Los datos de salud mental representan la prevalencia de los trastornos depresivos y de ansiedad, no de los trastornos del sueño en particular. Dada la naturaleza indirecta de la relación con la contaminación lumínica, estos resultados deben interpretarse con cautela.",
+    "translateAria": "Traducir el sitio al {{language}}"
   },
   "app": {
     "brand": "Érase una vez...\n la Noche",
@@ -21,9 +22,16 @@
     "aria": "Menú",
     "rankings": "Clasificaciones",
     "results": "Resultados interesantes",
-    "lightMode": "Tema claro",
-    "darkMode": "Tema oscuro",
-    "translateAria": "Traducir el sitio al {{language}}"
+    "settings": "Ajustes"
+  },
+  "settings": {
+    "title": "Ajustes",
+    "close": "Cerrar los ajustes",
+    "theme": "Tema",
+    "themeLight": "Claro",
+    "themeDark": "Oscuro",
+    "language": "Idioma",
+    "detected": "detectado"
   },
   "header": {
     "resultsBtn": "Resultados interesantes",

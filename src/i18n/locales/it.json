@@ -11,7 +11,8 @@
     "depressive": "Depressivi",
     "anxiety": "Ansia",
     "depression": "Depressione",
-    "healthDisclaimer": "I dati sulla salute mentale rappresentano la prevalenza dei disturbi depressivi e d'ansia, non dei disturbi del sonno in particolare. Data la natura indiretta della relazione con l'inquinamento luminoso, questi risultati vanno interpretati con cautela."
+    "healthDisclaimer": "I dati sulla salute mentale rappresentano la prevalenza dei disturbi depressivi e d'ansia, non dei disturbi del sonno in particolare. Data la natura indiretta della relazione con l'inquinamento luminoso, questi risultati vanno interpretati con cautela.",
+    "translateAria": "Traduci il sito in {{language}}"
   },
   "app": {
     "brand": "C'era una volta...\n la Notte",
@@ -21,9 +22,16 @@
     "aria": "Menu",
     "rankings": "Classifiche",
     "results": "Risultati interessanti",
-    "lightMode": "Tema chiaro",
-    "darkMode": "Tema scuro",
-    "translateAria": "Traduci il sito in {{language}}"
+    "settings": "Impostazioni"
+  },
+  "settings": {
+    "title": "Impostazioni",
+    "close": "Chiudi le impostazioni",
+    "theme": "Tema",
+    "themeLight": "Chiaro",
+    "themeDark": "Scuro",
+    "language": "Lingua",
+    "detected": "rilevata"
   },
   "header": {
     "resultsBtn": "Risultati interessanti",

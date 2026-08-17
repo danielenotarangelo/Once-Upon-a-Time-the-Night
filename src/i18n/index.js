@@ -12,16 +12,16 @@ import ptBR from './locales/pt-BR.json';
 
 export const STORAGE_KEY = 'lp-lang';
 
-// Native names are shown in the target language itself, so a visitor recognises
-// the offer even while the interface is still in English.
+// Endonyms: each language names itself, so the settings list stays readable whatever
+// the interface language currently is.
 export const LANGUAGES = {
-  en:      { name: 'English',               invite: 'View in English'                  },
-  it:      { name: 'Italiano',              invite: 'Traduci in italiano'              },
-  es:      { name: 'Español',               invite: 'Traducir al español'              },
-  fr:      { name: 'Français',              invite: 'Traduire en français'             },
-  de:      { name: 'Deutsch',               invite: 'Auf Deutsch übersetzen'           },
-  pt:      { name: 'Português (Portugal)',  invite: 'Traduzir para português'          },
-  'pt-BR': { name: 'Português (Brasil)',    invite: 'Traduzir para português do Brasil'},
+  en:      { name: 'English'              },
+  it:      { name: 'Italiano'             },
+  es:      { name: 'Español'              },
+  fr:      { name: 'Français'             },
+  de:      { name: 'Deutsch'              },
+  pt:      { name: 'Português (Portugal)' },
+  'pt-BR': { name: 'Português (Brasil)'   },
 };
 
 export const SUPPORTED = Object.keys(LANGUAGES);

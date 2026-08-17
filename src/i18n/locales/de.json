@@ -11,7 +11,8 @@
     "depressive": "Depressiv",
     "anxiety": "Angst",
     "depression": "Depression",
-    "healthDisclaimer": "Die Daten zur psychischen Gesundheit bilden die Prävalenz depressiver und Angststörungen ab, nicht speziell die von Schlafstörungen. Da der Zusammenhang mit Lichtverschmutzung indirekter Natur ist, sollten diese Ergebnisse mit Vorsicht interpretiert werden."
+    "healthDisclaimer": "Die Daten zur psychischen Gesundheit bilden die Prävalenz depressiver und Angststörungen ab, nicht speziell die von Schlafstörungen. Da der Zusammenhang mit Lichtverschmutzung indirekter Natur ist, sollten diese Ergebnisse mit Vorsicht interpretiert werden.",
+    "translateAria": "Die Website auf {{language}} übersetzen"
   },
   "app": {
     "brand": "Es war einmal...\n die Nacht",
@@ -21,9 +22,16 @@
     "aria": "Menü",
     "rankings": "Ranglisten",
     "results": "Interessante Ergebnisse",
-    "lightMode": "Helles Design",
-    "darkMode": "Dunkles Design",
-    "translateAria": "Die Website auf {{language}} übersetzen"
+    "settings": "Einstellungen"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "close": "Einstellungen schließen",
+    "theme": "Design",
+    "themeLight": "Hell",
+    "themeDark": "Dunkel",
+    "language": "Sprache",
+    "detected": "erkannt"
   },
   "header": {
     "resultsBtn": "Interessante Ergebnisse",

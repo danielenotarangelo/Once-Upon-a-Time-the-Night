@@ -11,7 +11,8 @@
     "depressive": "Dépressifs",
     "anxiety": "Anxiété",
     "depression": "Dépression",
-    "healthDisclaimer": "Les données de santé mentale représentent la prévalence des troubles dépressifs et anxieux, et non celle des troubles du sommeil en particulier. Compte tenu du caractère indirect du lien avec la pollution lumineuse, ces résultats doivent être interprétés avec prudence."
+    "healthDisclaimer": "Les données de santé mentale représentent la prévalence des troubles dépressifs et anxieux, et non celle des troubles du sommeil en particulier. Compte tenu du caractère indirect du lien avec la pollution lumineuse, ces résultats doivent être interprétés avec prudence.",
+    "translateAria": "Traduire le site en {{language}}"
   },
   "app": {
     "brand": "Il était une fois...\n la Nuit",
@@ -21,9 +22,16 @@
     "aria": "Menu",
     "rankings": "Classements",
     "results": "Résultats intéressants",
-    "lightMode": "Thème clair",
-    "darkMode": "Thème sombre",
-    "translateAria": "Traduire le site en {{language}}"
+    "settings": "Paramètres"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "close": "Fermer les paramètres",
+    "theme": "Thème",
+    "themeLight": "Clair",
+    "themeDark": "Sombre",
+    "language": "Langue",
+    "detected": "détectée"
   },
   "header": {
     "resultsBtn": "Résultats intéressants",

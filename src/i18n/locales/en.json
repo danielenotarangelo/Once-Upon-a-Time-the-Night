@@ -11,7 +11,8 @@
     "depressive": "Depressive",
     "anxiety": "Anxiety",
     "depression": "Depression",
-    "healthDisclaimer": "The mental health data represents the prevalence of depressive and anxiety disorders, not sleep disorders specifically. Given the indirect nature of the relationship with light pollution, these results should be interpreted with caution."
+    "healthDisclaimer": "The mental health data represents the prevalence of depressive and anxiety disorders, not sleep disorders specifically. Given the indirect nature of the relationship with light pollution, these results should be interpreted with caution.",
+    "translateAria": "Translate the site into {{language}}"
   },
   "app": {
     "brand": "Once upon a time...\n the Night",
@@ -21,9 +22,16 @@
     "aria": "Menu",
     "rankings": "Rankings",
     "results": "Interesting Results",
-    "lightMode": "Light mode",
-    "darkMode": "Dark mode",
-    "translateAria": "Translate the site into {{language}}"
+    "settings": "Settings"
+  },
+  "settings": {
+    "title": "Settings",
+    "close": "Close settings",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "language": "Language",
+    "detected": "detected"
   },
   "header": {
     "resultsBtn": "Interesting Results",
